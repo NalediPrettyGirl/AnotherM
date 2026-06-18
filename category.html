@@ -41,8 +41,9 @@
                     <span>Sign In / Register</span>
                     <i class="fa-regular fa-user"></i>
                 </div>
-                <div class="top-bar-item cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
+
+                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
                 </div>
             </div>
         </div>
@@ -65,11 +66,10 @@
                     <ul
                         class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
                         <li class="nav-item"><a class="nav-link p-0" href="index.html">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link p-0 active" href="category.html">WEDDING DRESSES</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">EVENING DRESS</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">MEN'S ATTIRE</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">KIDDOS</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=wedding">WEDDING DRESSES</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=evening">EVENING DRESS</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=men">MEN'S ATTIRE</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=kiddos">KIDDOS</a></li>
                         <li class="nav-item"><a class="nav-link p-0" href="#">CONTACT</a></li>
                     </ul>
                     <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
@@ -212,101 +212,7 @@
         <!-- Products Grid -->
         <div class="products-grid-container">
             <div class="products-grid">
-                <!-- Product Card 1 -->
-                <div class="outfit-card category-card">
-                    <div class="outfit-image-container">
-                        <button class="img-nav-btn img-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                        <img src="images/intro.png" alt="Bridal Gown" width="400" height="400">
-                        <button class="img-nav-btn img-next"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="outfit-details">
-                        <p class="outfit-desc">Romantic crystal-beaded<br>fit-and-flare gown with<br>illusion neckline
-                            and shear<br>back</p>
-                        <h3 class="outfit-price">R8500</h3>
-                        <a href="product-details.html" class="btn-outline-gold w-100 mt-2 mb-2 p-2"
-                            style="border-radius:30px;">View</a>
-                    </div>
-                </div>
-
-                <!-- Product Card 2 -->
-                <div class="outfit-card category-card">
-                    <div class="outfit-image-container">
-                        <button class="img-nav-btn img-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                        <img src="images/intro.png" alt="Bridal Gown" width="400" height="400">
-                        <button class="img-nav-btn img-next"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="outfit-details">
-                        <p class="outfit-desc">Romantic crystal-beaded<br>fit-and-flare gown with<br>illusion neckline
-                            and shear<br>back</p>
-                        <h3 class="outfit-price">R8500</h3>
-                        <a href="product-details.html" class="btn-outline-gold w-100 mt-2 mb-2 p-2"
-                            style="border-radius:30px;">View</a>
-                    </div>
-                </div>
-
-                <!-- Product Card 3 -->
-                <div class="outfit-card category-card">
-                    <div class="outfit-image-container">
-                        <button class="img-nav-btn img-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                        <img src="images/intro.png" alt="Bridal Gown" width="400" height="400">
-                        <button class="img-nav-btn img-next"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="outfit-details">
-                        <p class="outfit-desc">Romantic crystal-beaded<br>fit-and-flare gown with<br>illusion neckline
-                            and shear<br>back</p>
-                        <h3 class="outfit-price">R8500</h3>
-                        <a href="product-details.html" class="btn-outline-gold w-100 mt-2 mb-2 p-2"
-                            style="border-radius:30px;">View</a>
-                    </div>
-                </div>
-
-                <!-- Product Card 4 -->
-                <div class="outfit-card category-card">
-                    <div class="outfit-image-container">
-                        <button class="img-nav-btn img-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                        <img src="images/intro.png" alt="Bridal Gown" width="400" height="400">
-                        <button class="img-nav-btn img-next"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="outfit-details">
-                        <p class="outfit-desc">Romantic crystal-beaded<br>fit-and-flare gown with<br>illusion neckline
-                            and shear<br>back</p>
-                        <h3 class="outfit-price">R8500</h3>
-                        <a href="product-details.html" class="btn-outline-gold w-100 mt-2 mb-2 p-2"
-                            style="border-radius:30px;">View</a>
-                    </div>
-                </div>
-
-                <!-- Product Card 5 -->
-                <div class="outfit-card category-card">
-                    <div class="outfit-image-container">
-                        <button class="img-nav-btn img-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                        <img src="images/intro.png" alt="Bridal Gown" width="400" height="400">
-                        <button class="img-nav-btn img-next"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="outfit-details">
-                        <p class="outfit-desc">Romantic crystal-beaded<br>fit-and-flare gown with<br>illusion neckline
-                            and shear<br>back</p>
-                        <h3 class="outfit-price">R8500</h3>
-                        <a href="product-details.html" class="btn-outline-gold w-100 mt-2 mb-2 p-2"
-                            style="border-radius:30px;">View</a>
-                    </div>
-                </div>
-
-                <!-- Product Card 6 -->
-                <div class="outfit-card category-card">
-                    <div class="outfit-image-container">
-                        <button class="img-nav-btn img-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                        <img src="images/intro.png" alt="Bridal Gown" width="400" height="400">
-                        <button class="img-nav-btn img-next"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="outfit-details">
-                        <p class="outfit-desc">Romantic crystal-beaded<br>fit-and-flare gown with<br>illusion neckline
-                            and shear<br>back</p>
-                        <h3 class="outfit-price">R8500</h3>
-                        <a href="product-details.html" class="btn-outline-gold w-100 mt-2 mb-2 p-2"
-                            style="border-radius:30px;">View</a>
-                    </div>
-                </div>
+                <p class="text-center w-100">Loading products...</p>
             </div>
 
             <!-- Pagination -->
@@ -373,6 +279,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="frontend-api.js"></script>
 </body>
 
 </html>

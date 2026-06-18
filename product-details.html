@@ -41,8 +41,9 @@
                     <a href="login.html" class="text-decoration-none text-reset"><span>Sign In / Register</span></a>
                     <i class="fa-regular fa-user"></i>
                 </div>
-                <div class="top-bar-item cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
+
+                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
                 </div>
             </div>
         </div>
@@ -53,7 +54,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent w-100 py-0">
             <div class="container-fluid header-container px-0">
                 <div class="logo">
-                    <a class="navbar-brand m-0 p-0" href="index.html">TREASURED</a>
+                    <a class="navbar-brand m-0 p-0" href="index.html">ANOTHER MOMENT</a>
                 </div>
                 <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navMenuContent" aria-controls="navMenuContent" aria-expanded="false"
@@ -64,10 +65,10 @@
                     <ul
                         class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
                         <li class="nav-item"><a class="nav-link p-0" href="index.html">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">WEDDING DRESSES</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">EVENING DRESS</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">MEN'S ATTIRE</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">KIDDOS</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=wedding">WEDDING DRESSES</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=evening">EVENING DRESS</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=men">MEN'S ATTIRE</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=kiddos">KIDDOS</a></li>
                         <li class="nav-item"><a class="nav-link p-0" href="#">CONTACT</a></li>
                     </ul>
                     <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
@@ -85,55 +86,51 @@
             <!-- Left Side: Image Gallery -->
             <div class="product-gallery">
                 <div class="main-image">
-                    <img src="images/intro.png" alt="Pearl Detailed Back Strip Dress">
+                    <img id="detail-main-img" src="images/intro.png" alt="Product Image">
                     <button class="zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
                 </div>
-                <div class="thumbnail-list">
-                    <img src="images/intro.png" alt="Thumbnail 1" class="active">
-                    <img src="images/intro.png" alt="Thumbnail 2">
-                    <img src="images/intro.png" alt="Thumbnail 3">
-                    <img src="images/intro.png" alt="Thumbnail 4">
-                    <img src="images/intro.png" alt="Thumbnail 5">
+                <div id="detail-thumbnails" class="thumbnail-list">
+                    <!-- Dynamic Thumbnails Injected Here -->
                 </div>
             </div>
 
             <!-- Right Side: Product Info -->
             <div class="product-info-panel">
-                <div class="badge-preloved">Pre-Loved</div>
+                <div id="detail-condition" class="badge-preloved">Condition</div>
 
                 <div class="seller-meta">
                     <div class="meta-item">
                         <i class="fa-regular fa-user"></i>
                         <div class="meta-text">
                             <span class="meta-label">Listed By:</span>
-                            <span class="meta-value">Pearl Makhubedu</span>
+                            <span id="detail-seller-name" class="meta-value">Loading...</span>
                         </div>
                     </div>
                     <div class="meta-item">
                         <i class="fa-solid fa-location-dot"></i>
                         <div class="meta-text">
                             <span class="meta-label">Region:</span>
-                            <span class="meta-value">KwaZulu-Natal</span>
+                            <span id="detail-region" class="meta-value">Loading...</span>
                         </div>
                     </div>
                 </div>
 
-                <h1 class="product-title">Pearl Detailed Back<br>Strip Dress</h1>
+                <h1 id="detail-title" class="product-title">Loading Title...</h1>
 
                 <div class="price-section">
                     <div class="price-item">
                         <span class="price-label">Selling Price:</span>
-                        <span class="current-price">R6500</span>
+                        <span id="detail-price" class="current-price">R0</span>
                     </div>
                     <div class="price-item">
                         <span class="price-label">Original Price:</span>
-                        <span class="original-price">R29 000</span>
+                        <span id="detail-original-price" class="original-price">R0</span>
                     </div>
                 </div>
 
                 <div class="size-section">
                     <span class="size-label">Size:</span>
-                    <span class="size-value">34</span>
+                    <span id="detail-size" class="size-value">-</span>
                 </div>
 
                 <a href="#" class="size-chart-link">
@@ -141,17 +138,19 @@
                         alt="Size Chart Rule" style="width: 28px; height: auto;">
                     Size Chart
                 </a>
+                
+                <button id="add-to-favorite-btn" class="btn-outline-gold pt-2 pb-2 ps-5 pe-5 mt-4 mb-2 w-100" style="display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-regular fa-heart me-2"></i> Add to Favorites
+                </button>
 
                 <div class="product-description">
                     <h3>Product Details:</h3>
-                    <p>Beautiful outfits are often worn once and then carefully stored away. Our platform connects
-                        people across South Africa who want to give these garments another moment to shine while helping
-                        someone else find the perfect outfit without the boutique price tag.</p>
+                    <p id="detail-description">Loading description...</p>
                 </div>
 
                 <div class="contact-seller-section">
                     <h2>Contact Seller</h2>
-                    <form class="contact-seller-form">
+                    <form class="contact-seller-form" id="contact-seller-form">
                         <div class="form-group border-bottom-only">
                             <input type="text" placeholder="Your Full Names*" required>
                         </div>
@@ -162,14 +161,46 @@
                             <input type="tel" placeholder="Contact Number*" required>
                         </div>
                         <div class="form-group border-bottom-only">
-                            <textarea placeholder="Your Message*" rows="1" required></textarea>
+                            <textarea id="initial-chat-message" placeholder="Your Message*" rows="1" required></textarea>
                         </div>
-                        <button type="submit" class="btn-outline-gold pt-2 pb-2 ps-5 pe-5">View</button>
+                        <button type="submit" class="btn-outline-gold pt-2 pb-2 ps-5 pe-5">Start Chat</button>
                     </form>
+
+                    <div class="chat-interface mt-3 shadow-sm border rounded-3 p-3 bg-white" style="display: none; height: 350px; flex-direction: column;" id="chat-interface">
+                        <div class="chat-header border-bottom pb-2 mb-2 d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0" style="color: var(--sage-green); font-family: 'Playfair Display', serif;"><i class="fa-solid fa-comments me-2"></i> Chat with Seller</h6>
+                            <span class="badge bg-success">Online</span>
+                        </div>
+                        <div class="chat-messages flex-grow-1 overflow-auto mb-3 pe-2" id="chat-messages" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Messages go here -->
+                        </div>
+                        <div class="chat-input mt-auto">
+                            <div class="input-group">
+                                <input type="text" class="form-control rounded-pill-start border-end-0" id="chat-input-text" placeholder="Type a message..." style="box-shadow: none;">
+                                <button class="btn border border-start-0 rounded-pill-end" type="button" id="chat-send-btn" style="background-color: var(--sage-green); color: white;"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Recently Viewed Section -->
+    <section class="recent-outfits" id="recently-viewed-section" style="display: none; background-color: #fcf9f5; padding: 60px 0;">
+        <div class="recent-container">
+            <h2>Recently Viewed</h2>
+            <div class="heading-line center-line"></div>
+
+            <div class="carousel-wrapper">
+                <div class="carousel-viewport" style="overflow: hidden; width: 100%;">
+                    <div class="outfits-grid" id="recently-viewed-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -193,6 +224,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="frontend-api.js"></script>
 </body>
 
 </html>

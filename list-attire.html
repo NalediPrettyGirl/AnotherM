@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Treasured</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>info@treasured.co.za</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Mon-Fri: 9am - 4pm</span>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="top-bar-item sign-in">
+                    <a href="login.html" class="text-decoration-none text-reset"><span>Sign In / Register</span></a>
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent w-100 py-0">
+            <div class="container-fluid header-container px-0">
+                <div class="logo">
+                    <a class="navbar-brand m-0 p-0" href="index.html">ANOTHER MOMENT</a>
+                </div>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenuContent" aria-controls="navMenuContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenuContent">
+                    <ul
+                        class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
+                        <li class="nav-item"><a class="nav-link p-0" href="index.html">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html">WEDDING DRESSES</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html">EVENING DRESS</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html">MEN'S ATTIRE</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="category.html">KIDDOS</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="#">CONTACT</a></li>
+                    </ul>
+                    <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
+                        <a href="login.html" class="btn-list-attire text-decoration-none d-inline-block">List Your
+                            Attire</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- List Attire Flow Content -->
+    <main class="list-attire-page">
+        <div class="list-layout-container">
+            <!-- Sidebar Navigation -->
+            <div class="list-sidebar">
+                <ul class="list-nav">
+                    <li><a href="#general" class="active"><span class="nav-dot"></span> General</a></li>
+                    <li><a href="#dress"><span class="nav-dot"></span> The Dress</a></li>
+                    <li><a href="#price"><span class="nav-dot"></span> Price for the Dress</a></li>
+                    <li><a href="#images"><span class="nav-dot"></span> Images</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Form Area -->
+            <div class="list-content">
+                <h1 class="list-page-title">Your listing details</h1>
+                
+                <form id="listing-form" class="list-form-container">
+                    
+                    <!-- Section 1: General -->
+                    <div id="general" class="list-section-card">
+                        <div class="section-header">
+                            <div class="icon-circle"><i class="fa-solid fa-pencil"></i></div>
+                            <h3>General</h3>
+                        </div>
+                        <div class="field-row">
+                            <label>Contact Email</label>
+                            <input type="email" name="contact_email" class="form-control list-input">
+                        </div>
+                        <div class="field-row">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone_number" class="form-control list-input">
+                        </div>
+                        <div class="field-row no-border flex-column align-items-start">
+                            <label class="mb-2">Province</label>
+                            <select name="province" class="form-control list-select p-0">
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="Gauteng">Gauteng</option>
+                                <option value="Western Cape">Western Cape</option>
+                                <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+                                <option value="Eastern Cape">Eastern Cape</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: The Dress -->
+                    <div id="dress" class="list-section-card">
+                        <div class="section-header">
+                            <div class="icon-circle"><i class="fa-solid fa-person-dress"></i></div>
+                            <h3>The Dress</h3>
+                        </div>
+                        <div class="field-row field-row-split align-items-start">
+                            <label>Title</label>
+                            <div class="split-input-wrapper">
+                                <span class="desc-text mb-2 d-block">Please do not include the dress' designer here. There is a designated field below for the designer.</span>
+                                <input type="text" name="title" class="form-control list-input p-0" required>
+                            </div>
+                        </div>
+                        <div class="field-row field-row-split align-items-start">
+                            <label>Description</label>
+                            <div class="split-input-wrapper">
+                                <span class="desc-text mb-2 d-block">Please provide a clear description of the dress here. If the dress has been altered for a specific size or height, please provide the details of the alterations.</span>
+                                <textarea name="description" class="form-control list-textarea p-2" rows="4" required></textarea>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <label>Type</label>
+                            <div class="radio-group-vertical">
+                                <label class="radio-label"><input type="radio" name="category" value="Wedding Dresses" required> <span>Wedding Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Evening Dress"> <span>Evening / Matric Dress</span></label>
+                            </div>
+                        </div>
+                        <div class="field-row field-row-split align-items-start">
+                            <label>Style of Dress</label>
+                            <div class="checkbox-grid">
+                                <label class="check-label"><input type="checkbox" name="style" value="A-line"> <span>A-line</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Ball Gown"> <span>Ball Gown</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Fit & Flare"> <span>Fit & Flare</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Mermaid"> <span>Mermaid</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Other"> <span>Other</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Sheath"> <span>Sheath</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Trumpet"> <span>Trumpet</span></label>
+                            </div>
+                        </div>
+                        <div class="field-row flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between mb-2">
+                                <label>Dress Size</label>
+                                <span class="muted-text">South African Sizing</span>
+                            </div>
+                            <select name="size" class="form-control list-select p-0" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="30">30 / XXS</option>
+                                <option value="32">32 / XS</option>
+                                <option value="34">34 / S</option>
+                                <option value="36">36 / M</option>
+                                <option value="38">38 / L</option>
+                                <option value="40">40 / XL</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <label>Colour</label>
+                            <input type="text" name="color" class="form-control list-input ms-auto w-50">
+                        </div>
+                        <div class="field-row">
+                            <label>Designer Name</label>
+                            <input type="text" name="designer" class="form-control list-input ms-auto w-50">
+                        </div>
+                        <div class="field-row field-row-split flex-column align-items-start">
+                            <div class="d-flex align-items-center mb-1">
+                                <label>Year Created</label>
+                            </div>
+                            <span class="desc-text mb-2 d-block">Please input only the year the dress was created. Example: "2024". IMPORTANT: This influences the price!</span>
+                            <input type="number" name="year" class="form-control list-input p-0">
+                        </div>
+                        <div class="field-row">
+                            <label>Dress Condition</label>
+                            <div class="radio-group-vertical">
+                                <label class="radio-label"><input type="radio" name="condition" value="New" required> <span>New</span></label>
+                                <label class="radio-label"><input type="radio" name="condition" value="Pre-loved"> <span>Pre-loved</span></label>
+                                <label class="radio-label"><input type="radio" name="condition" value="Sample Dress"> <span>Sample Dress</span></label>
+                            </div>
+                        </div>
+                        <div class="field-row no-border">
+                            <div class="w-100">
+                                <label class="d-block mb-2">Cleaned [optional]</label>
+                                <div class="radio-group-vertical mt-1 ms-3">
+                                    <label class="radio-label mb-2"><input type="radio" name="cleaned" value="Yes"> <span>Yes</span></label>
+                                    <label class="radio-label"><input type="radio" name="cleaned" value="No"> <span>No</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Price for the Dress -->
+                    <div id="price" class="list-section-card">
+                        <div class="section-header">
+                            <div class="icon-circle"><i class="fa-solid fa-money-bill"></i></div>
+                            <h3>Price for the Dress</h3>
+                        </div>
+                        <div class="field-row field-row-split align-items-center">
+                            <label>Price</label>
+                            <div class="split-input-wrapper d-flex align-items-center justify-content-between w-100">
+                                <span class="desc-text ms-4">How much are you listing the dress for? (Value in Rand, don't add currency or decimals)</span>
+                                <input type="number" name="price" class="form-control list-input p-0 w-25 border-bottom ms-3" required>
+                            </div>
+                        </div>
+                        <div class="field-row field-row-split align-items-center">
+                            <label>Original Price</label>
+                            <div class="split-input-wrapper d-flex align-items-center justify-content-between w-100">
+                                <span class="desc-text ms-4">Original price that you paid for the dress (Value in Rand, don't add currency or decimals)</span>
+                                <input type="number" name="original_price" class="form-control list-input p-0 w-25 border-bottom ms-3">
+                            </div>
+                        </div>
+                        <div class="field-row flex-column align-items-start">
+                            <label>Available for Rental (optional)</label>
+                            <span class="desc-text mb-2 d-block">Do you want to make this dress available for rental? Please ensure you have read the rental terms as part of the site's Terms and Conditions.</span>
+                            <div class="radio-group-vertical mt-2 ms-3">
+                                <label class="radio-label mb-2"><input type="radio" name="rental" value="NO"> <span>NO - Not available for rental</span></label>
+                                <label class="radio-label"><input type="radio" name="rental" value="YES"> <span>YES - Available for rental</span></label>
+                            </div>
+                        </div>
+                        <div class="field-row field-row-split align-items-start">
+                            <label>Are You Willing To Courier The Dress?</label>
+                            <div class="split-input-wrapper ms-4">
+                                <span class="desc-text mb-2 d-block">Are you willing to courier the dress to the buyer at no extra cost?</span>
+                                <select name="courier" class="form-control list-select p-0">
+                                    <option value="" disabled selected>Select an option</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field-row no-border flex-column align-items-start">
+                            <label class="mb-2">Are You Willing To Arrange A Fitting Opportunity?</label>
+                            <select name="fitting" class="form-control list-select p-0 w-100">
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Images -->
+                    <div id="images" class="list-section-card">
+                        <div class="section-header">
+                            <div class="icon-circle"><i class="fa-solid fa-image"></i></div>
+                            <h3>Images</h3>
+                        </div>
+                        <div class="field-row flex-column align-items-start border-bottom-0 pb-0">
+                            <label class="mb-1">Gallery Images</label>
+                            <span class="desc-text mb-3 d-block">Upload a maximum of 4 good quality (full length front and back) images.</span>
+                            <span class="fw-bold fs-sm d-block mb-1" style="font-size: 13px; color: #333;">The first image should be landscape or square. The recommended size is: 1000px width & 520px height.</span>
+                            <span class="desc-text d-block mb-3">Maximum file size: 3 MB. Please note that the first image will be the cover image on the Facebook post, if you opt-in to have your dress shared on our Facebook page (Premium Package only).<br>
+                            <span class="text-danger mt-1 d-block">Make sure to use high-quality photos that showcase your dress from its best angles — great photos help your dress sell faster!</span></span>
+                            
+                            <div class="upload-container" style="width: 100%;">
+                                <div class="upload-box mb-3" style="position: relative;">
+                                    <input type="file" id="main-images" name="main_images" accept="image/*" multiple style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
+                                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; pointer-events: none;">
+                                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                        <span style="font-size: 13px; color: #888; margin-top: 10px;">Click or drag up to 4 images here</span>
+                                    </div>
+                                </div>
+                                <div id="main-image-preview" class="d-flex flex-wrap gap-2 w-100 mb-4"></div>
+                            </div>
+                        </div>
+                        <div class="field-row no-border flex-column align-items-start">
+                            <div class="d-flex justify-content-between w-100 mb-2">
+                                <label>Extra gallery images (optional)</label>
+                                <span class="muted-text text-sm">Upload a good quality image.</span>
+                            </div>
+                            
+                            <div class="upload-container" style="width: 100%;">
+                                <div class="upload-box mb-3" style="position: relative;">
+                                    <input type="file" id="extra-images" name="extra_images" accept="image/*" multiple style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
+                                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; pointer-events: none;">
+                                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                        <span style="font-size: 13px; color: #888; margin-top: 10px;">Click or drag an extra image here</span>
+                                    </div>
+                                </div>
+                                <div id="extra-image-preview" class="d-flex flex-wrap gap-2 w-100 mb-2"></div>
+                            </div>
+                            
+                            <div class="terms-accept w-100 mt-2 border-top pt-4">
+                                <label class="d-block mb-3 fw-bold" style="font-size: 14px;">I accept the <a href="#" class="text-dark text-decoration-underline">Terms & Conditions</a></label>
+                                <label class="check-label"><input type="checkbox" required> <span>I accept the Terms & Conditions</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-end mb-4">
+                        <button type="submit" class="btn-publish-listing">Publish Listing</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-top-container">
+                <div class="footer-logo">TREASURED</div>
+                <div class="footer-socials">
+                    <span class="follow-text">Follow Us:</span>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p>Terms & Conditions | Copyright@2026 | Designed by Red Canvas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title" id="paymentModalLabel" style="font-family: 'Playfair Display', serif; font-size: 24px; color: var(--sage-green);">Listing Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="payment-modal-close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <div class="text-center mb-4">
+                        <span class="text-muted d-block mb-1">Total Due:</span>
+                        <h2 style="color: var(--gold); font-family: 'Playfair Display', serif; font-size: 40px; font-weight: bold;">R49.00</h2>
+                        <span class="badge bg-light text-dark border mt-1">Once-off listing fee</span>
+                    </div>
+                    
+                    <label class="form-label mb-2" style="font-size: 14px; font-weight: 500;">Select Payment Method:</label>
+                    <div class="d-flex gap-2 mb-4 flex-wrap">
+                        <button type="button" class="btn btn-outline-secondary flex-grow-1 py-3 px-2 active payment-method-btn" data-method="card">
+                            <i class="fa-solid fa-credit-card d-block mb-2 fa-lg"></i> Card
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary flex-grow-1 py-3 px-2 payment-method-btn" data-method="eft">
+                            <i class="fa-solid fa-building-columns d-block mb-2 fa-lg"></i> Instant EFT
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary flex-grow-1 py-3 px-2 payment-method-btn" data-method="snapscan">
+                            <i class="fa-solid fa-qrcode d-block mb-2 fa-lg"></i> SnapScan
+                        </button>
+                    </div>
+                    
+                    <!-- Card Details Area -->
+                    <div id="payment-details-card" class="payment-method-details">
+                        <div class="mb-3">
+                            <label class="form-label small">Cardholder Name</label>
+                            <input type="text" class="form-control p-2" placeholder="e.g. Naledi Mokoena" id="pay-card-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Card Number</label>
+                            <input type="text" class="form-control p-2" placeholder="XXXX XXXX XXXX XXXX" id="pay-card-num">
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label small">Expiry Date</label>
+                                <input type="text" class="form-control p-2" placeholder="MM/YY" id="pay-card-expiry">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label small">CVV</label>
+                                <input type="password" class="form-control p-2" placeholder="XXX" id="pay-card-cvv">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- EFT Details Area -->
+                    <div id="payment-details-eft" class="payment-method-details d-none">
+                        <label class="form-label small">Select Your Bank</label>
+                        <select class="form-select p-2 mb-3">
+                            <option>Standard Bank</option>
+                            <option>FNB</option>
+                            <option>ABSA</option>
+                            <option>Nedbank</option>
+                            <option>Capitec</option>
+                        </select>
+                        <div class="alert alert-light border small text-muted">
+                            <i class="fa-solid fa-circle-info me-2 text-primary"></i> You will be redirected to your bank to authorize the instant EFT.
+                        </div>
+                    </div>
+                    
+                    <!-- SnapScan Details Area -->
+                    <div id="payment-details-snapscan" class="payment-method-details d-none text-center">
+                        <div class="p-4 border rounded mb-3 bg-light d-inline-block">
+                            <i class="fa-solid fa-qrcode fa-5x text-dark mb-2"></i>
+                            <div class="small fw-bold">Scan to Pay R49</div>
+                        </div>
+                        <p class="small text-muted">Scan the QR code with your SnapScan app to complete the payment.</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn text-white rounded-pill px-4" id="confirm-payment-btn" style="background-color: var(--sage-green);">Pay & Publish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="frontend-api.js"></script>
+</body>
+
+</html>

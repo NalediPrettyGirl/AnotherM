@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Treasured</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>info@treasured.co.za</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Mon-Fri: 9am - 4pm</span>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="user-profile-nav">
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown">
+                        <button class="user-name-dropdown dropdown-toggle border-0 bg-transparent p-0" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Naledi</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: var(--gold);"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item py-2 px-4" href="#"><i class="fa-regular fa-user me-2"></i> My Profile</a></li>
+                            <li><a class="dropdown-item py-2 px-4" href="#"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2 px-4 text-danger" href="#"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    <i class="fa-regular fa-user" style="font-size: 18px; color: var(--gold);"></i>
+
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold); cursor: pointer;" title="Favorites"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="dashboard-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent w-100 py-0">
+            <div class="container-fluid header-container px-0">
+                <div class="logo">
+                    <a class="navbar-brand m-0 p-0" href="index.html">TREASURED</a>
+                </div>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenuContent" aria-controls="navMenuContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenuContent">
+                    <ul class="navbar-nav mx-auto mb-3 mb-lg-0 dashboard-nav justify-content-center gap-2 mt-4 mt-lg-0 text-center">
+                        <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link" href="category.html?type=wedding">WEDDING DRESS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="category.html?type=evening">EVENING DRESS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="category.html?type=men">GENTS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="category.html?type=kiddos">KIDDOS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
+                    </ul>
+                    <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
+                        <a href="#" class="btn-list-attire-dash">List Your Attire</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link active" data-target="dashboard">
+                            <span class="sidebar-dot"></span>
+                            DASHBOARD
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="account">
+                            <span class="sidebar-dot"></span>
+                            ACCOUNT DETAILS
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="listings">
+                            <span class="sidebar-dot"></span>
+                            LISTINGS
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="bookmarks">
+                            <span class="sidebar-dot"></span>
+                            BOOKMARKS
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="messages">
+                            <span class="sidebar-dot"></span>
+                            MESSAGES
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link danger">
+                            <span class="sidebar-dot"></span>
+                            LOGOUT
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link danger">
+                            <span class="sidebar-dot"></span>
+                            DELETE ACCOUNT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-main">
+            <!-- Dashboard Section -->
+            <div id="section-dashboard" class="dashboard-section-content" style="display: block;">
+                <h1 class="greeting-title-dash">Hello, Naledi!</h1>
+
+                <!-- Stats Grid -->
+                <div class="stats-row-dash">
+                    <div class="stat-card-dash">
+                        <div class="stat-info-dash">
+                            <h2>0</h2>
+                            <p>Published Listings</p>
+                        </div>
+                        <div class="stat-icon-circle-dash"></div>
+                    </div>
+                    <div class="stat-card-dash">
+                        <div class="stat-info-dash">
+                            <h2>0</h2>
+                            <p>Pending Listings</p>
+                        </div>
+                        <div class="stat-icon-circle-dash"></div>
+                    </div>
+                    <div class="stat-card-dash">
+                        <div class="stat-info-dash">
+                            <h2>0</h2>
+                            <p>Active Promotions</p>
+                        </div>
+                        <div class="stat-icon-circle-dash"></div>
+                    </div>
+                </div>
+
+                <!-- Visits Chart Card -->
+                <div class="chart-card-dash">
+                    <div class="chart-header-dash">
+                        <div class="chart-title-dash">Visits</div>
+                        <div class="chart-controls-dash">
+                            <span class="chart-period-dash">Month</span>
+                            <div class="dropdown">
+                                <button class="month-selector-dash dropdown-toggle border-0" type="button" id="monthDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>April</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: var(--gold);"></i>
+                                </button>
+                                <ul class="dropdown-menu shadow border-0 mt-2" aria-labelledby="monthDropdown">
+                                    <li><a class="dropdown-item" href="#">January</a></li>
+                                    <li><a class="dropdown-item" href="#">February</a></li>
+                                    <li><a class="dropdown-item" href="#">March</a></li>
+                                    <li><a class="dropdown-item active" href="#">April</a></li>
+                                    <li><a class="dropdown-item" href="#">May</a></li>
+                                    <li><a class="dropdown-item" href="#">June</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container" style="position: relative; height: 500px; width: 100%;">
+                        <canvas id="visitsChart"></canvas>
+                    </div>
+
+                    <div class="chart-legend-dash">
+                        <div class="legend-item-dash">
+                            <div class="legend-color-dash color-current-dash"></div>
+                            <span>Current Views</span>
+                        </div>
+                        <div class="legend-item-dash">
+                            <div class="legend-color-dash color-previous-dash"></div>
+                            <span>Previous Views</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Details Section -->
+            <div id="section-account" class="dashboard-section-content" style="display: none;">
+                <h1 class="greeting-title-dash mb-4">Account Details</h1>
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                    <form id="dash-account-form">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--sage-green); font-weight: 500;">First Name</label>
+                                <input type="text" id="dash-fname" class="form-control p-3 rounded-3" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--sage-green); font-weight: 500;">Last Name</label>
+                                <input type="text" id="dash-lname" class="form-control p-3 rounded-3" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--sage-green); font-weight: 500;">Email Address</label>
+                                <input type="email" id="dash-email" class="form-control p-3 rounded-3" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--sage-green); font-weight: 500;">Phone Number</label>
+                                <input type="tel" id="dash-phone" class="form-control p-3 rounded-3" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                            </div>
+                            <div class="col-12 mt-5">
+                                <h4 style="font-family: 'Playfair Display', serif; color: var(--sage-green); font-size: 22px; margin-bottom: 20px;">Change Password</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--sage-green); font-weight: 500;">Current Password</label>
+                                <input type="password" class="form-control p-3 rounded-3" placeholder="Enter current password" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--sage-green); font-weight: 500;">New Password</label>
+                                <input type="password" class="form-control p-3 rounded-3" placeholder="Enter new password" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn text-white px-5 py-2 rounded-pill" style="background-color: var(--sage-green); font-weight: 500;">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Listings Section -->
+            <div id="section-listings" class="dashboard-section-content" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="greeting-title-dash mb-0">My Listings</h1>
+                    <a href="#" class="btn-list-attire-dash text-decoration-none">Add New Listing</a>
+                </div>
+                
+                <div class="row g-4" id="dashboard-listings-grid">
+                    <!-- Listings will be loaded here dynamically -->
+                </div>
+            </div>
+
+            <!-- Bookmarks Section -->
+            <div id="section-bookmarks" class="dashboard-section-content" style="display: none;">
+                <h1 class="greeting-title-dash mb-4">Saved Items</h1>
+                <div class="row g-4" id="dashboard-bookmarks-grid">
+                    <!-- Bookmarks will be loaded here dynamically -->
+                </div>
+            </div>
+
+            <!-- Messages Section -->
+            <div id="section-messages" class="dashboard-section-content" style="display: none;">
+                <h1 class="greeting-title-dash mb-4">Messages Inbox</h1>
+                <div class="row rounded-4 shadow-sm overflow-hidden bg-white border" style="height: 550px;">
+                    <!-- Left: Chat List -->
+                    <div class="col-md-4 border-end pe-0 h-100 d-flex flex-column" style="background-color: #fcfcfc;">
+                        <div class="p-3 border-bottom bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold" style="color: var(--sage-green); font-family: 'Playfair Display', serif; font-size: 18px;">Conversations</h5>
+                        </div>
+                        <div class="flex-grow-1 overflow-auto" id="dashboard-chats-list">
+                            <!-- Populated dynamically -->
+                            <p class="text-center text-muted p-4 small">No active conversations.</p>
+                        </div>
+                    </div>
+                    <!-- Right: Active Chat Window -->
+                    <div class="col-md-8 ps-0 h-100 d-flex flex-column">
+                        <div id="active-chat-container" class="h-100 d-flex flex-column d-none">
+                            <div class="p-3 border-bottom d-flex justify-content-between align-items-center bg-white">
+                                <div>
+                                    <h6 class="mb-0 fw-bold" id="chat-buyer-name" style="color: var(--sage-green);">Naledi</h6>
+                                    <span class="text-muted small" id="chat-product-title" style="font-size: 12px;">Product Title</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <button class="btn btn-sm btn-outline-gold rounded-pill px-3 py-1 fw-500" id="seller-deal-status-btn" style="border: 1px solid var(--gold); color: var(--gold); font-size: 12px;" disabled><i class="fa-solid fa-clock me-1"></i> Awaiting Buyer Checkout</button>
+                                    <span class="badge bg-success rounded-pill px-2">Online</span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 p-3 overflow-auto d-flex flex-column gap-2" id="dashboard-chat-messages" style="background-color: #fafafa; max-height: 380px;">
+                                <!-- Messages pop dynamically -->
+                            </div>
+                            <div class="p-3 border-top bg-white mt-auto">
+                                <div class="input-group">
+                                    <input type="text" class="form-control rounded-pill-start border-end-0 p-3" id="dash-chat-input" placeholder="Type a message..." style="box-shadow: none; border: 1px solid #e5e5e5; font-size: 14px;">
+                                    <button class="btn border border-start-0 rounded-pill-end px-4" type="button" id="dash-chat-send-btn" style="background-color: var(--sage-green); color: white;"><i class="fa-solid fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="no-chat-selected" class="h-100 d-flex flex-column align-items-center justify-content-center text-muted p-5 bg-white">
+                            <i class="fa-regular fa-comments fa-3x mb-3 text-secondary" style="color: var(--sage-green) !important; opacity: 0.5;"></i>
+                            <h5 style="font-family: 'Playfair Display', serif; font-size: 20px; color: var(--sage-green);">Your Inbox</h5>
+                            <p class="small text-center text-muted mb-0">Select a conversation to start chatting. When buyers contact you through your listing details page, their messages will show up here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-top-container">
+                <div class="footer-logo">TREASURED</div>
+                <div class="footer-socials">
+                    <span class="follow-text">Follow Us:</span>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p>Terms &amp; Conditions | Copyright@2026 | Designed by Red Canvas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Month Selector Interactivity
+            const monthSelector = document.querySelector('.month-selector-dash span');
+            const monthItems = document.querySelectorAll('.chart-header-dash .dropdown-item');
+            
+            monthItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Update text
+                    monthSelector.textContent = this.textContent;
+                    // Update active class
+                    monthItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Sidebar Interactivity
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const sections = document.querySelectorAll('.dashboard-section-content');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!this.classList.contains('danger')) {
+                        e.preventDefault();
+                        
+                        // Update active link
+                        sidebarLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+
+                        // Show corresponding section
+                        const targetId = this.getAttribute('data-target');
+                        if (targetId) {
+                            sections.forEach(sec => {
+                                sec.style.display = 'none';
+                            });
+                            const targetSection = document.getElementById('section-' + targetId);
+                            if (targetSection) {
+                                targetSection.style.display = 'block';
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Chart Initialization
+            const ctx = document.getElementById('visitsChart').getContext('2d');
+            
+            const xLabels = ['April', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
+
+            // Data adjusted to match the image visually
+            const currentData = [null, 1500, null, 2500, null, null, null, null, 3500, null, 6000, null, null, null, 9000, null, null, null, null, null, 6200, null, null, 10800, 3500, null, null, null, null, 1800];
+            const previousData = [null, null, null, 3500, null, null, null, null, null, 11500, null, null, null, null, 17500, null, null, null, null, null, 11500, null, null, null, 3500, null, null, null, 27000, 29000];
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xLabels,
+                    datasets: [
+                        {
+                            label: 'Current Views',
+                            data: currentData,
+                            borderColor: '#5d6b5e',
+                            backgroundColor: 'rgba(93, 107, 94, 0.4)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#5d6b5e',
+                            pointBorderWidth: 0,
+                            spanGaps: true
+                        },
+                        {
+                            label: 'Previous Views',
+                            data: previousData,
+                            borderColor: '#c4d1c8',
+                            backgroundColor: 'rgba(196, 209, 200, 0.4)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#c4d1c8',
+                            pointBorderWidth: 0,
+                            spanGaps: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 20
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 13,
+                                    family: 'Poppins'
+                                },
+                                color: '#7c8d7e'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 35000,
+                            ticks: {
+                                stepSize: 5000,
+                                callback: function(value) {
+                                    return value === 0 ? '0k' : (value / 1000) + 'k';
+                                },
+                                font: {
+                                    size: 13,
+                                    family: 'Poppins'
+                                },
+                                color: '#7c8d7e'
+                            },
+                            grid: {
+                                color: '#f0f0f0',
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title" id="logoutModalLabel" style="font-family: 'Playfair Display', serif; font-size: 24px; color: var(--sage-green);">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <p class="text-muted mb-0">Are you sure you want to log out of your account?</p>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn text-white rounded-pill px-4" id="confirm-logout-btn" style="background-color: var(--sage-green);">Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title text-danger" id="deleteAccountModalLabel" style="font-family: 'Playfair Display', serif; font-size: 24px;">Delete Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <p class="text-muted mb-4">Are you absolutely sure you want to permanently delete your account? All your listings, bookmarks, and account details will be removed. This action <strong>cannot be undone</strong>.</p>
+                    <div class="mb-3">
+                        <label for="delete-confirm-input" class="form-label" style="font-size: 14px; font-weight: 500;">Type <strong class="text-danger">DELETE</strong> to confirm</label>
+                        <input type="text" class="form-control p-3 rounded-3" id="delete-confirm-input" placeholder="DELETE" style="border: 1px solid #e5e5e5; background-color: #fcfcfc;">
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger rounded-pill px-4" id="confirm-delete-btn" disabled>Permanently Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="frontend-api.js"></script>
+</body>
+
+</html>
