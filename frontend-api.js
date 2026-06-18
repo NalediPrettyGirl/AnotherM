@@ -515,81 +515,83 @@ function handleListAttire() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Show payment modal
-        const paymentModalEl = document.getElementById('paymentModal');
-        if (!paymentModalEl) return;
-        
-        const modal = new bootstrap.Modal(paymentModalEl);
-        modal.show();
-        
         const confirmBtn = document.getElementById('confirm-payment-btn');
-        confirmBtn.disabled = false;
-        confirmBtn.innerText = 'Pay & Publish';
+        if (confirmBtn) {
+            confirmBtn.disabled = true;
+            confirmBtn.innerText = 'Processing Payment...';
+        }
         
-        // Unbind previous onclick listeners if form is submitted multiple times
-        const newConfirmBtn = confirmBtn.cloneNode(true);
-        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        // Extract the form data
+        const formData = new FormData(form);
+        const data = {};
         
-        newConfirmBtn.addEventListener('click', async () => {
-            newConfirmBtn.disabled = true;
-            newConfirmBtn.innerText = 'Processing Payment...';
+        for (const [key, value] of formData.entries()) {
+            if (key === 'main_images' || key === 'extra_images') continue;
             
-            // Extract the form data
-            const formData = new FormData(form);
-            const data = {};
-            
-            for (const [key, value] of formData.entries()) {
-                if (key === 'main_images' || key === 'extra_images') continue;
-                
-                if (data.hasOwnProperty(key)) {
-                    if (!Array.isArray(data[key])) {
-                        data[key] = [data[key]];
-                    }
-                    data[key].push(value);
+            if (data.hasOwnProperty(key)) {
+                if (!Array.isArray(data[key])) {
+                    data[key] = [data[key]];
+                }
+                data[key].push(value);
+            } else {
+                if (key === 'style') {
+                    data[key] = [value];
                 } else {
-                    if (key === 'style') {
-                        data[key] = [value];
-                    } else {
-                        data[key] = value;
-                    }
+                    data[key] = value;
                 }
             }
-            
-            data.main_images = window.collectedMainImages || [];
-            data.extra_images = window.collectedExtraImages || [];
-            if(data.main_images.length > 0) {
-                data.imageUrl = data.main_images[0];
-            }
-            
-            data.sellerId = state.user.id;
-            
-            // Simulate 2 seconds delay for payment gateway authorization
-            setTimeout(async () => {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/products`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
+        }
         
-                    if (response.ok) {
-                        modal.hide();
-                        alert('Payment successful & Listing published successfully!');
-                        window.location.href = 'dashboard.html';
-                    } else {
-                        const errorData = await response.json().catch(() => ({ error: 'Failed to publish listing' }));
-                        alert(errorData.error || 'Failed to publish listing.');
-                        newConfirmBtn.disabled = false;
-                        newConfirmBtn.innerText = 'Pay & Publish';
-                    }
-                } catch (error) {
-                    console.error('Publish error:', error);
-                    alert('Failed to connect to the server. Please ensure the backend is running.');
-                    newConfirmBtn.disabled = false;
-                    newConfirmBtn.innerText = 'Pay & Publish';
+        data.main_images = window.collectedMainImages || [];
+        data.extra_images = window.collectedExtraImages || [];
+        if(data.main_images.length > 0) {
+            data.imageUrl = data.main_images[0];
+        }
+        
+        data.sellerId = state.user.id;
+        
+        // Trigger Yoco Payment using our backend endpoint
+        try {
+            // Save the draft listing so we can publish it when we return from Yoco
+            localStorage.setItem('treasured_pending_listing', JSON.stringify(data));
+            
+            // Yoco will crash if the origin is a local file:// URL. Let's ensure it's a valid http URL.
+            let origin = window.location.origin;
+            if (!origin || origin === 'null' || origin.includes('file://')) {
+                origin = 'http://localhost:3000'; // Route back to our Express server
+            }
+            
+            const response = await fetch(`${API_BASE_URL}/checkout/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: 4900, // R49.00 in Cents
+                    currency: 'ZAR',
+                    successUrl: origin + '/dashboard.html?payment=success',
+                    cancelUrl: origin + '/list-attire.html?payment=cancel'
+                })
+            });
+            
+            const checkoutData = await response.json();
+            
+            if (checkoutData.redirectUrl) {
+                // Redirect the user to Yoco's Secure Payment Page!
+                window.location.href = checkoutData.redirectUrl;
+            } else {
+                alert(checkoutData.error || 'Failed to initialize payment.');
+                if (confirmBtn) {
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerText = 'Publish Listing';
                 }
-            }, 2000);
-        });
+            }
+        } catch (err) {
+            console.error('Checkout error:', err);
+            alert('Payment error: Could not reach the server.');
+            if (confirmBtn) {
+                confirmBtn.disabled = false;
+                confirmBtn.innerText = 'Publish Listing';
+            }
+        }
     });
 }
 
@@ -653,6 +655,32 @@ document.addEventListener('DOMContentLoaded', () => {
         loadDashboardListings();
         loadDashboardBookmarks();
         loadDashboardChats();
+        
+        // Check if we just returned from a successful Yoco payment
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('payment') === 'success') {
+            const pendingListingStr = localStorage.getItem('treasured_pending_listing');
+            if (pendingListingStr) {
+                try {
+                    const data = JSON.parse(pendingListingStr);
+                    fetch(`${API_BASE_URL}/products`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    }).then(res => {
+                        if (res.ok) {
+                            alert('Payment successful! Your listing is now published.');
+                            localStorage.removeItem('treasured_pending_listing');
+                            loadDashboardStats();
+                            loadDashboardListings();
+                        }
+                    });
+                } catch (e) {
+                    console.error("Error publishing pending listing", e);
+                }
+            }
+        }
+        
         // Setup logout block
         const logoutLinks = document.querySelectorAll('.sidebar-link.danger, .dropdown-item.text-danger');
         logoutLinks.forEach(link => {
