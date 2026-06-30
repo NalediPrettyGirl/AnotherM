@@ -126,23 +126,23 @@
                         </div>
                     </div>
 
-                    <!-- Section 2: The Dress -->
+                    <!-- Section 2: The Attire -->
                     <div id="dress" class="list-section-card">
                         <div class="section-header">
-                            <div class="icon-circle"><i class="fa-solid fa-person-dress"></i></div>
-                            <h3>The Dress</h3>
+                            <div class="icon-circle"><i class="fa-solid fa-shirt"></i></div>
+                            <h3>The Attire</h3>
                         </div>
                         <div class="field-row field-row-split align-items-start">
                             <label>Title</label>
                             <div class="split-input-wrapper">
-                                <span class="desc-text mb-2 d-block">Please do not include the dress' designer here. There is a designated field below for the designer.</span>
+                                <span class="desc-text mb-2 d-block">Please do not include the attire's designer here. There is a designated field below for the designer.</span>
                                 <input type="text" name="title" class="form-control list-input p-0" required>
                             </div>
                         </div>
                         <div class="field-row field-row-split align-items-start">
                             <label>Description</label>
                             <div class="split-input-wrapper">
-                                <span class="desc-text mb-2 d-block">Please provide a clear description of the dress here. If the dress has been altered for a specific size or height, please provide the details of the alterations.</span>
+                                <span class="desc-text mb-2 d-block">Please provide a clear description of the attire here. If the attire has been altered for a specific size or height, please provide the details of the alterations.</span>
                                 <textarea name="description" class="form-control list-textarea p-2" rows="4" required></textarea>
                             </div>
                         </div>
@@ -151,33 +151,34 @@
                             <div class="radio-group-vertical">
                                 <label class="radio-label"><input type="radio" name="category" value="Wedding Dresses" required> <span>Wedding Dress</span></label>
                                 <label class="radio-label"><input type="radio" name="category" value="Evening Dress"> <span>Evening / Matric Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Men's Attire"> <span>Men's Attire</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Kiddos"> <span>Kiddos</span></label>
                             </div>
                         </div>
                         <div class="field-row field-row-split align-items-start">
-                            <label>Style of Dress</label>
+                            <label>Style of Attire</label>
                             <div class="checkbox-grid">
-                                <label class="check-label"><input type="checkbox" name="style" value="A-line"> <span>A-line</span></label>
-                                <label class="check-label"><input type="checkbox" name="style" value="Ball Gown"> <span>Ball Gown</span></label>
-                                <label class="check-label"><input type="checkbox" name="style" value="Fit & Flare"> <span>Fit & Flare</span></label>
-                                <label class="check-label"><input type="checkbox" name="style" value="Mermaid"> <span>Mermaid</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="A-line"> <span>A-line / Ball Gown</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Mermaid"> <span>Mermaid / Sheath</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Suit"> <span>Suit / Tuxedo</span></label>
+                                <label class="check-label"><input type="checkbox" name="style" value="Blazer"> <span>Blazer / Jacket</span></label>
                                 <label class="check-label"><input type="checkbox" name="style" value="Other"> <span>Other</span></label>
-                                <label class="check-label"><input type="checkbox" name="style" value="Sheath"> <span>Sheath</span></label>
-                                <label class="check-label"><input type="checkbox" name="style" value="Trumpet"> <span>Trumpet</span></label>
                             </div>
                         </div>
                         <div class="field-row flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between mb-2">
-                                <label>Dress Size</label>
-                                <span class="muted-text">South African Sizing</span>
+                                <label>Attire Size</label>
+                                <span class="muted-text">South African / General Sizing</span>
                             </div>
                             <select name="size" class="form-control list-select p-0" required>
                                 <option value="" disabled selected>Select an option</option>
-                                <option value="30">30 / XXS</option>
-                                <option value="32">32 / XS</option>
-                                <option value="34">34 / S</option>
-                                <option value="36">36 / M</option>
-                                <option value="38">38 / L</option>
-                                <option value="40">40 / XL</option>
+                                <option value="30">30 / XXS / XS</option>
+                                <option value="32">32 / XS / S</option>
+                                <option value="34">34 / S / M</option>
+                                <option value="36">36 / M / L</option>
+                                <option value="38">38 / L / XL</option>
+                                <option value="40">40 / XL / XXL</option>
+                                <option value="Other">Other / Custom</option>
                             </select>
                         </div>
                         <div class="field-row">
@@ -192,15 +193,15 @@
                             <div class="d-flex align-items-center mb-1">
                                 <label>Year Created</label>
                             </div>
-                            <span class="desc-text mb-2 d-block">Please input only the year the dress was created. Example: "2024". IMPORTANT: This influences the price!</span>
+                            <span class="desc-text mb-2 d-block">Please input only the year the attire was created. Example: "2024". IMPORTANT: This influences the price!</span>
                             <input type="number" name="year" class="form-control list-input p-0">
                         </div>
                         <div class="field-row">
-                            <label>Dress Condition</label>
+                            <label>Attire Condition</label>
                             <div class="radio-group-vertical">
                                 <label class="radio-label"><input type="radio" name="condition" value="New" required> <span>New</span></label>
                                 <label class="radio-label"><input type="radio" name="condition" value="Pre-loved"> <span>Pre-loved</span></label>
-                                <label class="radio-label"><input type="radio" name="condition" value="Sample Dress"> <span>Sample Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="condition" value="Sample Dress"> <span>Sample / Rental</span></label>
                             </div>
                         </div>
                         <div class="field-row no-border">
@@ -223,20 +224,20 @@
                         <div class="field-row field-row-split align-items-center">
                             <label>Price</label>
                             <div class="split-input-wrapper d-flex align-items-center justify-content-between w-100">
-                                <span class="desc-text ms-4">How much are you listing the dress for? (Value in Rand, don't add currency or decimals)</span>
+                                <span class="desc-text ms-4">How much are you listing the attire for? (Value in Rand, don't add currency or decimals)</span>
                                 <input type="number" name="price" class="form-control list-input p-0 w-25 border-bottom ms-3" required>
                             </div>
                         </div>
                         <div class="field-row field-row-split align-items-center">
                             <label>Original Price</label>
                             <div class="split-input-wrapper d-flex align-items-center justify-content-between w-100">
-                                <span class="desc-text ms-4">Original price that you paid for the dress (Value in Rand, don't add currency or decimals)</span>
+                                <span class="desc-text ms-4">Original price that you paid for the attire (Value in Rand, don't add currency or decimals)</span>
                                 <input type="number" name="original_price" class="form-control list-input p-0 w-25 border-bottom ms-3">
                             </div>
                         </div>
                         <div class="field-row flex-column align-items-start">
                             <label>Available for Rental (optional)</label>
-                            <span class="desc-text mb-2 d-block">Do you want to make this dress available for rental? Please ensure you have read the rental terms as part of the site's Terms and Conditions.</span>
+                            <span class="desc-text mb-2 d-block">Do you want to make this attire available for rental? Please ensure you have read the rental terms as part of the site's Terms and Conditions.</span>
                             <div class="radio-group-vertical mt-2 ms-3">
                                 <label class="radio-label mb-2"><input type="radio" name="rental" value="NO"> <span>NO - Not available for rental</span></label>
                                 <label class="radio-label"><input type="radio" name="rental" value="YES"> <span>YES - Available for rental</span></label>
@@ -271,7 +272,7 @@
                         </div>
                         <div class="field-row flex-column align-items-start border-bottom-0 pb-0">
                             <label class="mb-1">Gallery Images</label>
-                            <span class="desc-text mb-3 d-block">Upload a maximum of 4 good quality (full length front and back) images.</span>
+                            <span class="desc-text mb-3 d-block">Upload good quality image.</span>
                             <span class="fw-bold fs-sm d-block mb-1" style="font-size: 13px; color: #333;">The first image should be landscape or square. The recommended size is: 1000px width & 520px height.</span>
                             <span class="desc-text d-block mb-3">Maximum file size: 3 MB. Please note that the first image will be the cover image on the Facebook post, if you opt-in to have your dress shared on our Facebook page (Premium Package only).<br>
                             <span class="text-danger mt-1 d-block">Make sure to use high-quality photos that showcase your dress from its best angles — great photos help your dress sell faster!</span></span>
@@ -281,7 +282,8 @@
                                     <input type="file" id="main-images" name="main_images" accept="image/*" multiple style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
                                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; pointer-events: none;">
                                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                                        <span style="font-size: 13px; color: #888; margin-top: 10px;">Click or drag up to 4 images here</span>
+                                        <span style="font-size: 13px; color: #888; margin-top: 10px;">
+                                           Upload a good quality image.</span>
                                     </div>
                                 </div>
                                 <div id="main-image-preview" class="d-flex flex-wrap gap-2 w-100 mb-4"></div>
@@ -289,8 +291,8 @@
                         </div>
                         <div class="field-row no-border flex-column align-items-start">
                             <div class="d-flex justify-content-between w-100 mb-2">
-                                <label>Extra gallery images (optional)</label>
-                                <span class="muted-text text-sm">Upload a good quality image.</span>
+                                <label>Extra gallery images </label>
+                                <span class="muted-text text-sm">
                             </div>
                             
                             <div class="upload-container" style="width: 100%;">
@@ -298,8 +300,8 @@
                                     <input type="file" id="extra-images" name="extra_images" accept="image/*" multiple style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
                                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; pointer-events: none;">
                                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                                        <span style="font-size: 13px; color: #888; margin-top: 10px;">Click or drag an extra image here</span>
-                                    </div>
+                                        <span style="font-size: 13px; color: #888; margin-top: 10px;"> Upload a maximum of 4 good quality (full length front and back) images.
+                                            Click or drag up to 4 images here</span>
                                 </div>
                                 <div id="extra-image-preview" class="d-flex flex-wrap gap-2 w-100 mb-2"></div>
                             </div>

@@ -1,19 +1,48 @@
 const API_BASE_URL = 'https://anotherm-api.onrender.com';
 
 // Global state
+const storedUserStr = localStorage.getItem('treasured_user');
+let parsedUser = null;
+try { parsedUser = storedUserStr ? JSON.parse(storedUserStr) : null; } catch(e) {}
+
 const state = {
-    user: null, // Hardcoded for now until auth is fully wired
+    user: parsedUser,
+    token: parsedUser ? parsedUser.token : null,
+};
+
+// Global Fetch Interceptor to auto-inject JWT token for backend API requests
+const originalFetch = window.fetch;
+window.fetch = function (url, options = {}) {
+    if (state.token && (typeof url === 'string' && url.includes(API_BASE_URL))) {
+        options.headers = options.headers || {};
+        if (options.headers instanceof Headers) {
+            if (!options.headers.has('Authorization')) {
+                options.headers.set('Authorization', `Bearer ${state.token}`);
+            }
+        } else {
+            if (!options.headers['Authorization']) {
+                options.headers['Authorization'] = `Bearer ${state.token}`;
+            }
+        }
+    }
+    return originalFetch(url, options);
 };
 
 // Generic fetch function
 async function apiFetch(endpoint, options = {}) {
     try {
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+        
+        if (state.token) {
+            headers['Authorization'] = `Bearer ${state.token}`;
+        }
+        
         const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers
-            },
-            ...options
+            ...options,
+            headers
         });
         
         if (!response.ok) {
@@ -80,15 +109,43 @@ async function loadCategoryProducts(filters = {}) {
     }
 
     if (filters.sizes && filters.sizes.length > 0) {
-        products = products.filter(p => filters.sizes.includes(p.size));
+        products = products.filter(p => {
+            if (!p.size) return false;
+            const sizeStr = p.size.toString().toUpperCase();
+            return filters.sizes.some(s => {
+                if (s === 'XS-S') {
+                    return sizeStr.includes('30') || sizeStr.includes('32') || sizeStr.includes('XS') || sizeStr.includes('S');
+                }
+                if (s === 'M-L') {
+                    return sizeStr.includes('34') || sizeStr.includes('36') || sizeStr.includes('38') || sizeStr.includes('M') || sizeStr.includes('L');
+                }
+                if (s === 'XL-XXXL') {
+                    return sizeStr.includes('40') || sizeStr.includes('XL') || sizeStr.includes('XXL') || sizeStr.includes('XXXL');
+                }
+                return false;
+            });
+        });
     }
 
     if (filters.provinces && filters.provinces.length > 0) {
-        products = products.filter(p => filters.provinces.includes(p.province));
+        products = products.filter(p => {
+            if (!p.province) return false;
+            const prov = p.province.toLowerCase().trim();
+            return filters.provinces.some(f => f.toLowerCase().trim() === prov);
+        });
     }
 
     if (filters.conditions && filters.conditions.length > 0) {
-        products = products.filter(p => filters.conditions.includes(p.condition));
+        products = products.filter(p => {
+            if (!p.condition) return false;
+            const cond = p.condition.toLowerCase().trim();
+            return filters.conditions.some(c => {
+                const searchCond = c.toLowerCase().trim();
+                if (searchCond === 'new-never worn' && cond.includes('new')) return true;
+                if (searchCond === 'pre-loved' && cond.includes('love')) return true;
+                return cond === searchCond;
+            });
+        });
     }
 
     if (products.length === 0) {
@@ -140,12 +197,15 @@ function setupFilters() {
         if (document.getElementById('size2').checked) filters.sizes.push('M-L');
         if (document.getElementById('size3').checked) filters.sizes.push('XL-XXXL');
 
-        // Province mapping - labels match the IDs roughly but we should use the label text or a mapping
-        const provinceChecks = document.querySelectorAll('.filter-group:nth-of-type(3) input:checked');
-        provinceChecks.forEach(ch => {
-            const label = document.querySelector(`label[for="${ch.id}"]`);
-            if (label) filters.provinces.push(label.innerText);
-        });
+        // Province mapping
+        const provinceGroup = Array.from(document.querySelectorAll('.filter-group')).find(g => g.querySelector('h4') && g.querySelector('h4').innerText.trim() === 'Province');
+        if (provinceGroup) {
+            const provinceChecks = provinceGroup.querySelectorAll('input:checked');
+            provinceChecks.forEach(ch => {
+                const label = provinceGroup.querySelector(`label[for="${ch.id}"]`);
+                if (label) filters.provinces.push(label.innerText.trim());
+            });
+        }
 
         // Condition mapping
         if (document.getElementById('cond1').checked) filters.conditions.push('New-Never Worn');
@@ -182,18 +242,70 @@ async function loadDashboardAccount() {
     if (fnameInput) fnameInput.value = state.user.name || state.user.username || '';
     if (lnameInput) lnameInput.value = state.user.surname || '';
     if (emailInput) emailInput.value = state.user.email || '';
-    if (phoneInput) phoneInput.value = state.user.whatsapp || '';
+    if (phoneInput) {
+        let wa = state.user.whatsapp || '';
+        const ccSelect = document.getElementById('dash-country-code');
+        if (ccSelect && wa.startsWith('+')) {
+            const options = Array.from(ccSelect.options).map(o => o.value).sort((a,b) => b.length - a.length);
+            const matchedCode = options.find(c => wa.startsWith(c));
+            if (matchedCode) {
+                ccSelect.value = matchedCode;
+                phoneInput.value = wa.substring(matchedCode.length);
+            } else {
+                phoneInput.value = wa;
+            }
+        } else {
+            phoneInput.value = wa;
+        }
+    }
 
     const form = document.getElementById('dash-account-form');
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            const fname = document.getElementById('dash-fname').value.trim();
+            const lname = document.getElementById('dash-lname').value.trim();
+            const email = document.getElementById('dash-email').value.trim();
+            const whatsapp = document.getElementById('dash-phone').value.trim();
+            const currPw = document.getElementById('dash-curr-pw').value;
+            const newPw = document.getElementById('dash-new-pw').value;
+            
+            if (fname.length < 2 || lname.length < 2) {
+                return alert('Name and surname must be at least 2 characters.');
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                return alert('Please enter a valid email address.');
+            }
+            const countryCodeSelect = document.getElementById('dash-country-code');
+            const countryCode = countryCodeSelect ? countryCodeSelect.value : '+27';
+            
+            let rawPhone = whatsapp.replace(/^0+/, '');
+            rawPhone = rawPhone.replace(/[\s\-\(\)]/g, '');
+            const finalWhatsapp = countryCode + rawPhone;
+
+            if (whatsapp && !/^\+[1-9]\d{6,14}$/.test(finalWhatsapp)) {
+                return alert('Please enter a valid phone number (between 7 and 15 digits).');
+            }
+
             const updatedData = {
-                name: document.getElementById('dash-fname').value,
-                surname: document.getElementById('dash-lname').value,
-                email: document.getElementById('dash-email').value,
-                whatsapp: document.getElementById('dash-phone').value,
+                name: fname,
+                surname: lname,
+                email: email,
+                whatsapp: finalWhatsapp,
             };
+
+            if (newPw) {
+                if (!currPw) {
+                    return alert('Current password is required to change password.');
+                }
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+                if (!passwordRegex.test(newPw)) {
+                    return alert('New password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
+                }
+                updatedData.currentPassword = currPw;
+                updatedData.newPassword = newPw;
+            }
             
             try {
                 const response = await fetch(`${API_BASE_URL}/users/${state.user.id}`, {
@@ -205,6 +317,8 @@ async function loadDashboardAccount() {
                     const saved = await response.json();
                     state.user = { ...state.user, ...saved };
                     localStorage.setItem('treasured_user', JSON.stringify(state.user));
+                    document.getElementById('dash-curr-pw').value = '';
+                    document.getElementById('dash-new-pw').value = '';
                     alert('Profile updated successfully!');
                 } else {
                     state.user = { ...state.user, ...updatedData };
@@ -347,24 +461,35 @@ window.removeFromDashboardFavorites = function(productId) {
 
 // Function to handle login
 function handleLogin() {
-    const form = document.querySelector('.auth-form');
-    if (!form) return;
-    
-    // Convert anchor to button for submission
-    const submitBtn = form.querySelector('.auth-submit-btn');
-    if (submitBtn) {
-        const newBtn = document.createElement('button');
-        newBtn.className = submitBtn.className;
-        newBtn.style.border = 'none';
-        newBtn.innerText = 'Sign In';
-        submitBtn.replaceWith(newBtn);
-    }
+    const form = document.getElementById('userLoginForm') || document.querySelector('.auth-form');
+    if (!form || !window.location.href.includes('login.html')) return;
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const inputs = form.querySelectorAll('input');
-        const username = inputs[0].value;
-        const password = inputs[1].value;
+        
+        const username = (document.getElementById('loginUsername') || form.querySelectorAll('input')[0]).value.trim();
+        const password = (document.getElementById('loginPassword') || form.querySelectorAll('input')[1]).value;
+        const errorBox = document.getElementById('loginError');
+        const errorMsg = document.getElementById('loginErrorMsg');
+
+        const showError = (msg) => {
+            if (errorBox && errorMsg) {
+                errorMsg.textContent = msg;
+                errorBox.style.display = 'flex';
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 500);
+            } else {
+                alert(msg);
+            }
+        };
+
+        if (username.length < 3) {
+            return showError('Username must be at least 3 characters long.');
+        }
+        if (password.length < 6) {
+            return showError('Password must be at least 6 characters long.');
+        }
+        if (errorBox) errorBox.style.display = 'none';
 
         try {
             const response = await fetch(`${API_BASE_URL}/users/login`, {
@@ -379,7 +504,7 @@ function handleLogin() {
                 window.location.href = 'dashboard.html';
             } else {
                 const errorData = await response.json().catch(() => ({ error: 'Invalid username or password' }));
-                alert(errorData.error || 'Invalid username or password');
+                showError(errorData.error || 'Invalid username or password');
             }
         } catch (error) {
             console.error('Login error:', error);
@@ -390,35 +515,68 @@ function handleLogin() {
 
 // Function to handle register
 function handleRegister() {
-    const form = document.querySelector('.auth-form');
-    if (!form) return;
-
-    // Convert anchor to button for submission
-    const submitBtn = form.querySelector('.auth-submit-btn');
-    if (submitBtn) {
-        const newBtn = document.createElement('button');
-        newBtn.className = submitBtn.className;
-        newBtn.style.border = 'none';
-        newBtn.innerText = 'Sign Up';
-        submitBtn.replaceWith(newBtn);
-    }
+    const form = document.getElementById('userRegisterForm') || document.querySelector('.auth-form');
+    if (!form || !window.location.href.includes('register.html')) return;
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const inputs = form.querySelectorAll('input');
         
-        const name = inputs[0].value;
-        const surname = inputs[1].value;
-        const whatsapp = inputs[2].value;
-        const email = inputs[3].value;
-        const username = inputs[4].value;
-        const password = inputs[5].value;
+        const name = (document.getElementById('regName') || inputs[0]).value.trim();
+        const surname = (document.getElementById('regSurname') || inputs[1]).value.trim();
+        const whatsapp = (document.getElementById('regPhone') || inputs[2]).value.trim();
+        const email = (document.getElementById('regEmail') || inputs[3]).value.trim();
+        const username = (document.getElementById('regUsername') || inputs[4]).value.trim();
+        const password = (document.getElementById('regPassword') || inputs[5]).value;
+
+        const errorBox = document.getElementById('registerError');
+        const errorMsg = document.getElementById('registerErrorMsg');
+
+        const showError = (msg) => {
+            if (errorBox && errorMsg) {
+                errorMsg.textContent = msg;
+                errorBox.style.display = 'flex';
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 500);
+            } else {
+                alert(msg);
+            }
+        };
+
+        if (name.length < 2 || surname.length < 2) {
+            return showError('Name and surname must be at least 2 characters long.');
+        }
+        
+        const countryCodeSelect = document.getElementById('regCountryCode');
+        const countryCode = countryCodeSelect ? countryCodeSelect.value : '+27';
+        
+        // Remove any leading zeroes from the typed phone number
+        let rawPhone = whatsapp.replace(/^0+/, '');
+        // Remove spaces, hyphens, parentheses
+        rawPhone = rawPhone.replace(/[\s\-\(\)]/g, '');
+        
+        const formattedWhatsapp = countryCode + rawPhone;
+
+        if (!/^\+[1-9]\d{6,14}$/.test(formattedWhatsapp)) {
+            return showError('Please enter a valid phone number (between 7 and 15 digits).');
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return showError('Please enter a valid email address.');
+        }
+        if (username.length < 3) {
+            return showError('Username must be at least 3 characters long.');
+        }
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+        if (password.length < 6 || !passwordRegex.test(password)) {
+            return showError('Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
+        }
+        if (errorBox) errorBox.style.display = 'none';
 
         try {
             const response = await fetch(`${API_BASE_URL}/users/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, surname, whatsapp, email, username, password })
+                body: JSON.stringify({ name, surname, whatsapp: formattedWhatsapp, email, username, password })
             });
             
             if (response.ok) {
@@ -427,7 +585,7 @@ function handleRegister() {
                 window.location.href = 'dashboard.html';
             } else {
                 const errorData = await response.json().catch(() => ({ error: 'Registration failed' }));
-                alert(errorData.error || 'Registration failed');
+                showError(errorData.error || 'Registration failed');
             }
         } catch (error) {
             console.error('Registration error:', error);
@@ -542,10 +700,57 @@ function handleListAttire() {
             }
         }
         
-        data.main_images = window.collectedMainImages || [];
-        data.extra_images = window.collectedExtraImages || [];
-        if(data.main_images.length > 0) {
-            data.imageUrl = data.main_images[0];
+        if (!data.title || data.title.trim().length < 3) {
+            if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Pay & Submit Listing'; }
+            return alert('Title must be at least 3 characters long.');
+        }
+        if (!data.price || isNaN(data.price) || Number(data.price) <= 0) {
+            if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Pay & Submit Listing'; }
+            return alert('Please enter a valid price greater than 0.');
+        }
+        if (!data.category) {
+            if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Pay & Submit Listing'; }
+            return alert('Please select a category.');
+        }
+        // Upload images first using the new secure endpoint
+        const mainInput = document.getElementById('main-images');
+        const extraInput = document.getElementById('extra-images');
+        
+        const uploadForm = new FormData();
+        
+        if (mainInput && mainInput.files) {
+            Array.from(mainInput.files).slice(0, 4).forEach(file => {
+                uploadForm.append('main_images', file);
+            });
+        }
+        
+        if (extraInput && extraInput.files) {
+            Array.from(extraInput.files).slice(0, 4).forEach(file => {
+                uploadForm.append('extra_images', file);
+            });
+        }
+        
+        try {
+            const uploadRes = await fetch(`${API_BASE_URL}/products/upload`, {
+                method: 'POST',
+                body: uploadForm
+            });
+            
+            if (!uploadRes.ok) {
+                const errData = await uploadRes.json();
+                if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Pay & Submit Listing'; }
+                return alert(errData.error || 'Failed to upload images. Please check the file sizes and types.');
+            }
+            
+            const uploadedPaths = await uploadRes.json();
+            data.main_images = uploadedPaths.main_images || [];
+            data.extra_images = uploadedPaths.extra_images || [];
+            if(data.main_images.length > 0) {
+                data.imageUrl = data.main_images[0];
+            }
+        } catch(e) {
+            if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Pay & Submit Listing'; }
+            return alert('Error connecting to the server for image upload.');
         }
         
         data.sellerId = state.user.id;
@@ -595,17 +800,21 @@ function handleListAttire() {
     });
 }
 
-// Intercept "List Your Attire" clicks site-wide
+// Intercept "List Your Attire" and "Sell My Outfit" clicks site-wide
 function setupListAttireButtons() {
-    const listBtns = document.querySelectorAll('.btn-list-attire, .btn-list-attire-dash');
+    const listBtns = Array.from(document.querySelectorAll('a')).filter(a => {
+        const href = a.getAttribute('href');
+        return (href === 'login.html' && (a.classList.contains('btn-outline-white') || a.classList.contains('btn-outline-gold'))) ||
+               (href === 'pricing.html' && a.classList.contains('btn-list-attire')) ||
+               a.classList.contains('btn-list-attire') ||
+               a.classList.contains('btn-list-attire-dash');
+    });
+
     listBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            if (state.user) {
-                window.location.href = 'list-attire.html';
-            } else {
-                window.location.href = 'login.html';
-            }
+            // Take everyone to the pricing terms page first!
+            window.location.href = 'pricing.html';
         });
     });
 }
@@ -806,6 +1015,9 @@ async function loadProductDetails() {
     const product = await apiFetch(`/products/${productId}`);
     if (!product) return;
 
+    // Log the product view asynchronously
+    apiFetch(`/products/${productId}/view`, { method: 'POST' }).catch(() => {});
+
     // Element bindings
     document.getElementById('detail-title').innerText = product.title || 'Untitled Listing';
     document.getElementById('detail-price').innerText = product.price ? `R${product.price}` : 'R0';
@@ -959,7 +1171,11 @@ async function loadProductDetails() {
             const emailVal = state.user.email;
             const phoneVal = state.user.phone || '';
             const initialMsgEl = document.getElementById('initial-chat-message');
-            const initialMsg = initialMsgEl ? initialMsgEl.value : '';
+            const initialMsg = initialMsgEl ? initialMsgEl.value.trim() : '';
+            
+            if (initialMsg.length < 5) {
+                return alert('Message must be at least 5 characters long.');
+            }
             
             currentThreadId = `chat_${productId}_${Date.now()}`;
             
@@ -993,26 +1209,7 @@ async function loadProductDetails() {
             
             if (initialMsg) {
                 addChatMessage(initialMsg, 'sent');
-                
-                setTimeout(() => {
-                    const replyText = "Hi there! Thanks for reaching out. Yes, the item is still available. What would you like to know?";
-                    addChatMessage(replyText, 'received');
-                    
-                    // Update thread in localStorage
-                    const currentChats = JSON.parse(localStorage.getItem('treasured_chats') || '[]');
-                    const t = currentChats.find(x => x.id === currentThreadId);
-                    if (t) {
-                        t.messages.push({ sender: 'seller', text: replyText, timestamp: new Date().toISOString() });
-                        localStorage.setItem('treasured_chats', JSON.stringify(currentChats));
-                        
-                        // Save to server
-                        fetch(`${API_BASE_URL}/chats`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(t)
-                        }).catch(e => console.error("Error posting mock reply:", e));
-                    }
-                }, 1500);
+                startChatPolling(currentThreadId, 'buyer');
             }
         });
         
@@ -1036,26 +1233,6 @@ async function loadProductDetails() {
                         body: JSON.stringify(t)
                     }).catch(e => console.error("Error posting message:", e));
                 }
-                
-                // mock reply
-                setTimeout(() => {
-                    const replyText = "I'll get back to you shortly!";
-                    addChatMessage(replyText, 'received');
-                    
-                    const updateChats = JSON.parse(localStorage.getItem('treasured_chats') || '[]');
-                    const ut = updateChats.find(x => x.id === currentThreadId);
-                    if (ut) {
-                        ut.messages.push({ sender: 'seller', text: replyText, timestamp: new Date().toISOString() });
-                        localStorage.setItem('treasured_chats', JSON.stringify(updateChats));
-                        
-                        // Save to server
-                        fetch(`${API_BASE_URL}/chats`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(ut)
-                        }).catch(e => console.error("Error posting mock reply:", e));
-                    }
-                }, 2000);
             }
         };
         
@@ -1199,13 +1376,24 @@ async function loadHomeProducts() {
 }
 
 // Function to load and manage seller chats in the Dashboard
-function loadDashboardChats() {
+async function loadDashboardChats() {
     const chatList = document.getElementById('dashboard-chats-list');
     if (!chatList) return;
 
-    const chats = JSON.parse(localStorage.getItem('treasured_chats') || '[]');
-    // Filter for chats (showing all chats for easy local preview/testing)
-    const sellerChats = chats;
+    chatList.innerHTML = '<p class="text-center w-100">Loading chats...</p>';
+
+    let chats = [];
+    try {
+        chats = await apiFetch('/chats');
+    } catch(err) {
+        console.error("Failed to load chats from server", err);
+    }
+    
+    // Filter for chats where the current user is the seller
+    const sellerChats = chats.filter(c => c.sellerId === state.user.id);
+    
+    // Cache locally for fast UI updates
+    localStorage.setItem('treasured_chats', JSON.stringify(chats));
 
     if (sellerChats.length === 0) {
         chatList.innerHTML = '<p class="text-center text-muted p-4 small">No active conversations yet.</p>';
@@ -1383,38 +1571,6 @@ async function openSellerChat(threadId) {
         // Re-render chat and inbox lists
         openSellerChat(threadId);
         loadDashboardChats();
-        
-        // Simulate buyer response after 2 seconds to make it interactive!
-        setTimeout(() => {
-            const replies = [
-                "That sounds great! How should we arrange payment and collection?",
-                "Perfect, thank you! I'm really interested in this dress.",
-                "Awesome! Would it be possible to arrange a fitting this coming weekend?",
-                "That works for me. Let me know what courier method you prefer."
-            ];
-            const randomReply = replies[Math.floor(Math.random() * replies.length)];
-            
-            const finalChats = JSON.parse(localStorage.getItem('treasured_chats') || '[]');
-            const finalChat = finalChats.find(c => c.id === threadId);
-            if (finalChat) {
-                finalChat.messages.push({
-                    sender: 'buyer',
-                    text: randomReply,
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem('treasured_chats', JSON.stringify(finalChats));
-                
-                // Save to server
-                fetch(`${API_BASE_URL}/chats`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(finalChat)
-                }).catch(e => console.error("Error posting mock buyer reply:", e));
-            }
-            
-            openSellerChat(threadId);
-            loadDashboardChats();
-        }, 2000);
     };
     
     // Replace listener with clean node clone to prevent multiple registrations
@@ -1434,13 +1590,24 @@ async function openSellerChat(threadId) {
 }
 
 // Function to load and manage buyer chats in the Favorites page
-function loadBuyerChats() {
+async function loadBuyerChats() {
     const chatList = document.getElementById('buyer-chats-list');
     if (!chatList) return;
 
-    const chats = JSON.parse(localStorage.getItem('treasured_chats') || '[]');
-    // Filter for chats belonging to this buyer (showing all for easy local preview/testing)
-    const buyerChats = chats;
+    chatList.innerHTML = '<p class="text-center w-100">Loading chats...</p>';
+
+    let chats = [];
+    try {
+        chats = await apiFetch('/chats');
+    } catch(err) {
+        console.error("Failed to load chats from server", err);
+    }
+
+    // Filter for chats belonging to this buyer (via email)
+    const buyerChats = chats.filter(c => c.buyerEmail === (state.user ? state.user.email : ''));
+    
+    // Cache locally for UI rendering/syncing
+    localStorage.setItem('treasured_chats', JSON.stringify(chats));
 
     if (buyerChats.length === 0) {
         chatList.innerHTML = '<p class="text-center text-muted p-4 small">No active inquiries yet.</p>';
@@ -1752,38 +1919,6 @@ async function openBuyerChat(threadId) {
         // Re-render chat and inbox lists
         openBuyerChat(threadId);
         loadBuyerChats();
-        
-        // Simulate seller response after 2 seconds to make it interactive!
-        setTimeout(() => {
-            const replies = [
-                "Hi! I can arrange shipping or you're welcome to come and fit it first. Let me know what suits you.",
-                "Yes, the dress is still available! It's in pristine condition, only worn once.",
-                "Let me check if I can reduce the price a bit for a quick sale. R200 off sound good?",
-                "That works! I'll get back to you with the bank details for EFT deposit."
-            ];
-            const randomReply = replies[Math.floor(Math.random() * replies.length)];
-            
-            const finalChats = JSON.parse(localStorage.getItem('treasured_chats') || '[]');
-            const finalChat = finalChats.find(c => c.id === threadId);
-            if (finalChat) {
-                finalChat.messages.push({
-                    sender: 'seller',
-                    text: randomReply,
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem('treasured_chats', JSON.stringify(finalChats));
-                
-                // Save to server
-                fetch(`${API_BASE_URL}/chats`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(finalChat)
-                }).catch(e => console.error("Error posting mock seller reply:", e));
-            }
-            
-            openBuyerChat(threadId);
-            loadBuyerChats();
-        }, 2000);
     };
     
     // Replace listener with clean node clone to prevent multiple registrations

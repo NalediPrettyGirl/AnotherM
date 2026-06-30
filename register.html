@@ -85,37 +85,60 @@
     <main class="auth-page">
         <div class="auth-card register-card">
             <h2>Register</h2>
-            <form class="auth-form">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Name*" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Surname*" required>
-                </div>
-                <div class="form-group">
-                    <input type="tel" class="form-control" placeholder="WhatsApp Number*" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email*" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username*" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password*" required>
-                </div>
+            
+            <div id="registerError" class="login-error" style="display:none; background: rgba(255,59,48,0.1); border: 1px solid rgba(255,59,48,0.3); border-radius: 8px; padding: 12px; margin-bottom: 20px; color: #ff3b30; align-items: center; gap: 10px; font-size: 14px;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="registerErrorMsg">Please check your inputs.</span>
+            </div>
 
-
+            <form id="userRegisterForm" class="auth-form">
+                <div class="form-group">
+                    <input type="text" id="regName" class="form-control" placeholder="Name*" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="regSurname" class="form-control" placeholder="Surname*" required>
+                </div>
+                <div class="form-group" style="display:flex; gap:10px;">
+                    <select id="regCountryCode" class="form-control" style="width:120px; border-radius:30px; background-color:transparent; color:#fff; border:1px solid #fff;" required>
+                        <option style="color:#000" value="+27">🇿🇦 +27</option>
+                        <option style="color:#000" value="+1">🇺🇸 +1</option>
+                        <option style="color:#000" value="+44">🇬🇧 +44</option>
+                        <option style="color:#000" value="+264">🇳🇦 +264</option>
+                        <option style="color:#000" value="+267">🇧🇼 +267</option>
+                        <option style="color:#000" value="+268">🇸🇿 +268</option>
+                        <option style="color:#000" value="+266">🇱🇸 +266</option>
+                        <option style="color:#000" value="+258">🇲🇿 +258</option>
+                        <option style="color:#000" value="+263">🇿🇼 +263</option>
+                        <option style="color:#000" value="+971">🇦🇪 +971</option>
+                        <option style="color:#000" value="+61">🇦🇺 +61</option>
+                        <option style="color:#000" value="+91">🇮🇳 +91</option>
+                    </select>
+                    <input type="tel" id="regPhone" class="form-control" placeholder="WhatsApp Number (e.g. 821234567)*" required title="Please enter your phone number without the country code">
+                </div>
+                <div class="form-group">
+                    <input type="email" id="regEmail" class="form-control" placeholder="Email*" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="regUsername" class="form-control" placeholder="Username*" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="regPassword" class="form-control" placeholder="Password*" required>
+                </div>
 
                 <p class="privacy-text">Your personal data will be used to support your experience<br>throughout the
                     website to manage to your account, and for in<br>our privacy policy</p>
 
-                <a href="index.html" class="auth-submit-btn text-decoration-none text-center mb-3">Sign Up</a>
+                <button type="submit" id="userRegisterBtn" class="auth-submit-btn text-decoration-none text-center mb-3 border-0 w-100" style="display: block;">
+                    <span id="registerBtnText">Sign Up</span>
+                    <span id="registerBtnLoader" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i>&nbsp;Registering...</span>
+                </button>
                 <p class="text-center text-white" style="font-size: 14px;">Already have an account? <a href="login.html"
                         class="text-white fw-bold">Sign In</a></p>
             </form>
         </div>
     </main>
+
+
 
     <!-- Footer -->
     <footer class="footer">
