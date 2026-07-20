@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://djangoapi-treasured.onrender.com';
+const API_BASE_URL = ' https://djangoapi-treasured-l0xu.onrender.com';
 // const API_BASE_URL = 'http://127.0.0.1:8000'; // local testing
 
 // Helper to resolve absolute image URLs for local testing
