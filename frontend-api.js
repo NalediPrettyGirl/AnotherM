@@ -302,9 +302,11 @@ async function loadDashboardStats() {
     const products = await apiFetch('/products');
     if (products && state.user) {
         const myProducts = products.filter(p => p.sellerId === state.user.id);
-        publishedEl.innerText = myProducts.length;
-        // Mocking 'pending' interactions based on actual listings count
-        pendingEl.innerText = Math.floor(myProducts.length / 2);
+        const approvedProducts = myProducts.filter(p => p.status === 'approved');
+        const pendingProducts = myProducts.filter(p => p.status === 'pending');
+        
+        publishedEl.innerText = approvedProducts.length;
+        pendingEl.innerText = pendingProducts.length;
 
         // Smart Dashboard Logic (Buyer vs Seller View)
         const dashboardTab = document.querySelector('.sidebar-link[data-target="dashboard"]');
@@ -488,7 +490,7 @@ async function loadDashboardListings() {
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold" style="color: var(--gold); font-size: 18px;">R ${product.price}</span>
                             <div>
-                                <button class="btn btn-sm btn-outline-secondary me-2 rounded-circle" style="width: 32px; height: 32px; padding: 0;"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary me-2 rounded-circle" style="width: 32px; height: 32px; padding: 0;" onclick="openEditListingModal('${product.id}')"><i class="fa-solid fa-pen"></i></button>
                                 <button class="btn btn-sm btn-outline-danger rounded-circle" style="width: 32px; height: 32px; padding: 0;" onclick="deleteDashboardListing('${product.id}')"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
@@ -498,6 +500,10 @@ async function loadDashboardListings() {
         `;
         grid.innerHTML += productHtml;
     });
+}
+
+window.openEditListingModal = async function(id) {
+    window.location.href = `list-attire.html?edit_id=${id}`;
 }
 
 window.deleteDashboardListing = async function(id) {
@@ -834,6 +840,119 @@ function handleListAttire() {
         return;
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const editId = urlParams.get('edit_id');
+
+    if (editId) {
+        // Change title and button
+        const titleEl = document.querySelector('.list-page-title');
+        if (titleEl) titleEl.innerText = 'Edit your listing details';
+        
+        const confirmBtn = document.getElementById('confirm-payment-btn');
+        if (confirmBtn) {
+            confirmBtn.innerText = 'Save Changes';
+        }
+
+        // Hide payment sections
+        const paymentSections = document.querySelectorAll('.list-section-card');
+        if (paymentSections.length >= 4) { // Assuming payment is the 4th section
+            paymentSections[3].style.display = 'none'; // Hide the payment container
+        }
+
+        // Fetch product and populate
+        apiFetch(`/products/${editId}`).then(product => {
+            if (!product) return alert('Product not found.');
+            
+            // Populate basic text/email/tel inputs
+            const inputs = ['contact_email', 'phone_number', 'title', 'price', 'color', 'designer', 'year'];
+            inputs.forEach(name => {
+                const el = form.querySelector(`input[name="${name}"]`);
+                if (el && product[name]) el.value = product[name];
+            });
+            
+            const descEl = form.querySelector('textarea[name="description"]');
+            if (descEl && product.description) descEl.value = product.description;
+
+            // Populate selects
+            const selects = ['province', 'size'];
+            selects.forEach(name => {
+                const el = form.querySelector(`select[name="${name}"]`);
+                if (el && product[name]) el.value = product[name];
+            });
+
+            // Populate radio buttons
+            const radios = ['category', 'condition'];
+            radios.forEach(name => {
+                if (product[name]) {
+                    const radio = form.querySelector(`input[name="${name}"][value="${product[name]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            });
+
+            // Populate styles checkboxes
+            if (product.style && Array.isArray(product.style)) {
+                product.style.forEach(styleVal => {
+                    const cb = form.querySelector(`input[name="style"][value="${styleVal}"]`);
+                    if (cb) cb.checked = true;
+                });
+            }
+            // Handle existing images
+            window.retainedMainImages = product.main_images || [];
+            window.retainedExtraImages = product.extra_images || [];
+
+            function renderExistingImages(imagesArray, containerId, arrayRef) {
+                const container = document.getElementById(containerId);
+                if (!container || !imagesArray) return;
+                
+                imagesArray.forEach((imgUrl, index) => {
+                    const imgContainer = document.createElement('div');
+                    imgContainer.style.width = '80px';
+                    imgContainer.style.height = '80px';
+                    imgContainer.style.borderRadius = '4px';
+                    imgContainer.style.overflow = 'hidden';
+                    imgContainer.style.border = '1px solid #ddd';
+                    imgContainer.style.position = 'relative';
+                    
+                    const img = document.createElement('img');
+                    img.src = resolveImageUrl(imgUrl);
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.style.position = 'absolute';
+                    removeBtn.style.top = '2px';
+                    removeBtn.style.right = '2px';
+                    removeBtn.style.background = 'rgba(255,0,0,0.7)';
+                    removeBtn.style.color = 'white';
+                    removeBtn.style.border = 'none';
+                    removeBtn.style.borderRadius = '50%';
+                    removeBtn.style.width = '20px';
+                    removeBtn.style.height = '20px';
+                    removeBtn.style.lineHeight = '20px';
+                    removeBtn.style.textAlign = 'center';
+                    removeBtn.style.cursor = 'pointer';
+                    removeBtn.style.fontSize = '14px';
+
+                    removeBtn.onclick = (e) => {
+                        e.preventDefault();
+                        const idx = arrayRef.indexOf(imgUrl);
+                        if (idx > -1) arrayRef.splice(idx, 1);
+                        imgContainer.remove();
+                    };
+                    
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(removeBtn);
+                    container.appendChild(imgContainer);
+                });
+            }
+
+            renderExistingImages(window.retainedMainImages, 'main-image-preview', window.retainedMainImages);
+            renderExistingImages(window.retainedExtraImages, 'extra-image-preview', window.retainedExtraImages);
+        });
+    }
+
     // Set up payment method buttons click handlers
     const methodBtns = document.querySelectorAll('.payment-method-btn');
     methodBtns.forEach(btn => {
@@ -926,10 +1045,21 @@ function handleListAttire() {
             }
             
             const uploadedPaths = await uploadRes.json();
-            data.main_images = uploadedPaths.main_images || [];
-            data.extra_images = uploadedPaths.extra_images || [];
+            
+            data.main_images = [
+                ...(window.retainedMainImages || []),
+                ...(uploadedPaths.main_images || [])
+            ];
+            
+            data.extra_images = [
+                ...(window.retainedExtraImages || []),
+                ...(uploadedPaths.extra_images || [])
+            ];
+
             if(data.main_images.length > 0) {
                 data.imageUrl = data.main_images[0];
+            } else {
+                data.imageUrl = '';
             }
         } catch(e) {
             console.log('API upload failed, mocking success for local testing.');
@@ -940,6 +1070,32 @@ function handleListAttire() {
         
         data.sellerId = state.user.id;
         
+        if (editId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/products/${editId}/`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${state.token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Listing updated successfully!');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    const err = await response.json();
+                    alert('Failed to update listing: ' + (err.error || err.detail || 'Unknown error'));
+                    if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Save Changes'; }
+                }
+            } catch(e) {
+                alert('Error updating listing.');
+                if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Save Changes'; }
+            }
+            return;
+        }
+
         // Trigger Yoco Payment using our backend endpoint
         try {
             // Save the draft listing so we can publish it when we return from Yoco
