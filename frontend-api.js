@@ -1,4 +1,5 @@
 const API_BASE_URL = 'https://djangoapi-treasured.onrender.com';
+// const API_BASE_URL = 'http://127.0.0.1:8000'; // local testing
 
 // Helper to resolve absolute image URLs for local testing
 function resolveImageUrl(url) {
@@ -24,11 +25,11 @@ window.fetch = function (url, options = {}) {
         options.headers = options.headers || {};
         if (options.headers instanceof Headers) {
             if (!options.headers.has('Authorization')) {
-                options.headers.set('Authorization', `Token ${state.token}`);
+                options.headers.set('Authorization', `Bearer ${state.token}`);
             }
         } else {
             if (!options.headers['Authorization']) {
-                options.headers['Authorization'] = `Token ${state.token}`;
+                options.headers['Authorization'] = `Bearer ${state.token}`;
             }
         }
     }
@@ -44,7 +45,7 @@ async function apiFetch(endpoint, options = {}) {
         };
         
         if (state.token) {
-            headers['Authorization'] = `Token ${state.token}`;
+            headers['Authorization'] = `Bearer ${state.token}`;
         }
         
         const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -2520,3 +2521,9 @@ async function markNotificationsAsRead() {
         console.error('Error marking notifications read:', e);
     }
 }
+
+window.logoutUser = function(e) {
+    if (e) e.preventDefault();
+    localStorage.removeItem('treasured_user');
+    window.location.href = 'index.html';
+};
