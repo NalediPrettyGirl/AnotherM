@@ -21,6 +21,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 
 <body>
@@ -43,7 +44,14 @@
                     <i class="fa-regular fa-user"></i>
                 </div>
 
-                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                    <i class="fa-regular fa-bell notification-bell"></i>
+                    <span class="notification-badge" id="nav-notifications-badge">0</span>
+                    <div class="notification-dropdown" id="nav-notifications-dropdown">
+                        <div class="notification-empty">Loading notifications...</div>
+                    </div>
+                </div>
+<div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
                     <i class="fa-regular fa-heart"></i>
                 </div>
             </div>
@@ -63,18 +71,39 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navMenuContent">
-                    <ul
-                        class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
-                        <li class="nav-item"><a class="nav-link p-0" href="index.html">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">WEDDING DRESSES</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">EVENING DRESS</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">MEN'S ATTIRE</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html">KIDDOS</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="#">CONTACT</a></li>
-                    </ul>
+                    <ul class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
+    <li class="nav-item"><a class="nav-link active p-0" href="index.html">Home</a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="ladiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ladies</a>
+        <ul class="dropdown-menu" aria-labelledby="ladiesDropdown">
+            <li><a class="dropdown-item" href="category.html?type=white-wedding">White Wedding Dress</a></li>
+            <li><a class="dropdown-item" href="category.html?type=traditional-wedding">Traditional Wedding Dress</a></li>
+            <li><a class="dropdown-item" href="category.html?type=matric-dance">Matric Dance Dress</a></li>
+            <li><a class="dropdown-item" href="category.html?type=evening">Evening Dress</a></li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="gentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gents</a>
+        <ul class="dropdown-menu" aria-labelledby="gentsDropdown">
+            <li><a class="dropdown-item" href="category.html?type=tuxedos">Tuxedos</a></li>
+            <li><a class="dropdown-item" href="category.html?type=suits">Suits</a></li>
+            <li><a class="dropdown-item" href="category.html?type=traditional-attire">Traditional Attire</a></li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="kiddosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiddos</a>
+        <ul class="dropdown-menu" aria-labelledby="kiddosDropdown">
+            <li><a class="dropdown-item" href="category.html?type=boys-formal">Boys Formal Attire</a></li>
+            <li><a class="dropdown-item" href="category.html?type=boys-traditional">Boys Traditional Attire</a></li>
+            <li><a class="dropdown-item" href="category.html?type=girls-formal">Girl Formal Dresses</a></li>
+            <li><a class="dropdown-item" href="category.html?type=girls-traditional">Girls Traditional Dress</a></li>
+        </ul>
+    </li>
+    <li class="nav-item"><a class="nav-link p-0" href="vendors.html">Vendors</a></li>
+    <li class="nav-item"><a class="nav-link p-0" href="#">About Us</a></li>
+</ul>
                     <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
-                        <a href="login.html" class="btn-list-attire text-decoration-none d-inline-block">List Your
-                            Attire</a>
+                        <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
                     </div>
                 </div>
             </div>
@@ -88,8 +117,8 @@
             <div class="list-sidebar">
                 <ul class="list-nav">
                     <li><a href="#general" class="active"><span class="nav-dot"></span> General</a></li>
-                    <li><a href="#dress"><span class="nav-dot"></span> The Dress</a></li>
-                    <li><a href="#price"><span class="nav-dot"></span> Price for the Dress</a></li>
+                    <li><a href="#dress"><span class="nav-dot"></span> The Attire</a></li>
+                    <li><a href="#price"><span class="nav-dot"></span> Price for the Attire</a></li>
                     <li><a href="#images"><span class="nav-dot"></span> Images</a></li>
                 </ul>
             </div>
@@ -98,7 +127,7 @@
             <div class="list-content">
                 <h1 class="list-page-title">Your listing details</h1>
                 
-                <form id="listing-form" class="list-form-container">
+                <form id="listing-form" class="list-form-container" action="index.html">
                     
                     <!-- Section 1: General -->
                     <div id="general" class="list-section-card">
@@ -122,6 +151,11 @@
                                 <option value="Western Cape">Western Cape</option>
                                 <option value="KwaZulu-Natal">KwaZulu-Natal</option>
                                 <option value="Eastern Cape">Eastern Cape</option>
+                                <option value="Limpopo">Limpopo</option>
+                                <option value="Mpumalanga">Mpumalanga</option>
+                                <option value="North West">North West</option>
+                                <option value="Free State">Free State</option>
+                                <option value="Northern Cape">Northern Cape</option>
                             </select>
                         </div>
                     </div>
@@ -135,7 +169,7 @@
                         <div class="field-row field-row-split align-items-start">
                             <label>Title</label>
                             <div class="split-input-wrapper">
-                                <span class="desc-text mb-2 d-block">Please do not include the attire's designer here. There is a designated field below for the designer.</span>
+                                <span class="desc-text mb-2 d-block">E.g: 'Elegant Zulu Traditional Dress', 'White Mermaid Wedding Dress'</span>
                                 <input type="text" name="title" class="form-control list-input p-0" required>
                             </div>
                         </div>
@@ -149,10 +183,17 @@
                         <div class="field-row">
                             <label>Type</label>
                             <div class="radio-group-vertical">
-                                <label class="radio-label"><input type="radio" name="category" value="Wedding Dresses" required> <span>Wedding Dress</span></label>
-                                <label class="radio-label"><input type="radio" name="category" value="Evening Dress"> <span>Evening / Matric Dress</span></label>
-                                <label class="radio-label"><input type="radio" name="category" value="Men's Attire"> <span>Men's Attire</span></label>
-                                <label class="radio-label"><input type="radio" name="category" value="Kiddos"> <span>Kiddos</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="White Wedding Dress" required> <span>White Wedding Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Traditional Wedding Dress"> <span>Traditional Wedding Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Evening Dress"> <span>Evening Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Matric Dance"> <span>Matric Dance</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Tuxedo"> <span>Tuxedo</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Suits"> <span>Suits</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Traditional Attire"> <span>Traditional Attire</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Boys Formal Attire"> <span>Boys Formal Attire</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Boys Traditional Attire"> <span>Boys Traditional Attire</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Girls Formal Dress"> <span>Girls Formal Dress</span></label>
+                                <label class="radio-label"><input type="radio" name="category" value="Girls Traditional Dress"> <span>Girls Traditional Dress</span></label>
                             </div>
                         </div>
                         <div class="field-row field-row-split align-items-start">
@@ -194,7 +235,10 @@
                                 <label>Year Created</label>
                             </div>
                             <span class="desc-text mb-2 d-block">Please input only the year the attire was created. Example: "2024". IMPORTANT: This influences the price!</span>
-                            <input type="number" name="year" class="form-control list-input p-0">
+                            <div class="d-flex align-items-center w-100">
+                                <input type="range" class="form-range flex-grow-1 me-3" min="1950" max="2026" value="2024" oninput="this.nextElementSibling.value = this.value" style="accent-color: var(--sage-green);">
+                                <input type="number" name="year" class="form-control list-input p-2 text-center border rounded" style="width: 100px;" value="2024" oninput="this.previousElementSibling.value = this.value">
+                            </div>
                         </div>
                         <div class="field-row">
                             <label>Attire Condition</label>
@@ -219,20 +263,22 @@
                     <div id="price" class="list-section-card">
                         <div class="section-header">
                             <div class="icon-circle"><i class="fa-solid fa-money-bill"></i></div>
-                            <h3>Price for the Dress</h3>
+                            <h3>Price for the Attire</h3>
                         </div>
-                        <div class="field-row field-row-split align-items-center">
-                            <label>Price</label>
-                            <div class="split-input-wrapper d-flex align-items-center justify-content-between w-100">
-                                <span class="desc-text ms-4">How much are you listing the attire for? (Value in Rand, don't add currency or decimals)</span>
-                                <input type="number" name="price" class="form-control list-input p-0 w-25 border-bottom ms-3" required>
+                        <div class="field-row flex-column align-items-start">
+                            <label class="mb-1">Price</label>
+                            <span class="desc-text mb-2 d-block">How much are you listing the attire for? (Value in Rand, don't add currency or decimals)</span>
+                            <div class="d-flex align-items-center w-100">
+                                <input type="range" class="form-range flex-grow-1 me-3" min="0" max="50000" step="100" value="0" oninput="this.nextElementSibling.value = this.value" style="accent-color: var(--sage-green);">
+                                <input type="number" name="price" class="form-control list-input p-2 text-center border rounded" style="width: 120px;" value="0" oninput="this.previousElementSibling.value = this.value" required>
                             </div>
                         </div>
-                        <div class="field-row field-row-split align-items-center">
-                            <label>Original Price</label>
-                            <div class="split-input-wrapper d-flex align-items-center justify-content-between w-100">
-                                <span class="desc-text ms-4">Original price that you paid for the attire (Value in Rand, don't add currency or decimals)</span>
-                                <input type="number" name="original_price" class="form-control list-input p-0 w-25 border-bottom ms-3">
+                        <div class="field-row flex-column align-items-start">
+                            <label class="mb-1">Original Price</label>
+                            <span class="desc-text mb-2 d-block">Original price that you paid for the attire (Value in Rand, don't add currency or decimals)</span>
+                            <div class="d-flex align-items-center w-100">
+                                <input type="range" class="form-range flex-grow-1 me-3" min="0" max="100000" step="100" value="0" oninput="this.nextElementSibling.value = this.value" style="accent-color: var(--sage-green);">
+                                <input type="number" name="original_price" class="form-control list-input p-2 text-center border rounded" style="width: 120px;" value="0" oninput="this.previousElementSibling.value = this.value">
                             </div>
                         </div>
                         <div class="field-row flex-column align-items-start">
@@ -244,23 +290,23 @@
                             </div>
                         </div>
                         <div class="field-row field-row-split align-items-start">
-                            <label>Are You Willing To Courier The Dress?</label>
+                            <label>Are You Willing To Courier The Attire?</label>
                             <div class="split-input-wrapper ms-4">
-                                <span class="desc-text mb-2 d-block">Are you willing to courier the dress to the buyer at no extra cost?</span>
-                                <select name="courier" class="form-control list-select p-0">
-                                    <option value="" disabled selected>Select an option</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+                                <span class="desc-text mb-2 d-block">Are you willing to courier the attire to the buyer at no extra cost?</span>
+                                <div class="radio-group-vertical mt-2">
+                                    <label class="radio-label mb-2"><input type="radio" name="courier" value="Yes"> <span>Yes</span></label>
+                                    <label class="radio-label"><input type="radio" name="courier" value="No"> <span>No</span></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="field-row no-border flex-column align-items-start">
+                        <div class="field-row field-row-split align-items-start border-0">
                             <label class="mb-2">Are You Willing To Arrange A Fitting Opportunity?</label>
-                            <select name="fitting" class="form-control list-select p-0 w-100">
-                                <option value="" disabled selected>Select an option</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
+                            <div class="split-input-wrapper ms-4">
+                                <div class="radio-group-vertical mt-2">
+                                    <label class="radio-label mb-2"><input type="radio" name="fitting" value="Yes"> <span>Yes</span></label>
+                                    <label class="radio-label"><input type="radio" name="fitting" value="No"> <span>No</span></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -273,7 +319,7 @@
                         <div class="field-row flex-column align-items-start border-bottom-0 pb-0">
                             <label class="mb-1">Gallery Images</label>
                             <span class="desc-text mb-3 d-block">Upload good quality image.</span>
-                            <span class="fw-bold fs-sm d-block mb-1" style="font-size: 13px; color: #333;">The first image should be landscape or square. The recommended size is: 1000px width & 520px height.</span>
+                            <span class="fw-bold fs-sm d-block mb-1" style="font-size: 13px; color: #333;">The first image should be landscape. The recommended size is: 1000px width & 520px height.</span>
                             <span class="desc-text d-block mb-3">Maximum file size: 3 MB. Please note that the first image will be the cover image on the Facebook post, if you opt-in to have your dress shared on our Facebook page (Premium Package only).<br>
                             <span class="text-danger mt-1 d-block">Make sure to use high-quality photos that showcase your dress from its best angles — great photos help your dress sell faster!</span></span>
                             
@@ -292,7 +338,7 @@
                         <div class="field-row no-border flex-column align-items-start">
                             <div class="d-flex justify-content-between w-100 mb-2">
                                 <label>Extra gallery images </label>
-                                <span class="muted-text text-sm">
+                                <span class="muted-text text-sm"></span>
                             </div>
                             
                             <div class="upload-container" style="width: 100%;">
@@ -302,8 +348,9 @@
                                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
                                         <span style="font-size: 13px; color: #888; margin-top: 10px;"> Upload a maximum of 4 good quality (full length front and back) images.
                                             Click or drag up to 4 images here</span>
+                                    </div>
                                 </div>
-                                <div id="extra-image-preview" class="d-flex flex-wrap gap-2 w-100 mb-2"></div>
+                                <div id="extra-image-preview" class="d-flex flex-wrap gap-2 w-100 mb-2 mt-2"></div>
                             </div>
                             
                             <div class="terms-accept w-100 mt-2 border-top pt-4">
@@ -345,7 +392,32 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="frontend-api.js"></script>
+    <script src="frontend-api.js?v=17"></script>
+    <script>
+        // Sync sidebar active highlight when clicking nav links
+        document.querySelectorAll('.list-nav a').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.list-nav a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Also highlight active link on scroll
+        const sections = document.querySelectorAll('.list-section-card');
+        const navLinks = document.querySelectorAll('.list-nav a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
+

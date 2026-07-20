@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendors - ANOTHER MOMENT</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>info@anothermoment.co.za</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Mon-Fri: 9am - 4pm</span>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="top-bar-item sign-in">
+                    <a href="login.html" class="text-decoration-none text-reset"><span>Sign In / Register</span></a>
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                    <i class="fa-regular fa-bell notification-bell"></i>
+                    <span class="notification-badge" id="nav-notifications-badge">0</span>
+                    <div class="notification-dropdown" id="nav-notifications-dropdown">
+                        <div class="notification-empty">Loading notifications...</div>
+                    </div>
+                </div>
+<div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent w-100 py-0">
+            <div class="container-fluid header-container px-0">
+                <div class="logo">
+                    <a class="navbar-brand m-0 p-0" href="index.html">ANOTHER MOMENT</a>
+                </div>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenuContent" aria-controls="navMenuContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenuContent">
+                    <ul class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
+                        <li class="nav-item"><a class="nav-link p-0" href="index.html">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle p-0" href="#" id="ladiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ladies</a>
+                            <ul class="dropdown-menu" aria-labelledby="ladiesDropdown">
+                                <li><a class="dropdown-item" href="category.html?type=white-wedding">White Wedding Dress</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=traditional-wedding">Traditional Wedding Dress</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=matric-dance">Matric Dance Dress</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=evening">Evening Dress</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle p-0" href="#" id="gentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gents</a>
+                            <ul class="dropdown-menu" aria-labelledby="gentsDropdown">
+                                <li><a class="dropdown-item" href="category.html?type=tuxedos">Tuxedos</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=suits">Suits</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=traditional-attire">Traditional Attire</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle p-0" href="#" id="kiddosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiddos</a>
+                            <ul class="dropdown-menu" aria-labelledby="kiddosDropdown">
+                                <li><a class="dropdown-item" href="category.html?type=boys-formal">Boys Formal Attire</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=boys-traditional">Boys Traditional Attire</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=girls-formal">Girl Formal Dresses</a></li>
+                                <li><a class="dropdown-item" href="category.html?type=girls-traditional">Girls Traditional Dress</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active p-0" href="vendors.html">Vendors</a></li>
+                        <li class="nav-item"><a class="nav-link p-0" href="#">About Us</a></li>
+                    </ul>
+                    <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
+                        <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Vendors Main Content -->
+    <main class="vendors-page">
+        <div class="vendors-container">
+            <h1 class="page-title text-center mb-2 mt-4" style="font-family: 'Playfair Display', serif; color: var(--sage-green);">Our Vendors</h1>
+            <div class="text-center mb-4">
+                <a href="vendor-register.html" class="btn rounded-pill px-4 py-2 shadow-sm" style="background-color: var(--gold); color: var(--white); font-family: 'Poppins', sans-serif; font-weight: 500; text-decoration: none; border: none;">List a Service</a>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="vendor-tabs-wrapper">
+                <div class="vendor-tabs" id="vendorTabs">
+                    <button class="vendor-tab active" data-category="Venues">Venues</button>
+                    <button class="vendor-tab" data-category="Tailors and Dress Makers">Tailors and Dress Makers</button>
+                    <button class="vendor-tab" data-category="Wedding Planners">Wedding Planners</button>
+                    <button class="vendor-tab" data-category="Photographers">Photographers</button>
+                    <button class="vendor-tab" data-category="Dee Jays">Dee Jays</button>
+                    <button class="vendor-tab" data-category="Caterers">Caterers</button>
+                    <button class="vendor-tab" data-category="Make-Up Artists">Make-Up Artists</button>
+                    <button class="vendor-tab" data-category="Hair Dressers">Hair Dressers</button>
+                    <button class="vendor-tab" data-category="Barbers">Barbers</button>
+                    <button class="vendor-tab" data-category="Nail Technicians">Nail Technicians</button>
+                    <button class="vendor-tab" data-category="Event Managers">Event Managers</button>
+                </div>
+            </div>
+
+            <!-- Province Filter -->
+            <div class="vendor-filters text-center my-4">
+                <select id="provinceFilter" class="form-control d-inline-block w-auto" style="border-radius: 30px; padding: 10px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee;">
+                    <option value="All">All Provinces</option>
+                    <option value="Eastern Cape">Eastern Cape</option>
+                    <option value="Free State">Free State</option>
+                    <option value="Gauteng">Gauteng</option>
+                    <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+                    <option value="Limpopo">Limpopo</option>
+                    <option value="Mpumalanga">Mpumalanga</option>
+                    <option value="North West">North West</option>
+                    <option value="Northern Cape">Northern Cape</option>
+                    <option value="Western Cape">Western Cape</option>
+                </select>
+            </div>
+
+            <!-- Vendor Grid -->
+            <div class="vendor-grid" id="vendorGrid">
+                <!-- Cards will be populated by JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Vendor Detail Modal (Hidden by default) -->
+    <div class="vendor-modal-overlay" id="vendorModal">
+        <div class="vendor-modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="vendor-modal-header text-center">
+                <img src="images/intro.png" alt="Vendor Logo" id="modalLogo" class="modal-vendor-img mb-3">
+                <h2 id="modalName" style="font-family: 'Playfair Display', serif; color: var(--sage-green);">Vendor Name</h2>
+                <p id="modalCategory" class="text-muted mb-1">Category</p>
+                <p id="modalProvince" class="text-muted mb-3"><i class="fa-solid fa-location-dot"></i> Province</p>
+            </div>
+            <div class="vendor-modal-body">
+                <div class="vendor-description mb-4">
+                    <h5 style="color: var(--sage-green);">About Us</h5>
+                    <p id="modalDesc">Vendor description goes here.</p>
+                </div>
+                <div class="vendor-contact bg-light p-3 rounded text-center">
+                    <h5 style="color: var(--sage-green);">Contact</h5>
+                    <p class="mb-1"><i class="fa-solid fa-phone"></i> <span id="modalPhone">012 345 6789</span></p>
+                    <p class="mb-0"><i class="fa-solid fa-envelope"></i> <span id="modalEmail">email@vendor.com</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="footer-top">
+            <div class="footer-top-container">
+                <div class="footer-logo">ANOTHER MOMENT</div>
+                <div class="footer-socials">
+                    <span class="follow-text">Follow Us:</span>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p>Terms & Conditions | Copyright@2026 | Designed by Red Canvas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="frontend-api.js?v=17"></script>
+    <script>
+        // Mock Vendor Data (Since there's no backend endpoint mentioned for vendors yet)
+        const mockVendors = [
+            { id: 1, name: "Grand Luxe Venue", category: "Venues", province: "Gauteng", desc: "A beautiful luxury venue for your dream wedding.", phone: "082 111 2222", email: "info@grandluxe.co.za", logo: "images/categories/wedding_dresses.png" },
+            { id: 2, name: "Sunset Estates", category: "Venues", province: "Western Cape", desc: "Picturesque vineyard setting with breathtaking sunset views.", phone: "082 333 4444", email: "bookings@sunsetestates.co.za", logo: "images/categories/wedding_dresses.png" },
+            { id: 3, name: "Stitch & Style", category: "Tailors and Dress Makers", province: "Gauteng", desc: "Expert dressmakers specializing in custom bridal gowns.", phone: "011 555 6666", email: "hello@stitchandstyle.co.za", logo: "images/categories/matric_dance.png" },
+            { id: 4, name: "Perfect Day Planners", category: "Wedding Planners", province: "KwaZulu-Natal", desc: "Full-service wedding coordination to make your day stress-free.", phone: "031 777 8888", email: "plan@perfectday.co.za", logo: "images/categories/traditional_dresses.png" },
+            { id: 5, name: "Lens Magic", category: "Photographers", province: "Gauteng", desc: "Capturing your special moments with artistic flair.", phone: "083 999 0000", email: "smile@lensmagic.co.za", logo: "images/categories/mens_formal.png" },
+            { id: 6, name: "DJ Vibes", category: "Dee Jays", province: "Free State", desc: "Keeping the dance floor alive all night long.", phone: "084 123 4567", email: "music@djvibes.co.za", logo: "images/categories/mens_traditional.png" },
+            { id: 7, name: "Gourmet Bites", category: "Caterers", province: "Western Cape", desc: "Delicious fine dining catering for large events.", phone: "021 987 6543", email: "food@gourmetbites.co.za", logo: "images/intro.png" },
+            { id: 8, name: "Flawless Faces", category: "Make-Up Artists", province: "Gauteng", desc: "Professional bridal makeup that lasts all day.", phone: "072 456 7890", email: "glam@flawlessfaces.co.za", logo: "images/intro.png" },
+            { id: 9, name: "Crown Hair Studio", category: "Hair Dressers", province: "Eastern Cape", desc: "Bridal hair styling experts.", phone: "073 567 8901", email: "hair@crownstudio.co.za", logo: "images/intro.png" },
+            { id: 10, name: "Sharp Cuts", category: "Barbers", province: "Gauteng", desc: "Crisp fades and grooming for the groomsmen.", phone: "074 678 9012", email: "cuts@sharpcuts.co.za", logo: "images/intro.png" },
+            { id: 11, name: "Nail Envy", category: "Nail Technicians", province: "Western Cape", desc: "Elegant manicures for your big day.", phone: "075 789 0123", email: "nails@nailenvy.co.za", logo: "images/intro.png" },
+            { id: 12, name: "Elite Event Managers", category: "Event Managers", province: "KwaZulu-Natal", desc: "Managing your event from start to finish.", phone: "076 890 1234", email: "manage@eliteevents.co.za", logo: "images/intro.png" }
+        ];
+
+        let currentCategory = "Venues";
+        let currentProvince = "All";
+
+        const grid = document.getElementById('vendorGrid');
+        const modal = document.getElementById('vendorModal');
+        const closeModal = document.getElementById('closeModal');
+
+        function renderVendors() {
+            grid.innerHTML = '';
+            
+            const filtered = mockVendors.filter(v => 
+                v.category === currentCategory && 
+                (currentProvince === "All" || v.province === currentProvince)
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p class="text-center w-100 py-5" style="grid-column: 1 / -1;">No vendors found for this selection.</p>';
+                return;
+            }
+
+            filtered.forEach(vendor => {
+                const card = document.createElement('div');
+                card.className = 'vendor-card';
+                card.innerHTML = `
+                    <div class="vendor-img-container">
+                        <img src="${vendor.logo}" alt="${vendor.name}">
+                    </div>
+                    <div class="vendor-card-body">
+                        <h4>${vendor.name}</h4>
+                        <p class="vendor-prov"><i class="fa-solid fa-location-dot"></i> ${vendor.province}</p>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(vendor));
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(vendor) {
+            document.getElementById('modalLogo').src = vendor.logo;
+            document.getElementById('modalName').innerText = vendor.name;
+            document.getElementById('modalCategory').innerText = vendor.category;
+            document.getElementById('modalProvince').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${vendor.province}`;
+            document.getElementById('modalDesc').innerText = vendor.desc;
+            document.getElementById('modalPhone').innerText = vendor.phone;
+            document.getElementById('modalEmail').innerText = vendor.email;
+            
+            modal.style.display = 'flex';
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
+
+        // Tab Clicking
+        document.querySelectorAll('.vendor-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                document.querySelectorAll('.vendor-tab').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                currentCategory = e.target.getAttribute('data-category');
+                renderVendors();
+            });
+        });
+
+        // Province Changing
+        document.getElementById('provinceFilter').addEventListener('change', (e) => {
+            currentProvince = e.target.value;
+            renderVendors();
+        });
+
+        // Initial Render
+        renderVendors();
+    </script>
+</body>
+
+</html>
+

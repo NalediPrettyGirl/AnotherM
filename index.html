@@ -20,6 +20,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 
 <body>
@@ -42,7 +43,14 @@
                     <i class="fa-regular fa-user"></i>
                 </div>
 
-                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                    <i class="fa-regular fa-bell notification-bell"></i>
+                    <span class="notification-badge" id="nav-notifications-badge">0</span>
+                    <div class="notification-dropdown" id="nav-notifications-dropdown">
+                        <div class="notification-empty">Loading notifications...</div>
+                    </div>
+                </div>
+<div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
                     <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
                 </div>
             </div>
@@ -62,18 +70,39 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navMenuContent">
-                    <ul
-                        class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
-                        <li class="nav-item"><a class="nav-link active p-0" href="index.html">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=wedding">WEDDING DRESSES</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=evening">EVENING DRESS</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=men">MEN'S ATTIRE</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="category.html?type=kiddos">KIDDOS</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="#">CONTACT</a></li>
-                    </ul>
+                    <ul class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
+    <li class="nav-item"><a class="nav-link active p-0" href="index.html">Home</a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="ladiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ladies</a>
+        <ul class="dropdown-menu" aria-labelledby="ladiesDropdown">
+            <li><a class="dropdown-item" href="category.html?type=white-wedding">White Wedding Dress</a></li>
+            <li><a class="dropdown-item" href="category.html?type=traditional-wedding">Traditional Wedding Dress</a></li>
+            <li><a class="dropdown-item" href="category.html?type=matric-dance">Matric Dance Dress</a></li>
+            <li><a class="dropdown-item" href="category.html?type=evening">Evening Dress</a></li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="gentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gents</a>
+        <ul class="dropdown-menu" aria-labelledby="gentsDropdown">
+            <li><a class="dropdown-item" href="category.html?type=tuxedos">Tuxedos</a></li>
+            <li><a class="dropdown-item" href="category.html?type=suits">Suits</a></li>
+            <li><a class="dropdown-item" href="category.html?type=traditional-attire">Traditional Attire</a></li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="kiddosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiddos</a>
+        <ul class="dropdown-menu" aria-labelledby="kiddosDropdown">
+            <li><a class="dropdown-item" href="category.html?type=boys-formal">Boys Formal Attire</a></li>
+            <li><a class="dropdown-item" href="category.html?type=boys-traditional">Boys Traditional Attire</a></li>
+            <li><a class="dropdown-item" href="category.html?type=girls-formal">Girl Formal Dresses</a></li>
+            <li><a class="dropdown-item" href="category.html?type=girls-traditional">Girls Traditional Dress</a></li>
+        </ul>
+    </li>
+    <li class="nav-item"><a class="nav-link p-0" href="vendors.html">Vendors</a></li>
+    <li class="nav-item"><a class="nav-link p-0" href="#">About Us</a></li>
+</ul>
                     <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
-                        <a href="login.html" class="btn-list-attire text-decoration-none d-inline-block">List Your
-                            Attire</a>
+                        <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
                     </div>
                 </div>
             </div>
@@ -88,8 +117,8 @@
             <p>Buy and sell wedding dresses, traditional wedding attire, matric<br>dance dresses, and formal wear at
                 affordable prices.</p>
             <div class="hero-buttons">
-                <a href="login.html" class="btn-outline-white">Sell My Outfit</a>
-                <a href="category.html" class="btn-outline-white">Browse Outfits</a>
+                <a href="login.html" class="btn-outline-white">How to sell my attire</a>
+                <a href="category.html" class="btn-outline-white">How to buy</a>
             </div>
         </div>
     </section>
@@ -107,8 +136,8 @@
                     across South Africa who want to give these garments another moment to shine while helping someone
                     else find the perfect outfit without the boutique price tag.</p>
                 <div class="intro-buttons">
-                    <a href="login.html" class="btn-outline-gold">Sell My Outfit</a>
-                    <a href="category.html" class="btn-outline-gold">Browse Outfits</a>
+                    <a href="login.html" class="btn-outline-gold">How to sell my attire</a>
+                    <a href="category.html" class="btn-outline-gold">How to buy</a>
                 </div>
             </div>
         </div>
@@ -151,7 +180,7 @@
                     </div>
                     <h3>Traditional Dresses</h3>
                     <p>Beautiful cultural garments for lobola celebrations, traditional ceremonies, and weddings.</p>
-                    <a href="category.html?type=wedding" class="btn-outline-white">Browse Dresses</a>
+                    <a href="category.html?type=wedding" class="btn-outline-gold">Browse Dresses</a>
                 </div>
                 <div class="card">
                     <div class="card-icon">
@@ -349,7 +378,7 @@
                         <div class="outfit-card">
                             <div class="outfit-image-container">
                                 <img src="images/categories/mens_traditional.png" alt="Men's Traditional Suit"
-                                    width="400" height="400">
+                                    style="width:120px;height:120px;object-fit:contain;">
                             </div>
                             <div class="outfit-details">
                                 <p class="outfit-desc">Modern tailored traditional<br>men's suit with cultural<br>motifs
@@ -476,7 +505,8 @@
             }
         });
     </script>
-    <script src="frontend-api.js"></script>
+    <script src="frontend-api.js?v=17"></script>
 </body>
 
 </html>
+

@@ -20,6 +20,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 
 <body class="dashboard-body">
@@ -41,7 +42,7 @@
                     <!-- Profile Dropdown -->
                     <div class="dropdown">
                         <button class="user-name-dropdown dropdown-toggle border-0 bg-transparent p-0" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span>Naledi</span>
+                            <span>User</span>
                             <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: var(--gold);"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="profileDropdown">
@@ -81,7 +82,7 @@
                         <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
                     </ul>
                     <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
-                        <a href="#" class="btn-list-attire-dash">List Your Attire</a>
+                        <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
                     </div>
                 </div>
             </div>
@@ -125,6 +126,13 @@
                     </li>
                 </ul>
             </nav>
+
+            <div id="buyer-cta-container" style="display: none; padding: 20px;">
+                <div style="background-color: var(--cream); border-radius: 12px; padding: 15px; text-align: center;">
+                    <p style="font-size: 13px; color: var(--sage-green); margin-bottom: 10px;">Turn your closet into cash!</p>
+                    <a href="pricing.html" class="btn w-100 rounded-pill" style="background-color: var(--gold); color: white; font-size: 14px; font-weight: 500;">Become a Seller</a>
+                </div>
+            </div>
 
             <div class="sidebar-bottom">
                 <ul class="sidebar-nav">
@@ -224,7 +232,7 @@
             <!-- Account Details Section -->
             <div id="section-account" class="dashboard-section-content" style="display: none;">
                 <h1 class="greeting-title-dash mb-4">Account Details</h1>
-                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <div class="bg-white border-0 shadow-sm rounded-4 p-4 mb-4">
                     <form id="dash-account-form">
                         <div class="row g-4">
                             <div class="col-md-6">
@@ -533,7 +541,9 @@
             }
 
             initChart();
-        });
+        }
+    );
+    
     </script>
     <!-- Logout Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -577,7 +587,7 @@
         </div>
     </div>
     
-    <script src="frontend-api.js"></script>
+    <script src="frontend-api.js?v=17"></script>
 </body>
-
 </html>
+
