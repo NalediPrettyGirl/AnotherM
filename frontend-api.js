@@ -97,16 +97,32 @@ async function loadCategoryProducts(filters = {}) {
         return;
     }
 
-    // Filter by category if specified in URL
     if (categoryType) {
         products = products.filter(p => {
             if (!p.category) return false;
-            const cat = p.category.toLowerCase();
-            if (categoryType === 'wedding') return cat.includes('wedding');
-            if (categoryType === 'evening') return cat.includes('evening') || cat.includes('matric');
-            if (categoryType === 'men') return cat.includes('men');
-            if (categoryType === 'kiddos') return cat.includes('kid') || cat.includes('flower') || cat.includes('page');
-            return true;
+            const cat = p.category;
+            
+            const categoryMap = {
+                'white-wedding': 'White Wedding Dress',
+                'traditional-wedding': 'Traditional Wedding Dress',
+                'matric-dance': 'Matric Dance',
+                'evening': 'Evening Dress',
+                'tuxedos': 'Tuxedo',
+                'suits': 'Suits',
+                'traditional-attire': 'Traditional Attire',
+                'boys-formal': 'Boys Formal Attire',
+                'boys-traditional': 'Boys Traditional Attire',
+                'girls-formal': 'Girls Formal Dress',
+                'girls-traditional': 'Girls Traditional Dress'
+            };
+            
+            const targetCategory = categoryMap[categoryType.toLowerCase()];
+            if (targetCategory) {
+                return cat === targetCategory;
+            }
+            
+            // Fallback for search or partial matches
+            return cat.toLowerCase().includes(categoryType.toLowerCase().replace('-', ' '));
         });
     }
 
@@ -864,7 +880,7 @@ function handleListAttire() {
             if (!product) return alert('Product not found.');
             
             // Populate basic text/email/tel inputs
-            const inputs = ['contact_email', 'phone_number', 'title', 'price', 'color', 'designer', 'year'];
+            const inputs = ['contact_email', 'phone_number', 'title', 'price', 'original_price', 'color', 'designer', 'year'];
             inputs.forEach(name => {
                 const el = form.querySelector(`input[name="${name}"]`);
                 if (el && product[name]) el.value = product[name];
@@ -1300,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span>${userName}</span>
                                 <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: var(--gold); margin-left: 5px;"></i>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="profileDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="profileDropdown" style="z-index: 1050;">
                                 <li><a class="dropdown-item py-2 px-4" href="dashboard.html"><i class="fa-regular fa-user me-2"></i> My Profile</a></li>
                                 <li><a class="dropdown-item py-2 px-4" href="dashboard.html"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
