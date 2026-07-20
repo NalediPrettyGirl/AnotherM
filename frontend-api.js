@@ -1,5 +1,4 @@
-const API_BASE_URL = 'https://djangoapi-treasured.onrender.com';
-// const API_BASE_URL = 'http://127.0.0.1:8000'; // local testing
+const API_BASE_URL = 'http://localhost:3000';
 
 // Helper to resolve absolute image URLs for local testing
 function resolveImageUrl(url) {
@@ -561,63 +560,58 @@ window.removeFromDashboardFavorites = function(productId) {
 };
 
 // Function to handle login
-window.handleLogin = function() {
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const usernameInput = document.getElementById('loginUsername') || form.querySelectorAll('input')[0];
-            const passwordInput = document.getElementById('loginPassword') || form.querySelectorAll('input')[1];
-            
-            if (!usernameInput || !passwordInput) return; // Not the login form
-            
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value;
-            const errorBox = document.getElementById('loginError');
-            const errorMsg = document.getElementById('loginErrorMsg');
+function handleLogin() {
+    const form = document.getElementById('userLoginForm') || document.querySelector('.auth-form');
+    if (!form || !window.location.href.includes('login.html')) return;
 
-            const showError = (msg) => {
-                if (errorBox && errorMsg) {
-                    errorMsg.textContent = msg;
-                    errorBox.style.display = 'flex';
-                    form.classList.add('shake');
-                    setTimeout(() => form.classList.remove('shake'), 500);
-                } else {
-                    alert(msg);
-                }
-            };
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const username = (document.getElementById('loginUsername') || form.querySelectorAll('input')[0]).value.trim();
+        const password = (document.getElementById('loginPassword') || form.querySelectorAll('input')[1]).value;
+        const errorBox = document.getElementById('loginError');
+        const errorMsg = document.getElementById('loginErrorMsg');
 
-            if (username.length < 3) {
-                return showError('Username must be at least 3 characters long.');
+        const showError = (msg) => {
+            if (errorBox && errorMsg) {
+                errorMsg.textContent = msg;
+                errorBox.style.display = 'flex';
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 500);
+            } else {
+                alert(msg);
             }
-            if (password.length < 6) {
-                return showError('Password must be at least 6 characters long.');
-            }
-            if (errorBox) errorBox.style.display = 'none';
+        };
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/users/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    localStorage.setItem('treasured_user', JSON.stringify(data));
-                    window.location.href = 'dashboard.html';
-                } else {
-                    const errorData = await response.json().catch(() => ({ error: 'Invalid username or password' }));
-                    showError(errorData.error || 'Invalid username or password');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('Failed to connect to the server. Please ensure the backend is running.');
+        if (username.length < 3) {
+            return showError('Username must be at least 3 characters long.');
+        }
+        if (password.length < 6) {
+            return showError('Password must be at least 6 characters long.');
+        }
+        if (errorBox) errorBox.style.display = 'none';
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/users/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('treasured_user', JSON.stringify(data));
+                window.location.href = 'dashboard.html';
+            } else {
+                const errorData = await response.json().catch(() => ({ error: 'Invalid username or password' }));
+                showError(errorData.error || 'Invalid username or password');
             }
-        });
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('Failed to connect to the server. Please ensure the backend is running.');
+        }
     });
-};
+}
 
 // Function to handle register
 function handleRegister() {
@@ -1754,7 +1748,7 @@ async function loadHomeProducts() {
         const productHtml = `
             <div class="outfit-card">
                 <div class="outfit-image-container">
-                    <img src="${resolveImageUrl(product.imageUrl)}" alt="${product.title}" width="400" height="400" style="object-fit:cover;">
+                    <img src="${resolveImageUrl(product.imageUrl)}" alt="${product.title}" style="width:120px;height:120px;object-fit:contain;">
                 </div>
                 <div class="outfit-details">
                     <p class="outfit-desc" style="font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;" title="${product.description || product.title}">${product.title}</p>
@@ -2489,13 +2483,13 @@ async function loadNotifications() {
         notifications.forEach(n => {
             const dateStr = new Date(n.createdAt).toLocaleDateString();
             const unreadClass = n.read ? '' : 'unread';
-            html += `
-                <div class="notification-item ${unreadClass}">
-                    <div class="notification-title">${n.title}</div>
-                    <div class="notification-body">${n.message}</div>
-                    <div class="notification-time">${dateStr}</div>
+            html += \
+                <div class="notification-item \">
+                    <div class="notification-title">\</div>
+                    <div class="notification-body">\</div>
+                    <div class="notification-time">\</div>
                 </div>
-            `;
+            \;
         });
         
         dropdown.innerHTML = html;
@@ -2521,9 +2515,3 @@ async function markNotificationsAsRead() {
         console.error('Error marking notifications read:', e);
     }
 }
-
-window.logoutUser = function(e) {
-    if (e) e.preventDefault();
-    localStorage.removeItem('treasured_user');
-    window.location.href = 'index.html';
-};
