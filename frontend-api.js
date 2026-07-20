@@ -465,13 +465,12 @@ async function loadDashboardListings() {
 
     grid.innerHTML = '';
     myProducts.forEach((product, idx) => {
-        const status = product.status || 'pending';
         let badgeColor = 'bg-warning text-dark';
-        let badgeText = 'Pending';
-        if (status === 'approved') {
+        let badgeText = 'Pending Approval';
+        if (product.status === 'approved') {
             badgeColor = 'bg-success';
             badgeText = 'Active';
-        } else if (status === 'rejected') {
+        } else if (product.status === 'rejected') {
             badgeColor = 'bg-danger';
             badgeText = 'Rejected';
         }
