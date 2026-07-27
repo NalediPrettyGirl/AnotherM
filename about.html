@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Dresses - ANOTHER MOMENT</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>info@treasured.co.za</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Mon-Fri: 9am - 4pm</span>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="top-bar-item sign-in">
+                    <span>Sign In / Register</span>
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                    <i class="fa-regular fa-bell notification-bell"></i>
+                    <span class="notification-badge" id="nav-notifications-badge">0</span>
+                    <div class="notification-dropdown" id="nav-notifications-dropdown">
+                        <div class="notification-empty">Loading notifications...</div>
+                    </div>
+                </div>
+<div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: relative;">
+        <!-- Main Navigation -->
+        <header class="header position-absolute w-100" style="z-index: 1000; background-color: transparent;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-transparent w-100 py-0">
+                <div class="container-fluid header-container px-0">
+                    <div class="logo">
+                        <a class="navbar-brand m-0 p-0" href="index.html">TREASURED</a>
+                    </div>
+                    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navMenuContent" aria-controls="navMenuContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navMenuContent">
+                        <ul class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
+        <li class="nav-item"><a class="nav-link active p-0" href="index.html">Home</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" id="ladiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ladies</a>
+            <ul class="dropdown-menu" aria-labelledby="ladiesDropdown">
+                <li><a class="dropdown-item" href="category.html?type=white-wedding">White Wedding Dress</a></li>
+                <li><a class="dropdown-item" href="category.html?type=traditional-wedding">Traditional Wedding Dress</a></li>
+                <li><a class="dropdown-item" href="category.html?type=matric-dance">Matric Dance Dress</a></li>
+                <li><a class="dropdown-item" href="category.html?type=evening">Evening Dress</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" id="gentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gents</a>
+            <ul class="dropdown-menu" aria-labelledby="gentsDropdown">
+                <li><a class="dropdown-item" href="category.html?type=tuxedos">Tuxedos</a></li>
+                <li><a class="dropdown-item" href="category.html?type=suits">Suits</a></li>
+                <li><a class="dropdown-item" href="category.html?type=traditional-attire">Traditional Attire</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" id="kiddosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiddos</a>
+            <ul class="dropdown-menu" aria-labelledby="kiddosDropdown">
+                <li><a class="dropdown-item" href="category.html?type=boys-formal">Boys Formal Attire</a></li>
+                <li><a class="dropdown-item" href="category.html?type=boys-traditional">Boys Traditional Attire</a></li>
+                <li><a class="dropdown-item" href="category.html?type=girls-formal">Girl Formal Dresses</a></li>
+                <li><a class="dropdown-item" href="category.html?type=girls-traditional">Girls Traditional Dress</a></li>
+            </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link p-0" href="#">Vendors</a></li>
+        
+    </ul>
+                        <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
+                            <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+
+    <main class="about-us-layout">
+        <!-- Hero Section -->
+        <section class="about-hero text-center position-relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/about-us.png'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 500px; display: flex; align-items: center; justify-content: center; padding-top: 100px;">
+            <div style="background-color: rgba(252, 249, 245, 0.95); padding: 60px 80px; max-width: 900px; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                <h1 style="font-family: 'Playfair Display', serif; color: var(--sage-green); font-size: 3.5rem; margin-bottom: 20px; font-weight: 600;">Our Story</h1>
+                <p style="font-family: 'Poppins', sans-serif; font-size: 1.25rem; color: var(--dark-grey); margin-bottom: 0;">Your outfit deserves more than one moment.<br>Welcome to <span style="color: var(--sage-green); font-weight: 600;">ANOTHER MOMENT</span>.</p>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="container py-5" style="margin-top: 50px;">
+            <div class="row align-items-center mb-5 pb-4">
+                <div class="col-md-6 mb-4 mb-md-0 position-relative">
+                    <div style="position: absolute; top: 20px; left: -20px; width: 100%; height: 100%; border: 2px solid var(--gold); border-radius: 20px; z-index: -1;"></div>
+                    <img src="images/intro.png" class="img-fluid rounded-4 shadow-lg w-100" style="object-fit: cover; height: 500px;" alt="Another Moment Boutique">
+                </div>
+                <div class="col-md-6 ps-md-5">
+                    <h2 style="font-family: 'Playfair Display', serif; color: var(--sage-green); font-size: 2.5rem; margin-bottom: 25px;">Why We Started</h2>
+                    <p style="font-family: 'Poppins', sans-serif; color: var(--dark-grey); line-height: 1.9; font-size: 1.1rem; margin-bottom: 20px;">
+                        Finding the perfect dress or suit for a special occasion can be a stressful and expensive experience. Often, these beautiful garments are worn only once, before being packed away in a closet and forgotten. 
+                    </p>
+                    <p style="font-family: 'Poppins', sans-serif; color: var(--dark-grey); line-height: 1.9; font-size: 1.1rem;">
+                        At <strong>ANOTHER MOMENT</strong>, we believe every exquisite piece of attire deserves more than just one day in the spotlight. Our platform connects people looking for high-quality, pre-loved event wear—from stunning wedding dresses to elegant matric dance gowns—with individuals ready to give their cherished garments a second life.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row align-items-center flex-md-row-reverse mb-5 pt-4 pb-5">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div style="background-color: var(--sage-green); padding: 50px; border-radius: 20px; color: white; box-shadow: 0 20px 40px rgba(135, 155, 140, 0.3);">
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 25px;"><i class="fa-solid fa-leaf me-3" style="color: var(--gold);"></i> Sustainability</h3>
+                        <p style="font-family: 'Poppins', sans-serif; line-height: 1.9; font-size: 1.1rem; opacity: 0.95;">
+                            By choosing pre-loved formal wear, you are actively participating in sustainable fashion. Not only do you save money and find unique pieces, but you also help reduce the environmental impact of the clothing industry. Look beautiful while being kind to the planet.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 pe-md-5">
+                    <h2 style="font-family: 'Playfair Display', serif; color: var(--sage-green); font-size: 2.5rem; margin-bottom: 25px;">Our Mission</h2>
+                    <p style="font-family: 'Poppins', sans-serif; color: var(--dark-grey); line-height: 1.9; font-size: 1.1rem; margin-bottom: 30px;">
+                        Whether you are a bride on a budget, a mother looking for a handsome suit for her son, or someone who wants to make some extra cash by selling or renting out their wardrobe, our marketplace is built for you.
+                    </p>
+                    <a href="register.html" class="btn text-white px-5 py-3 mt-3 rounded-pill" style="background-color: var(--gold); font-weight: 500; letter-spacing: 1px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Join Our Community <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-top-container">
+                <div class="footer-logo">ANOTHER MOMENT</div>
+                <div class="footer-socials">
+                    <span class="follow-text">Follow Us:</span>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p><a href="about.html" style="color: white; text-decoration: none;">About Us</a> | <a href="contact.html" style="color: white; text-decoration: none;">Contact Us</a> | Terms & Conditions | Copyright@2026 | Designed by Red Canvas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="frontend-api.js?v=15"></script>
+</body>
+
+</html>
+
+

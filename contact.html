@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Dresses - ANOTHER MOMENT</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>info@treasured.co.za</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Mon-Fri: 9am - 4pm</span>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="top-bar-item sign-in">
+                    <span>Sign In / Register</span>
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                    <i class="fa-regular fa-bell notification-bell"></i>
+                    <span class="notification-badge" id="nav-notifications-badge">0</span>
+                    <div class="notification-dropdown" id="nav-notifications-dropdown">
+                        <div class="notification-empty">Loading notifications...</div>
+                    </div>
+                </div>
+<div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: relative;">
+        <!-- Main Navigation -->
+        <header class="header position-absolute w-100" style="z-index: 1000; background-color: transparent;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-transparent w-100 py-0">
+                <div class="container-fluid header-container px-0">
+                    <div class="logo">
+                        <a class="navbar-brand m-0 p-0" href="index.html">TREASURED</a>
+                    </div>
+                    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navMenuContent" aria-controls="navMenuContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navMenuContent">
+                        <ul class="navbar-nav mx-auto mb-3 mb-lg-0 nav-menu justify-content-center gap-3 mt-4 mt-lg-0 text-center">
+        <li class="nav-item"><a class="nav-link active p-0" href="index.html">Home</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" id="ladiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ladies</a>
+            <ul class="dropdown-menu" aria-labelledby="ladiesDropdown">
+                <li><a class="dropdown-item" href="category.html?type=white-wedding">White Wedding Dress</a></li>
+                <li><a class="dropdown-item" href="category.html?type=traditional-wedding">Traditional Wedding Dress</a></li>
+                <li><a class="dropdown-item" href="category.html?type=matric-dance">Matric Dance Dress</a></li>
+                <li><a class="dropdown-item" href="category.html?type=evening">Evening Dress</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" id="gentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gents</a>
+            <ul class="dropdown-menu" aria-labelledby="gentsDropdown">
+                <li><a class="dropdown-item" href="category.html?type=tuxedos">Tuxedos</a></li>
+                <li><a class="dropdown-item" href="category.html?type=suits">Suits</a></li>
+                <li><a class="dropdown-item" href="category.html?type=traditional-attire">Traditional Attire</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle p-0" href="#" id="kiddosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kiddos</a>
+            <ul class="dropdown-menu" aria-labelledby="kiddosDropdown">
+                <li><a class="dropdown-item" href="category.html?type=boys-formal">Boys Formal Attire</a></li>
+                <li><a class="dropdown-item" href="category.html?type=boys-traditional">Boys Traditional Attire</a></li>
+                <li><a class="dropdown-item" href="category.html?type=girls-formal">Girl Formal Dresses</a></li>
+                <li><a class="dropdown-item" href="category.html?type=girls-traditional">Girls Traditional Dress</a></li>
+            </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link p-0" href="#">Vendors</a></li>
+        
+    </ul>
+                        <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
+                            <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+
+    <main class="contact-us-layout">
+        <!-- Hero Section -->
+        <section class="about-hero text-center position-relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/contact-hero.png'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 500px; display: flex; align-items: center; justify-content: center; padding-top: 100px;">
+            <div style="background-color: rgba(252, 249, 245, 0.9); padding: 50px 80px; max-width: 800px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                <h1 style="font-family: 'Playfair Display', serif; color: var(--sage-green); font-size: 3.5rem; margin-bottom: 20px;">Get in Touch</h1>
+                <p style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: var(--dark-grey);">We'd love to hear from you. Reach out with any questions.</p>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="container py-5" style="margin-top: 40px; margin-bottom: 40px;">
+            <div class="row">
+                <!-- Contact Info -->
+                <div class="col-md-5 mb-5 mb-md-0 pe-md-5">
+                    <h2 style="font-family: 'Playfair Display', serif; color: var(--sage-green); margin-bottom: 30px; font-size: 2.5rem;">Contact Information</h2>
+                    <p style="font-family: 'Poppins', sans-serif; color: var(--dark-grey); line-height: 1.8; margin-bottom: 30px;">
+                        Have questions about selling your dress? Need help finding the perfect outfit? Our team at <strong>ANOTHER MOMENT</strong> is here to assist you.
+                    </p>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background-color: var(--sage-green); color: white; margin-right: 20px;">
+                            <i class="fa-solid fa-envelope fs-5"></i>
+                        </div>
+                        <div>
+                            <h5 style="margin-bottom: 2px; font-family: 'Playfair Display', serif; color: var(--dark-grey);">Email Us</h5>
+                            <a href="mailto:info@anothermoment.co.za" style="color: var(--sage-green); text-decoration: none; font-family: 'Poppins', sans-serif;">info@anothermoment.co.za</a>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background-color: var(--sage-green); color: white; margin-right: 20px;">
+                            <i class="fa-solid fa-phone fs-5"></i>
+                        </div>
+                        <div>
+                            <h5 style="margin-bottom: 2px; font-family: 'Playfair Display', serif; color: var(--dark-grey);">Call Us</h5>
+                            <a href="tel:+27110000000" style="color: var(--sage-green); text-decoration: none; font-family: 'Poppins', sans-serif;">+27 11 000 0000</a>
+                        </div>
+                    </div>
+                    
+
+                </div>
+
+                <!-- Contact Form -->
+                <div class="col-md-7">
+                    <div style="background-color: #fcfcfc; padding: 50px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+                        <h3 style="font-family: 'Playfair Display', serif; color: var(--sage-green); margin-bottom: 25px;">Send a Message</h3>
+                        <div id="contactStatus" class="mb-3" style="display: none; padding: 15px; border-radius: 8px; font-family: 'Poppins', sans-serif;"></div>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" style="font-family: 'Poppins', sans-serif; font-weight: 500;">First Name</label>
+                                    <input type="text" id="contactFirstName" class="form-control p-3 border-0" style="background-color: #f0f0f0; border-radius: 8px;" placeholder="Jane" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Last Name</label>
+                                    <input type="text" id="contactLastName" class="form-control p-3 border-0" style="background-color: #f0f0f0; border-radius: 8px;" placeholder="Doe" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Email Address</label>
+                                <input type="email" id="contactEmail" class="form-control p-3 border-0" style="background-color: #f0f0f0; border-radius: 8px;" placeholder="jane@example.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Message</label>
+                                <textarea id="contactMessage" class="form-control p-3 border-0" style="background-color: #f0f0f0; border-radius: 8px; resize: none;" rows="5" placeholder="How can we help you today?" required></textarea>
+                            </div>
+                            <button type="submit" id="contactSubmitBtn" class="btn text-white w-100 p-3 rounded-3" style="background-color: var(--sage-green); font-family: 'Poppins', sans-serif; font-size: 1.1rem; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='var(--gold)'" onmouseout="this.style.backgroundColor='var(--sage-green)'">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-top-container">
+                <div class="footer-logo">ANOTHER MOMENT</div>
+                <div class="footer-socials">
+                    <span class="follow-text">Follow Us:</span>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p><a href="about.html" style="color: white; text-decoration: none;">About Us</a> | <a href="contact.html" style="color: white; text-decoration: none;">Contact Us</a> | Terms & Conditions | Copyright@2026 | Designed by Red Canvas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="frontend-api.js?v=15"></script>
+</body>
+
+</html>
+
+

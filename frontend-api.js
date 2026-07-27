@@ -1,4 +1,4 @@
-const API_BASE_URL = ' https://djangoapi-treasured-l0xu.onrender.com';
+const API_BASE_URL = 'https://djangoapi-treasured-l0xu.onrender.com';
 // const API_BASE_URL = 'http://127.0.0.1:8000'; // local testing
 
 // Helper to resolve absolute image URLs for local testing
@@ -2705,3 +2705,51 @@ window.logoutUser = function(e) {
     localStorage.removeItem('treasured_user');
     window.location.href = 'index.html';
 };
+
+// Contact Us Form Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('contactSubmitBtn');
+            const statusDiv = document.getElementById('contactStatus');
+            const firstName = document.getElementById('contactFirstName').value;
+            const lastName = document.getElementById('contactLastName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+            statusDiv.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, message })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.backgroundColor = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusDiv.innerHTML = 'Thank you! Your message has been sent successfully.';
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.error || 'Failed to send message');
+                }
+            } catch (error) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.backgroundColor = '#f8d7da';
+                statusDiv.style.color = '#721c24';
+                statusDiv.innerHTML = error.message;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Send Message';
+            }
+        });
+    }
+});
+

@@ -102,7 +102,7 @@
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link p-0" href="vendors.html">Vendors</a></li>
-                        <li class="nav-item"><a class="nav-link p-0" href="#">About Us</a></li>
+                        
                     </ul>
                     <div class="header-action mt-3 mt-lg-0 mb-3 mb-lg-0 text-center">
                         <a href="register.html" class="btn-list-attire text-decoration-none d-inline-block">Start Listing Now!</a>
@@ -454,8 +454,12 @@
                             if (targetSection) {
                                 targetSection.style.display = 'block';
                             }
+                        }
+                    }
+                });
+            });
                             
-                            // Chart Initialization
+            // Chart Initialization
             const ctx = document.getElementById('visitsChart').getContext('2d');
             
             // Visual mockup fallback data used only if there are 0 total views across all products
@@ -564,8 +568,7 @@
             }
 
             initChart();
-        }
-    );
+        });
     
     </script>
     <!-- Logout Modal -->
@@ -613,4 +616,3 @@
     <script src="frontend-api.js?v=17"></script>
 </body>
 </html>
-
