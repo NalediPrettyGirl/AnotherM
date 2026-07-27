@@ -1,4 +1,23 @@
 const API_BASE_URL = 'https://djangoapi-treasured-l0xu.onrender.com';
+
+const APPROVED_BADGE_SVG = `
+<svg class="approved-badge-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110" width="30" height="30" style="position: absolute; top: 10px; right: 10px; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));" title="Approved by Admin">
+    <path fill="#9ed4a8" d="M 40,60 L 20,105 L 35,95 L 50,105 Z" />
+    <path fill="#9ed4a8" d="M 60,60 L 50,105 L 65,95 L 80,105 Z" />
+    <g fill="#ffffff">
+      <rect x="13" y="13" width="74" height="74" rx="14" />
+      <rect x="13" y="13" width="74" height="74" rx="14" transform="rotate(30, 50, 50)" />
+      <rect x="13" y="13" width="74" height="74" rx="14" transform="rotate(60, 50, 50)" />
+    </g>
+    <g fill="#9ed4a8">
+      <rect x="16" y="16" width="68" height="68" rx="12" />
+      <rect x="16" y="16" width="68" height="68" rx="12" transform="rotate(30, 50, 50)" />
+      <rect x="16" y="16" width="68" height="68" rx="12" transform="rotate(60, 50, 50)" />
+    </g>
+    <circle cx="50" cy="50" r="18" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 40,52 L 46,58 L 60,42" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+`;
 // const API_BASE_URL = 'http://127.0.0.1:8000'; // local testing
 
 // Helper to resolve absolute image URLs for local testing
@@ -8,15 +27,66 @@ function resolveImageUrl(url) {
     return `${API_BASE_URL}${url}`;
 }
 
+// Session inactivity timeout (60 minutes)
+const INACTIVITY_TIMEOUT_MS = 60 * 60 * 1000; 
+
+function checkSessionTimeout() {
+    let storedUserStr = localStorage.getItem('treasured_user');
+    const lastActivityStr = localStorage.getItem('treasured_last_activity');
+    const rememberMe = localStorage.getItem('treasured_remember_me') === 'true';
+    if (storedUserStr && lastActivityStr) {
+        const lastActivity = parseInt(lastActivityStr, 10);
+        const timeout = rememberMe ? 30 * 24 * 60 * 60 * 1000 : INACTIVITY_TIMEOUT_MS;
+        if (Date.now() - lastActivity > timeout) {
+            // Session expired
+            localStorage.removeItem('treasured_user');
+            localStorage.removeItem('treasured_token');
+            localStorage.removeItem('treasured_last_activity');
+            localStorage.removeItem('treasured_remember_me');
+            // If not already on login page, alert and redirect
+            if (!window.location.pathname.endsWith('login.html')) {
+                alert('Your session has expired due to inactivity. Please log in again.');
+                window.location.href = 'login.html';
+            }
+            return null; 
+        }
+    }
+    return storedUserStr;
+}
+
 // Global state
-const storedUserStr = localStorage.getItem('treasured_user');
+let storedUserStr = checkSessionTimeout();
 let parsedUser = null;
-try { parsedUser = storedUserStr ? JSON.parse(storedUserStr) : null; } catch(e) {}
+
+if (storedUserStr) {
+    try { parsedUser = JSON.parse(storedUserStr); } catch(e) {}
+    localStorage.setItem('treasured_last_activity', Date.now().toString());
+}
 
 const state = {
     user: parsedUser,
     token: parsedUser ? parsedUser.token : null,
 };
+
+// Activity tracker to reset timeout on user interaction
+function updateActivity() {
+    if (localStorage.getItem('treasured_user')) {
+        localStorage.setItem('treasured_last_activity', Date.now().toString());
+    }
+}
+let activityTimeout;
+function handleUserActivity() {
+    if (!activityTimeout) {
+        activityTimeout = setTimeout(() => {
+            updateActivity();
+            activityTimeout = null;
+        }, 5000);
+    }
+}
+window.addEventListener('mousemove', handleUserActivity);
+window.addEventListener('keydown', handleUserActivity);
+window.addEventListener('scroll', handleUserActivity);
+window.addEventListener('click', handleUserActivity);
 
 // Global Fetch Interceptor to auto-inject JWT token for backend API requests
 const originalFetch = window.fetch;
@@ -387,8 +457,6 @@ async function loadDashboardAccount() {
             const lname = document.getElementById('dash-lname').value.trim();
             const email = document.getElementById('dash-email').value.trim();
             const whatsapp = document.getElementById('dash-phone').value.trim();
-            const currPw = document.getElementById('dash-curr-pw').value;
-            const newPw = document.getElementById('dash-new-pw').value;
             
             if (fname.length < 2 || lname.length < 2) {
                 return alert('Name and surname must be at least 2 characters.');
@@ -414,18 +482,6 @@ async function loadDashboardAccount() {
                 whatsapp: finalWhatsapp,
             };
 
-            if (newPw) {
-                if (!currPw) {
-                    return alert('Current password is required to change password.');
-                }
-                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-                if (!passwordRegex.test(newPw)) {
-                    return alert('New password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
-                }
-                updatedData.currentPassword = currPw;
-                updatedData.newPassword = newPw;
-            }
-            
             try {
                 const response = await fetch(`${API_BASE_URL}/users/${state.user.id}`, {
                     method: 'PUT',
@@ -436,8 +492,6 @@ async function loadDashboardAccount() {
                     const saved = await response.json();
                     state.user = { ...state.user, ...saved };
                     localStorage.setItem('treasured_user', JSON.stringify(state.user));
-                    document.getElementById('dash-curr-pw').value = '';
-                    document.getElementById('dash-new-pw').value = '';
                     alert('Profile updated successfully!');
                 } else {
                     state.user = { ...state.user, ...updatedData };
@@ -633,6 +687,12 @@ window.handleLogin = function() {
                 
                 if (response.ok) {
                     const data = await response.json();
+                    const rememberCheckbox = document.getElementById('rememberMe');
+                    if (rememberCheckbox && rememberCheckbox.checked) {
+                        localStorage.setItem('treasured_remember_me', 'true');
+                    } else {
+                        localStorage.removeItem('treasured_remember_me');
+                    }
                     localStorage.setItem('treasured_user', JSON.stringify(data));
                     window.location.href = 'dashboard.html';
                 } else {
@@ -1590,6 +1650,13 @@ async function loadProductDetails() {
 
     // Element bindings
     document.getElementById('detail-title').innerText = product.title || 'Untitled Listing';
+    
+    // Check and add badge
+    const badgeContainer = document.getElementById('detail-badge-container');
+    if (badgeContainer) {
+        badgeContainer.innerHTML = product.status === 'approved' ? APPROVED_BADGE_SVG : '';
+    }
+
     document.getElementById('detail-price').innerText = product.price ? `R${product.price}` : 'R0';
     document.getElementById('detail-original-price').innerText = product.original_price ? `R${product.original_price}` : '';
     document.getElementById('detail-size').innerText = product.size || 'N/A';

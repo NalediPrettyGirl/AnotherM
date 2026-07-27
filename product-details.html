@@ -115,8 +115,8 @@
             <!-- Left Side: Image Gallery -->
             <div class="product-gallery">
                 <div class="main-image">
-                    <img id="detail-main-img" src="images/intro.png" alt="Product Image">
-                    <button class="zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                    <img id="detail-main-img" src="images/intro.png" alt="Product Image" style="cursor: pointer;" onclick="document.getElementById('zoomed-image').src = this.src; new bootstrap.Modal(document.getElementById('imageZoomModal')).show();">
+                    <button class="zoom-btn" onclick="document.getElementById('zoomed-image').src = document.getElementById('detail-main-img').src; new bootstrap.Modal(document.getElementById('imageZoomModal')).show();"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
                 </div>
                 <div id="detail-thumbnails" class="thumbnail-list">
                     <!-- Dynamic Thumbnails Injected Here -->
@@ -124,9 +124,10 @@
             </div>
 
             <!-- Right Side: Product Info -->
-            <div class="product-info-panel">
+            <div class="product-info-panel" style="position: relative;">
+                <div id="detail-badge-container"></div>
                 <div id="detail-condition" class="badge-preloved">Condition</div>
-
+                
                 <div class="seller-meta">
                     <div class="meta-item">
                         <i class="fa-regular fa-user"></i>
@@ -250,6 +251,18 @@
             </div>
         </div>
     </footer>
+
+    <!-- Image Zoom Modal -->
+    <div class="modal fade" id="imageZoomModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body text-center p-0 position-relative">
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: -15px; top: -15px; background-color: white; opacity: 1; border-radius: 50%; padding: 0.8rem; z-index: 1060; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></button>
+                    <img id="zoomed-image" src="" class="img-fluid rounded" alt="Zoomed Product Image" style="max-height: 90vh; object-fit: contain; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
