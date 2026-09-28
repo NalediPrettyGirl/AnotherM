@@ -31,7 +31,7 @@
             <div class="top-bar-left">
                 <div class="top-bar-item">
                     <i class="fa-regular fa-envelope"></i>
-                    <span>info@treasured.co.za</span>
+                    <span>info@anothermoment.co.za</span>
                 </div>
                 <div class="top-bar-item">
                     <i class="fa-regular fa-clock"></i>
@@ -44,15 +44,15 @@
                     <i class="fa-regular fa-user"></i>
                 </div>
 
-                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
                     <i class="fa-regular fa-bell notification-bell"></i>
                     <span class="notification-badge" id="nav-notifications-badge">0</span>
                     <div class="notification-dropdown" id="nav-notifications-dropdown">
                         <div class="notification-empty">Loading notifications...</div>
                     </div>
-                </div>
-<div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
-                    <i class="fa-regular fa-heart"></i>
                 </div>
             </div>
         </div>
@@ -150,8 +150,20 @@
                 <div class="form-group">
                     <input type="text" id="regUsername" class="form-control" placeholder="Username*" required>
                 </div>
-                <div class="form-group">
-                    <input type="password" id="regPassword" class="form-control" placeholder="Password*" required>
+                <div class="form-group" style="position: relative;">
+                    <input type="password" id="regPassword" class="form-control" placeholder="Password*" style="padding-right: 40px;" required>
+                    <i class="fa-regular fa-eye-slash" id="toggleRegPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #fff;" onclick="
+                        const pwd = document.getElementById('regPassword');
+                        if (pwd.type === 'password') {
+                            pwd.type = 'text';
+                            this.classList.remove('fa-eye-slash');
+                            this.classList.add('fa-eye');
+                        } else {
+                            pwd.type = 'password';
+                            this.classList.remove('fa-eye');
+                            this.classList.add('fa-eye-slash');
+                        }
+                    "></i>
                 </div>
 
                 <p class="privacy-text">Your personal data will be used to support your experience<br>throughout the
@@ -161,6 +173,27 @@
                     <span id="registerBtnText">Sign Up</span>
                     <span id="registerBtnLoader" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i>&nbsp;Registering...</span>
                 </button>
+
+                <!-- Social Logins -->
+                <div class="mt-3 mb-4 text-center text-white w-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <hr class="flex-grow-1 border-white opacity-50">
+                        <span class="px-2" style="font-size: 13px;">Or sign up with</span>
+                        <hr class="flex-grow-1 border-white opacity-50">
+                    </div>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Google login integration requires OAuth Developer keys.')">
+                            <i class="fa-brands fa-google fa-lg" style="color: #DB4437;"></i>
+                        </button>
+                        <button type="button" class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Facebook login integration requires Meta Developer keys.')">
+                            <i class="fa-brands fa-facebook fa-lg text-primary"></i>
+                        </button>
+                        <button type="button" class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Instagram login integration requires Meta Developer keys.')">
+                            <i class="fa-brands fa-instagram fa-lg" style="color: #E1306C;"></i>
+                        </button>
+                    </div>
+                </div>
+
                 <p class="text-center text-white" style="font-size: 14px;">Already have an account? <a href="login.html"
                         class="text-white fw-bold">Sign In</a></p>
             </form>
@@ -176,9 +209,9 @@
                 <div class="footer-logo">ANOTHER MOMENT</div>
                 <div class="footer-socials">
                     <span class="follow-text">Follow Us:</span>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/search/top?q=Another%20Moment%20-%20Events%20Attire%20Marketplace" target="_blank" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/anothermoment_attire/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@anothermoment_attire" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
                 </div>
             </div>
         </div>

@@ -126,8 +126,8 @@ h2,
 }
 
 .btn-list-attire {
-    background-color: var(--cream-btn);
-    color: var(--sage-green);
+    background-color: var(--gold);
+    color: var(--white);
     padding: 8px 20px;
     border-radius: 20px;
     font-size: 13px;
@@ -136,7 +136,7 @@ h2,
 }
 
 .btn-list-attire:hover {
-    background-color: #d1d8b2;
+    background-color: #a0894e;
     transform: translateY(-1px);
 }
 
@@ -2486,14 +2486,14 @@ h2,
 }
 
 /* Also for nav link dropdowns */
-.dropdown-menu {
+.nav-menu .dropdown-menu {
     background-color: var(--sage-green);
     border: none;
 }
-.dropdown-item {
+.nav-menu .dropdown-item {
     color: var(--white);
 }
-.dropdown-item:hover {
+.nav-menu .dropdown-item:hover {
     background-color: var(--sage-green-light);
     color: var(--white);
 }

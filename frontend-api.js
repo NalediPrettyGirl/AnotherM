@@ -560,8 +560,8 @@ async function loadDashboardListings() {
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold" style="color: var(--gold); font-size: 18px;">R ${product.price}</span>
                             <div>
-                                <button class="btn btn-sm btn-outline-secondary me-2 rounded-circle" style="width: 32px; height: 32px; padding: 0;" onclick="openEditListingModal('${product.id}')"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn btn-sm btn-outline-danger rounded-circle" style="width: 32px; height: 32px; padding: 0;" onclick="deleteDashboardListing('${product.id}')"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-sm me-2 rounded-circle" style="width: 32px; height: 32px; padding: 0; border-color: var(--sage-green); color: var(--sage-green); background-color: transparent; transition: all 0.2s;" onmouseover="this.style.backgroundColor='var(--sage-green)'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--sage-green)';" onclick="openEditListingModal('${product.id}')"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-sm rounded-circle" style="width: 32px; height: 32px; padding: 0; border-color: var(--gold); color: var(--gold); background-color: transparent; transition: all 0.2s;" onmouseover="this.style.backgroundColor='var(--gold)'; this.style.color='white';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--gold)';" onclick="deleteDashboardListing('${product.id}')"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
@@ -866,18 +866,20 @@ function setupImageUploads() {
     function handleFileSelect(input, previewContainer, maxFiles, globalStoreKey) {
         if (!input || !previewContainer) return;
         window[globalStoreKey] = [];
+        let accumulatedFiles = [];
         
-        input.addEventListener('change', function(e) {
+        function renderAndUpdate() {
+            const dt = new DataTransfer();
+            accumulatedFiles.forEach(file => dt.items.add(file));
+            input.files = dt.files;
+
             previewContainer.innerHTML = '';
-            window[globalStoreKey] = []; // clear on re-selection
-            const files = Array.from(e.target.files).slice(0, maxFiles);
+            window[globalStoreKey] = [];
             
-            files.forEach(file => {
-                if (!file.type.startsWith('image/')) return;
-                
+            accumulatedFiles.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    window[globalStoreKey].push(e.target.result); // store the base64 result
+                    window[globalStoreKey].push(e.target.result);
                     
                     const imgContainer = document.createElement('div');
                     imgContainer.style.width = '80px';
@@ -885,6 +887,7 @@ function setupImageUploads() {
                     imgContainer.style.borderRadius = '4px';
                     imgContainer.style.overflow = 'hidden';
                     imgContainer.style.border = '1px solid #ddd';
+                    imgContainer.style.position = 'relative';
                     
                     const img = document.createElement('img');
                     img.src = e.target.result;
@@ -892,11 +895,44 @@ function setupImageUploads() {
                     img.style.height = '100%';
                     img.style.objectFit = 'cover';
                     
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                    deleteBtn.style.position = 'absolute';
+                    deleteBtn.style.bottom = '4px';
+                    deleteBtn.style.right = '4px';
+                    deleteBtn.style.background = 'rgba(255, 255, 255, 0.8)';
+                    deleteBtn.style.color = '#ff4d4f';
+                    deleteBtn.style.borderRadius = '50%';
+                    deleteBtn.style.width = '20px';
+                    deleteBtn.style.height = '20px';
+                    deleteBtn.style.display = 'flex';
+                    deleteBtn.style.alignItems = 'center';
+                    deleteBtn.style.justifyContent = 'center';
+                    deleteBtn.style.cursor = 'pointer';
+                    deleteBtn.style.fontSize = '12px';
+                    
+                    deleteBtn.onclick = function(event) {
+                        event.preventDefault();
+                        accumulatedFiles.splice(index, 1);
+                        renderAndUpdate();
+                    };
+                    
                     imgContainer.appendChild(img);
+                    imgContainer.appendChild(deleteBtn);
                     previewContainer.appendChild(imgContainer);
                 };
                 reader.readAsDataURL(file);
             });
+        }
+        
+        input.addEventListener('change', function(e) {
+            const newFiles = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+            
+            // Check to avoid duplicating files that might somehow be reported again (edge case)
+            // But since input.files is rewritten, the new e.target.files will be just the newly selected ones
+            // unless the user drops the same file.
+            accumulatedFiles = accumulatedFiles.concat(newFiles).slice(0, maxFiles);
+            renderAndUpdate();
         });
     }
 
@@ -1371,8 +1407,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (topBarRight) {
                 topBarRight.innerHTML = `
                     <div class="user-profile-nav" style="display: flex; align-items: center; gap: 15px;">
-                        <div class="dropdown">
-                            <button class="user-name-dropdown dropdown-toggle border-0 bg-transparent p-0" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--dark-grey); font-size: 14px; font-weight: 500;">
+                        <div class="dropdown" style="display: flex; align-items: center;">
+                            <button class="user-name-dropdown dropdown-toggle border-0 bg-transparent p-0" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--dark-grey); font-size: 14px; font-weight: 500; display: flex; align-items: center;">
                                 <span>${userName}</span>
                                 <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: var(--gold); margin-left: 5px;"></i>
                             </button>
@@ -1383,15 +1419,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <li><a class="dropdown-item py-2 px-4 text-danger" href="#" onclick="logoutUser(event)"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout</a></li>
                             </ul>
                         </div>
-                        <i class="fa-regular fa-user" style="font-size: 18px; color: var(--gold);"></i>
-                        <div class="notifications-container" id="nav-notifications-bell" style="display: inline-block; position: relative;">
+                        <i class="fa-regular fa-user" style="font-size: 18px; color: var(--gold); display: flex; align-items: center;"></i>
+                        <div class="notifications-container" id="nav-notifications-bell" style="display: flex; align-items: center; position: relative;">
                             <i class="fa-regular fa-bell notification-bell" style="font-size: 18px; color: var(--gold); cursor: pointer;"></i>
                             <span class="notification-badge" id="nav-notifications-badge">0</span>
                             <div class="notification-dropdown" id="nav-notifications-dropdown">
                                 <div class="notification-empty">Loading notifications...</div>
                             </div>
                         </div>
-                        <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold); cursor: pointer;" title="Favorites"></i></a>
+                        <a href="favorites.html" class="text-decoration-none text-reset" style="display: flex; align-items: center;"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold); cursor: pointer;" title="Favorites"></i></a>
                     </div>
                 `;
             }
@@ -1404,11 +1440,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (topBarRight) {
             topBarRight.innerHTML = `
                 <div class="top-bar-item sign-in" style="display: flex; align-items: center; gap: 10px;">
-                    <a href="login.html" class="text-decoration-none text-reset" style="color: var(--dark-grey); font-size: 14px; font-weight: 500;"><span>Sign In / Register</span></a>
-                    <i class="fa-regular fa-user" style="font-size: 18px; color: var(--gold);"></i>
+                    <a href="login.html" class="text-decoration-none text-reset" style="color: var(--dark-grey); font-size: 14px; font-weight: 500; display: flex; align-items: center;"><span>Sign In / Register</span></a>
+                    <i class="fa-regular fa-user" style="font-size: 18px; color: var(--gold); display: flex; align-items: center;"></i>
                 </div>
                 <div class="top-bar-item favorites" style="cursor: pointer; display: flex; align-items: center;" title="Favorites">
-                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold);"></i></a>
+                    <a href="favorites.html" class="text-decoration-none text-reset" style="display: flex; align-items: center;"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold);"></i></a>
                 </div>
             `;
             // Re-apply standard layout gap if we replaced it
