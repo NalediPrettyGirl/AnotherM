@@ -227,9 +227,9 @@
             .then(res => res.json().then(data => ({ status: res.status, body: data })))
             .then(res => {
                 if (res.status === 200 || res.status === 201) {
-                    localStorage.setItem('token', res.body.token);
-                    localStorage.setItem('user', JSON.stringify(res.body));
-                    window.location.href = 'index.html';
+                    localStorage.setItem('treasured_user', JSON.stringify(res.body));
+                    localStorage.setItem('treasured_last_activity', Date.now().toString());
+                    window.location.href = 'dashboard.html';
                 } else {
                     if (errorDiv) {
                         document.getElementById('loginErrorMsg').textContent = res.body.error || 'Google login failed';
