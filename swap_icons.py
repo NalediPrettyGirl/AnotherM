@@ -1,13 +1,11 @@
 import os
 import re
 
-directory = r'c:\Users\User\Documents\dresses - Copy'
+directory = '.'
 
-# Regex to match the notifications block and favorites block
-# Notifications block starts with <div class="top-bar-item notifications-container"
-# and ends after its corresponding closing div (which has two inner divs)
+# Favorites is currently FIRST, notifications is SECOND. We want to swap them.
 pattern = re.compile(
-    r'(<div class="top-bar-item notifications-container".*?</div>\s*</div>\s*</div>)\s*(<div class="top-bar-item favorites".*?</div>)',
+    r'(<div class="top-bar-item favorites".*?</div>)\s*(<div class="top-bar-item notifications-container".*?</div>\s*</div>\s*</div>)',
     re.DOTALL
 )
 
@@ -17,6 +15,7 @@ for filename in os.listdir(directory):
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         
+        # Put notifications (\2) before favorites (\1)
         new_content = pattern.sub(r'\2\n                \1', content)
         
         if content != new_content:
