@@ -1420,6 +1420,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </ul>
                         </div>
                         <i class="fa-regular fa-user" style="font-size: 18px; color: var(--gold); display: flex; align-items: center;"></i>
+                        <a href="favorites.html" class="text-decoration-none text-reset" style="display: flex; align-items: center;"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold); cursor: pointer;" title="Favorites"></i></a>
                         <div class="notifications-container" id="nav-notifications-bell" style="display: flex; align-items: center; position: relative;">
                             <i class="fa-regular fa-bell notification-bell" style="font-size: 18px; color: var(--gold); cursor: pointer;"></i>
                             <span class="notification-badge" id="nav-notifications-badge">0</span>
@@ -1427,7 +1428,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="notification-empty">Loading notifications...</div>
                             </div>
                         </div>
-                        <a href="favorites.html" class="text-decoration-none text-reset" style="display: flex; align-items: center;"><i class="fa-regular fa-heart" style="font-size: 18px; color: var(--gold); cursor: pointer;" title="Favorites"></i></a>
                     </div>
                 `;
             }
