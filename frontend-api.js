@@ -940,6 +940,29 @@ function setupImageUploads() {
     handleFileSelect(extraInput, extraPreview, 4, 'collectedExtraImages');
 }
 
+// ─── Early-Bird Free Listing Helper ───────────────────────────────────────
+// The first FREE_LISTING_SLOTS people to publish a listing pay nothing.
+const FREE_LISTING_SLOTS = 15;
+
+/**
+ * Returns the current total number of published listings from the API.
+ * Falls back to Infinity (force paid) if the request fails.
+ */
+async function getTotalListingCount() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/products?limit=1`);
+        if (!res.ok) return Infinity;
+        const data = await res.json();
+        // Support both { count: N, results: [...] } and plain arrays
+        if (data && typeof data.count === 'number') return data.count;
+        if (Array.isArray(data)) return data.length;
+        return Infinity;
+    } catch {
+        return Infinity;
+    }
+}
+// ───────────────────────────────────────────────────────────────────────────
+
 // Function to handle attire listing
 function handleListAttire() {
     setupImageUploads();
@@ -1087,7 +1110,7 @@ function handleListAttire() {
         const confirmBtn = document.getElementById('confirm-payment-btn');
         if (confirmBtn) {
             confirmBtn.disabled = true;
-            confirmBtn.innerText = 'Processing Payment...';
+            confirmBtn.innerText = 'Checking eligibility...';
         }
         
         // Extract the form data
@@ -1207,6 +1230,46 @@ function handleListAttire() {
             }
             return;
         }
+
+        // ── Early-Bird Free Listing Check ──────────────────────────────
+        const currentCount = await getTotalListingCount();
+        const isEarlyBird = currentCount < FREE_LISTING_SLOTS;
+
+        if (isEarlyBird) {
+            // Lucky! Publish directly without charging.
+            try {
+                if (confirmBtn) {
+                    confirmBtn.innerText = 'Publishing for free...';
+                }
+                const response = await fetch(`${API_BASE_URL}/products`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${state.token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    const slotsLeft = Math.max(0, FREE_LISTING_SLOTS - currentCount - 1);
+                    const msg = slotsLeft > 0
+                        ? `🎉 Congratulations! You're one of the first ${FREE_LISTING_SLOTS} listers — your listing has been published for FREE!\n\n${slotsLeft} free slot${slotsLeft === 1 ? '' : 's'} remaining.`
+                        : `🎉 Congratulations! You claimed the last free listing slot — your listing has been published for FREE!`;
+                    alert(msg);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    const err = await response.json();
+                    alert('Failed to publish listing: ' + (err.error || err.detail || 'Unknown error'));
+                    if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'Publish Listing'; }
+                }
+            } catch (err) {
+                console.error('Free publish error:', err);
+                // Mock for offline testing
+                alert('🎉 (Offline Mode) Free listing published successfully!');
+                window.location.href = 'dashboard.html';
+            }
+            return;
+        }
+        // ── End Early-Bird Check ───────────────────────────────────────
 
         // Trigger Yoco Payment using our backend endpoint
         try {

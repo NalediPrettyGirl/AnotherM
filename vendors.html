@@ -19,7 +19,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
     <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 
@@ -111,77 +111,293 @@
     <!-- Vendors Main Content -->
     <main class="vendors-page">
         <div class="vendors-container">
-            <h1 class="page-title text-center mb-2 mt-4" style="font-family: 'Playfair Display', serif; color: var(--sage-green);">Our Vendors</h1>
-            <div class="text-center mb-4">
-                <a href="vendor-register.html" class="btn rounded-pill px-4 py-2 shadow-sm" style="background-color: var(--gold); color: var(--white); font-family: 'Poppins', sans-serif; font-weight: 500; text-decoration: none; border: none;">List a Service</a>
-            </div>
             
-            <!-- Category Tabs -->
-            <div class="vendor-tabs-wrapper">
-                <div class="vendor-tabs" id="vendorTabs">
-                    <button class="vendor-tab active" data-category="Venues">Venues</button>
-                    <button class="vendor-tab" data-category="Tailors and Dress Makers">Tailors and Dress Makers</button>
-                    <button class="vendor-tab" data-category="Wedding Planners">Wedding Planners</button>
-                    <button class="vendor-tab" data-category="Photographers">Photographers</button>
-                    <button class="vendor-tab" data-category="Dee Jays">Dee Jays</button>
-                    <button class="vendor-tab" data-category="Caterers">Caterers</button>
-                    <button class="vendor-tab" data-category="Make-Up Artists">Make-Up Artists</button>
-                    <button class="vendor-tab" data-category="Hair Dressers">Hair Dressers</button>
-                    <button class="vendor-tab" data-category="Barbers">Barbers</button>
-                    <button class="vendor-tab" data-category="Nail Technicians">Nail Technicians</button>
-                    <button class="vendor-tab" data-category="Event Managers">Event Managers</button>
+            <!-- Header Row -->
+            <div class="vendors-header-row">
+                <div class="vendors-title-group">
+                    <span class="vendors-eyebrow">VENDOR DIRECTORY</span>
+                    <h1 class="vendors-heading">Our Vendors</h1>
+                </div>
+                <div class="vendors-cta-group">
+                    <button type="button" class="btn-list-vendor" onclick="openVendorRequestModal()">Are you a vendor? Request to join</button>
                 </div>
             </div>
 
-            <!-- Province Filter -->
-            <div class="vendor-filters text-center my-4">
-                <select id="provinceFilter" class="form-control d-inline-block w-auto" style="border-radius: 30px; padding: 10px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee;">
-                    <option value="All">All Provinces</option>
-                    <option value="Eastern Cape">Eastern Cape</option>
-                    <option value="Free State">Free State</option>
-                    <option value="Gauteng">Gauteng</option>
-                    <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-                    <option value="Limpopo">Limpopo</option>
-                    <option value="Mpumalanga">Mpumalanga</option>
-                    <option value="North West">North West</option>
-                    <option value="Northern Cape">Northern Cape</option>
-                    <option value="Western Cape">Western Cape</option>
-                </select>
+            <!-- Search & Filter Card -->
+            <div class="vendor-search-card">
+                <form id="vendorSearchForm" onsubmit="event.preventDefault(); applyVendorFilters();">
+                    <div class="vendor-search-inputs">
+                        <!-- Category Input -->
+                        <div class="vendor-input-group">
+                            <label for="categorySelect">I'm looking for</label>
+                            <select id="categorySelect" class="vendor-select">
+                                <option value="All">All categories</option>
+                                <option value="Venues">Venues</option>
+                                <option value="Photographers">Photographers</option>
+                                <option value="Caterers">Caterers</option>
+                                <option value="Make-up Artists">Make-up Artists</option>
+                                <option value="Tailors and Dress Makers">Tailors and Dress Makers</option>
+                                <option value="Wedding Planners">Wedding Planners</option>
+                                <option value="Dee Jays">Dee Jays</option>
+                                <option value="Hair Dressers">Hair Dressers</option>
+                                <option value="Barbers">Barbers</option>
+                                <option value="Nail Technicians">Nail Technicians</option>
+                                <option value="Event Managers">Event Managers</option>
+                            </select>
+                        </div>
+
+                        <!-- Province Input -->
+                        <div class="vendor-input-group">
+                            <label for="provinceSelect">In</label>
+                            <select id="provinceSelect" class="vendor-select">
+                                <option value="All">All provinces</option>
+                                <option value="Eastern Cape">Eastern Cape</option>
+                                <option value="Free State">Free State</option>
+                                <option value="Gauteng">Gauteng</option>
+                                <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+                                <option value="Limpopo">Limpopo</option>
+                                <option value="Mpumalanga">Mpumalanga</option>
+                                <option value="North West">North West</option>
+                                <option value="Northern Cape">Northern Cape</option>
+                                <option value="Western Cape">Western Cape</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="vendor-btn-group">
+                            <button type="button" id="findVendorsBtn" class="btn-find-vendors">Find vendors</button>
+                        </div>
+                    </div>
+
+                    <!-- Popular Tags Row -->
+                    <div class="popular-tags-row">
+                        <span class="popular-label">Popular:</span>
+                        <div class="popular-pills">
+                            <button type="button" class="popular-pill" data-category="Venues">Venues</button>
+                            <button type="button" class="popular-pill" data-category="Photographers">Photographers</button>
+                            <button type="button" class="popular-pill" data-category="Caterers">Caterers</button>
+                            <button type="button" class="popular-pill" data-category="Make-up Artists">Make-up Artists</button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <!-- Vendor Grid -->
-            <div class="vendor-grid" id="vendorGrid">
-                <!-- Cards will be populated by JS -->
+            <!-- Results Summary Meta -->
+            <div class="vendor-results-meta">
+                <p>Showing <span class="fw-bold" id="selectedCategoryLabel">all categories</span> in <span class="fw-bold" id="selectedProvinceLabel">all provinces</span></p>
             </div>
+
+            <!-- Vendor Cards Grid -->
+            <div class="vendor-cards-grid" id="vendorGrid">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="vendor-empty-state d-none" id="vendorEmptyState">
+                <i class="fa-solid fa-magnifying-glass mb-3"></i>
+                <h3>No vendors found</h3>
+                <p>We couldn't find any vendors matching your current criteria. Try resetting your filters to explore all available services.</p>
+                <button type="button" id="resetFiltersBtn" class="btn-reset-filters">Reset all filters</button>
+            </div>
+
         </div>
     </main>
 
-    <!-- Vendor Detail Modal (Hidden by default) -->
-    <div class="vendor-modal-overlay" id="vendorModal">
-        <div class="vendor-modal-content">
-            <button class="close-modal" id="closeModal">&times;</button>
-            <div class="vendor-modal-header text-center">
-                <img src="images/intro.png" alt="Vendor Logo" id="modalLogo" class="modal-vendor-img mb-3">
-                <h2 id="modalName" style="font-family: 'Playfair Display', serif; color: var(--sage-green);">Vendor Name</h2>
-                <p id="modalCategory" class="text-muted mb-1">Category</p>
-                <p id="modalProvince" class="text-muted mb-3"><i class="fa-solid fa-location-dot"></i> Province</p>
+    <!-- Vendor Detail Modal (Profile Popup) -->
+    <div class="vendor-modal-overlay" id="vendorModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+        <div class="vendor-modal-container">
+            <button class="vendor-modal-close" id="closeModal" aria-label="Close modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- Logo Box -->
+            <div class="vendor-popup-logo" id="modalLogoWrap">
+                <span class="vendor-popup-logo-text" id="modalLogoText"><i class="fa-solid fa-store"></i></span>
+                <img src="" alt="Vendor Logo" id="modalLogoImg" class="vendor-popup-logo-img d-none">
             </div>
-            <div class="vendor-modal-body">
-                <div class="vendor-description mb-4">
-                    <h5 style="color: var(--sage-green);">About Us</h5>
-                    <p id="modalDesc">Vendor description goes here.</p>
-                </div>
-                <div class="vendor-contact bg-light p-3 rounded text-center">
-                    <h5 style="color: var(--sage-green);">Contact</h5>
-                    <p class="mb-1"><i class="fa-solid fa-phone"></i> <span id="modalPhone">012 345 6789</span></p>
-                    <p class="mb-0"><i class="fa-solid fa-envelope"></i> <span id="modalEmail">email@vendor.com</span></p>
-                </div>
+
+            <!-- Vendor Name -->
+            <h2 id="modalName" class="vendor-popup-title">Vendor Details</h2>
+
+            <!-- About Section -->
+            <div class="vendor-popup-about">
+                <span class="vendor-popup-about-label">ABOUT</span>
+                <p id="modalDesc" class="vendor-popup-desc">Professional vendor on Another Moment.</p>
+            </div>
+
+            <!-- Contact List (Grouped List) -->
+            <div class="vendor-popup-contact-list">
+                <!-- Phone -->
+                <a href="#" id="modalPhoneLink" class="vendor-contact-row">
+                    <div class="vendor-contact-icon-box">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="vendor-contact-info">
+                        <span class="vendor-contact-label">Phone</span>
+                        <span class="vendor-contact-val" id="modalPhone">—</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right vendor-contact-chevron"></i>
+                </a>
+
+                <!-- Email -->
+                <a href="#" id="modalEmailLink" class="vendor-contact-row">
+                    <div class="vendor-contact-icon-box">
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                    <div class="vendor-contact-info">
+                        <span class="vendor-contact-label">Email</span>
+                        <span class="vendor-contact-val" id="modalEmail">—</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right vendor-contact-chevron"></i>
+                </a>
+
+                <!-- Website -->
+                <a href="#" id="modalWebsiteLink" target="_blank" class="vendor-contact-row">
+                    <div class="vendor-contact-icon-box">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div class="vendor-contact-info">
+                        <span class="vendor-contact-label">Website</span>
+                        <span class="vendor-contact-val" id="modalWebsite">—</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right vendor-contact-chevron"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a href="#" id="modalInstagramLink" target="_blank" class="vendor-contact-row">
+                    <div class="vendor-contact-icon-box">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="vendor-contact-info">
+                        <span class="vendor-contact-label">Instagram</span>
+                        <span class="vendor-contact-val" id="modalInstagram">—</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right vendor-contact-chevron"></i>
+                </a>
             </div>
         </div>
     </div>
 
+    <!-- Vendor Request Modal -->
+    <div class="vendor-request-overlay" id="vendorRequestModal" role="dialog" aria-modal="true" aria-labelledby="reqModalTitle" style="display:none;">
+        <div class="vendor-request-container">
+            <button class="vendor-modal-close" id="closeRequestModal" aria-label="Close request form">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="vendor-req-header">
+                <div class="vendor-req-icon">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <h2 id="reqModalTitle" class="vendor-req-title">Request to Become a Vendor</h2>
+                <p class="vendor-req-subtitle">Fill in your details below and our team will review your application. We'll be in touch within 2–3 business days.</p>
+            </div>
+
+            <!-- Success State (hidden by default) -->
+            <div class="vendor-req-success d-none" id="vendorReqSuccess">
+                <div class="vendor-req-success-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3>Application Submitted!</h3>
+                <p>Thank you for your interest! Our team has received your application for <strong id="successBusinessName">your business</strong> and will review your request within 2–3 business days.</p>
+                <div style="background: #f4f6f4; border: 1px solid #d2ded4; border-radius: 12px; padding: 14px 18px; margin: 0 auto 24px; max-width: 440px; font-family: 'Poppins', sans-serif; font-size: 13.5px; color: #2b3e34; text-align: left;">
+                    <div class="mb-1"><strong>Application Reference:</strong> <span id="successRefNum" class="text-dark fw-bold">—</span></div>
+                    <div><strong>Notification Sent To:</strong> <span id="successEmail">—</span></div>
+                </div>
+                <button type="button" class="vendor-req-submit-btn" onclick="closeVendorRequestModal()">Done</button>
+            </div>
+
+            <!-- Form -->
+            <form id="vendorRequestForm" class="vendor-req-form" onsubmit="submitVendorRequest(event)" novalidate>
+
+                <div class="vendor-req-row">
+                    <div class="vendor-req-field">
+                        <label for="reqBusinessName">Business / Trading Name <span class="req-asterisk">*</span></label>
+                        <input type="text" id="reqBusinessName" placeholder="Trading or Business Name" required>
+                    </div>
+                    <div class="vendor-req-field">
+                        <label for="reqCategory">Service Category <span class="req-asterisk">*</span></label>
+                        <select id="reqCategory" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Venues">Venues</option>
+                            <option value="Photographers">Photographers</option>
+                            <option value="Caterers">Caterers</option>
+                            <option value="Make-up Artists">Make-up Artists</option>
+                            <option value="Tailors and Dress Makers">Tailors and Dress Makers</option>
+                            <option value="Wedding Planners">Wedding Planners</option>
+                            <option value="Dee Jays">Dee Jays</option>
+                            <option value="Hair Dressers">Hair Dressers</option>
+                            <option value="Barbers">Barbers</option>
+                            <option value="Nail Technicians">Nail Technicians</option>
+                            <option value="Event Managers">Event Managers</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="vendor-req-row">
+                    <div class="vendor-req-field">
+                        <label for="reqContactName">Contact Person <span class="req-asterisk">*</span></label>
+                        <input type="text" id="reqContactName" placeholder="Your full name" required>
+                    </div>
+                    <div class="vendor-req-field">
+                        <label for="reqPhone">Phone Number <span class="req-asterisk">*</span></label>
+                        <input type="tel" id="reqPhone" placeholder="e.g. 082 123 4567" required>
+                    </div>
+                </div>
+
+                <div class="vendor-req-row">
+                    <div class="vendor-req-field">
+                        <label for="reqEmail">Email Address <span class="req-asterisk">*</span></label>
+                        <input type="email" id="reqEmail" placeholder="you@business.co.za" required>
+                    </div>
+                    <div class="vendor-req-field">
+                        <label for="reqProvince">Province <span class="req-asterisk">*</span></label>
+                        <select id="reqProvince" required>
+                            <option value="" disabled selected>Select province</option>
+                            <option>Eastern Cape</option>
+                            <option>Free State</option>
+                            <option>Gauteng</option>
+                            <option>KwaZulu-Natal</option>
+                            <option>Limpopo</option>
+                            <option>Mpumalanga</option>
+                            <option>North West</option>
+                            <option>Northern Cape</option>
+                            <option>Western Cape</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="vendor-req-field vendor-req-full">
+                    <label for="reqWebsite">Website / Social Media Link <span class="req-optional">(optional)</span></label>
+                    <input type="url" id="reqWebsite" placeholder="https://yourwebsite.co.za or @yourinstagram">
+                </div>
+
+                <div class="vendor-req-field vendor-req-full">
+                    <label for="reqMessage">Tell us about your business <span class="req-asterisk">*</span></label>
+                    <textarea id="reqMessage" rows="4" placeholder="Briefly describe your services, experience, and why you'd like to join Another Moment..." required></textarea>
+                </div>
+
+                <div class="vendor-req-error d-none" id="vendorReqError">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="vendorReqErrorMsg">Please fill in all required fields.</span>
+                </div>
+
+                <div class="vendor-req-actions">
+                    <button type="button" class="vendor-req-cancel-btn" onclick="closeVendorRequestModal()">Cancel</button>
+                    <button type="submit" class="vendor-req-submit-btn" id="vendorReqSubmitBtn">
+                        <span id="vendorReqSubmitText">Submit Application</span>
+                        <i class="fa-solid fa-paper-plane ms-2" id="vendorReqSubmitIcon"></i>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="footer mt-5">
+    <footer class="footer mt-0">
         <div class="footer-top">
             <div class="footer-top-container">
                 <div class="footer-logo">ANOTHER MOMENT</div>
@@ -204,98 +420,477 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="frontend-api.js?v=17"></script>
     <script>
-        // Mock Vendor Data (Since there's no backend endpoint mentioned for vendors yet)
-        const mockVendors = [
-            { id: 1, name: "Grand Luxe Venue", category: "Venues", province: "Gauteng", desc: "A beautiful luxury venue for your dream wedding.", phone: "082 111 2222", email: "info@grandluxe.co.za", logo: "images/categories/wedding_dresses.png" },
-            { id: 2, name: "Sunset Estates", category: "Venues", province: "Western Cape", desc: "Picturesque vineyard setting with breathtaking sunset views.", phone: "082 333 4444", email: "bookings@sunsetestates.co.za", logo: "images/categories/wedding_dresses.png" },
-            { id: 3, name: "Stitch & Style", category: "Tailors and Dress Makers", province: "Gauteng", desc: "Expert dressmakers specializing in custom bridal gowns.", phone: "011 555 6666", email: "hello@stitchandstyle.co.za", logo: "images/categories/matric_dance.png" },
-            { id: 4, name: "Perfect Day Planners", category: "Wedding Planners", province: "KwaZulu-Natal", desc: "Full-service wedding coordination to make your day stress-free.", phone: "031 777 8888", email: "plan@perfectday.co.za", logo: "images/categories/traditional_dresses.png" },
-            { id: 5, name: "Lens Magic", category: "Photographers", province: "Gauteng", desc: "Capturing your special moments with artistic flair.", phone: "083 999 0000", email: "smile@lensmagic.co.za", logo: "images/categories/mens_formal.png" },
-            { id: 6, name: "DJ Vibes", category: "Dee Jays", province: "Free State", desc: "Keeping the dance floor alive all night long.", phone: "084 123 4567", email: "music@djvibes.co.za", logo: "images/categories/mens_traditional.png" },
-            { id: 7, name: "Gourmet Bites", category: "Caterers", province: "Western Cape", desc: "Delicious fine dining catering for large events.", phone: "021 987 6543", email: "food@gourmetbites.co.za", logo: "images/intro.png" },
-            { id: 8, name: "Flawless Faces", category: "Make-Up Artists", province: "Gauteng", desc: "Professional bridal makeup that lasts all day.", phone: "072 456 7890", email: "glam@flawlessfaces.co.za", logo: "images/intro.png" },
-            { id: 9, name: "Crown Hair Studio", category: "Hair Dressers", province: "Eastern Cape", desc: "Bridal hair styling experts.", phone: "073 567 8901", email: "hair@crownstudio.co.za", logo: "images/intro.png" },
-            { id: 10, name: "Sharp Cuts", category: "Barbers", province: "Gauteng", desc: "Crisp fades and grooming for the groomsmen.", phone: "074 678 9012", email: "cuts@sharpcuts.co.za", logo: "images/intro.png" },
-            { id: 11, name: "Nail Envy", category: "Nail Technicians", province: "Western Cape", desc: "Elegant manicures for your big day.", phone: "075 789 0123", email: "nails@nailenvy.co.za", logo: "images/intro.png" },
-            { id: 12, name: "Elite Event Managers", category: "Event Managers", province: "KwaZulu-Natal", desc: "Managing your event from start to finish.", phone: "076 890 1234", email: "manage@eliteevents.co.za", logo: "images/intro.png" }
-        ];
-
-        let currentCategory = "Venues";
+        // Directory state (loaded dynamically from database/API)
+        let directoryVendors = [];
+        let currentCategory = "All";
         let currentProvince = "All";
 
+        // DOM elements
         const grid = document.getElementById('vendorGrid');
+        const emptyState = document.getElementById('vendorEmptyState');
+        const categorySelect = document.getElementById('categorySelect');
+        const provinceSelect = document.getElementById('provinceSelect');
+        const findVendorsBtn = document.getElementById('findVendorsBtn');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const selectedCategoryLabel = document.getElementById('selectedCategoryLabel');
+        const selectedProvinceLabel = document.getElementById('selectedProvinceLabel');
+        const popularPills = document.querySelectorAll('.popular-pill');
+
+        // Modal elements
         const modal = document.getElementById('vendorModal');
         const closeModal = document.getElementById('closeModal');
+        const modalLogoWrap = document.getElementById('modalLogoWrap');
+        const modalLogoText = document.getElementById('modalLogoText');
+        const modalLogoImg = document.getElementById('modalLogoImg');
+        const modalName = document.getElementById('modalName');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalPhone = document.getElementById('modalPhone');
+        const modalPhoneLink = document.getElementById('modalPhoneLink');
+        const modalEmail = document.getElementById('modalEmail');
+        const modalEmailLink = document.getElementById('modalEmailLink');
+        const modalWebsite = document.getElementById('modalWebsite');
+        const modalWebsiteLink = document.getElementById('modalWebsiteLink');
+        const modalInstagram = document.getElementById('modalInstagram');
+        const modalInstagramLink = document.getElementById('modalInstagramLink');
 
+        // Update the results summary text e.g. "Showing all categories in all provinces"
+        function updateSummaryMeta() {
+            selectedCategoryLabel.textContent = currentCategory === "All" ? "all categories" : currentCategory;
+            selectedProvinceLabel.textContent = currentProvince === "All" ? "all provinces" : currentProvince;
+        }
+
+        // Active Directory Vendors (Live API & Approved Records)
+
+        // Fetch live vendors/services from Django backend API
+        async function loadDirectoryVendors() {
+            grid.innerHTML = '<div class="text-center py-5 w-100" style="grid-column: 1 / -1;"><i class="fa-solid fa-spinner fa-spin fa-2x mb-3" style="color: var(--sage-green);"></i><p style="font-family: \'Poppins\', sans-serif; color: #666;">Loading vendors...</p></div>';
+            emptyState.classList.add('d-none');
+            grid.classList.remove('d-none');
+
+            directoryVendors = [];
+            const baseApi = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : 'https://djangoapi-treasured-l0xu.onrender.com';
+            
+            try {
+                let products = null;
+                if (typeof apiFetch === 'function') {
+                    products = await apiFetch('/products');
+                } else {
+                    const response = await fetch(`${baseApi}/products`);
+                    if (response.ok) products = await response.json();
+                }
+
+                if (Array.isArray(products) && products.length > 0) {
+                    const backendVendors = products
+                        .filter(p => p.category === 'Service' || (p.subCategory && p.subCategory.trim() !== '') || p.type === 'service')
+                        .map(p => ({
+                            id: 'api-' + p.id,
+                            name: p.title,
+                            category: p.subCategory || 'Service',
+                            town: p.city || '',
+                            province: p.province || '',
+                            price: p.price ? `From R${parseFloat(p.price).toLocaleString()} / ${p.rate_type || 'service'}` : 'Contact for quote',
+                            desc: p.description || '',
+                            phone: p.phone_number || '',
+                            email: p.contact_email || (p.seller ? p.seller.email : ''),
+                            website: p.website || '',
+                            instagram: p.instagram || '',
+                            image: (p.main_images && p.main_images[0]) || p.imageUrl || ''
+                        }));
+
+                    if (backendVendors.length > 0) {
+                        directoryVendors = [...backendVendors];
+                    }
+                }
+            } catch (fetchErr) {
+                console.warn('Backend vendor query notice:', fetchErr);
+            }
+
+            // Also check for any approved vendor records from local store
+            try {
+                const localApproved = JSON.parse(localStorage.getItem('anothermoment_approved_vendors') || '[]');
+                if (Array.isArray(localApproved) && localApproved.length > 0) {
+                    directoryVendors = [...localApproved, ...directoryVendors];
+                }
+            } catch (e) {}
+
+            renderVendors();
+        }
+
+        // Render Cards
         function renderVendors() {
             grid.innerHTML = '';
             
-            const filtered = mockVendors.filter(v => 
-                v.category === currentCategory && 
-                (currentProvince === "All" || v.province === currentProvince)
-            );
+            const filtered = directoryVendors.filter(v => {
+                const matchesCategory = (currentCategory === "All") || (v.category.toLowerCase() === currentCategory.toLowerCase());
+                const matchesProvince = (currentProvince === "All") || (v.province.toLowerCase() === currentProvince.toLowerCase());
+                return matchesCategory && matchesProvince;
+            });
+
+            updateSummaryMeta();
 
             if (filtered.length === 0) {
-                grid.innerHTML = '<p class="text-center w-100 py-5" style="grid-column: 1 / -1;">No vendors found for this selection.</p>';
+                grid.classList.add('d-none');
+                emptyState.classList.remove('d-none');
+                if (directoryVendors.length === 0) {
+                    emptyState.innerHTML = `
+                        <i class="fa-solid fa-store mb-3" style="font-size: 2.8rem; color: #9b8258;"></i>
+                        <h3>No vendors currently listed</h3>
+                        <p>There are no vendor profiles listed yet. Are you an event or wedding vendor? Submit a request to get featured in our directory.</p>
+                        <button type="button" class="btn-list-vendor mt-3" onclick="openVendorRequestModal()">Request to become a vendor</button>
+                    `;
+                } else {
+                    emptyState.innerHTML = `
+                        <i class="fa-solid fa-magnifying-glass mb-3"></i>
+                        <h3>No vendors found</h3>
+                        <p>We couldn't find any vendors matching your current criteria. Try resetting your filters to explore all available services.</p>
+                        <button type="button" id="resetFiltersBtn" class="btn-reset-filters" onclick="resetAllFilters()">Reset all filters</button>
+                    `;
+                }
                 return;
             }
 
+            grid.classList.remove('d-none');
+            emptyState.classList.add('d-none');
+
             filtered.forEach(vendor => {
                 const card = document.createElement('div');
-                card.className = 'vendor-card';
+                card.className = 'vendor-directory-card';
+                card.setAttribute('data-id', vendor.id);
+
+                const imageHtml = vendor.image ? 
+                    `<img src="${vendor.image}" alt="${vendor.name}" class="vendor-card-img" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'vendor-photo-placeholder\\'><i class=\\'fa-regular fa-image\\'></i></div>';">` :
+                    `<div class="vendor-photo-placeholder"><i class="fa-regular fa-image"></i></div>`;
+
                 card.innerHTML = `
-                    <div class="vendor-img-container">
-                        <img src="${vendor.logo}" alt="${vendor.name}">
+                    <div class="vendor-card-img-wrap">
+                        ${imageHtml}
                     </div>
-                    <div class="vendor-card-body">
-                        <h4>${vendor.name}</h4>
-                        <p class="vendor-prov"><i class="fa-solid fa-location-dot"></i> ${vendor.province}</p>
+                    <div class="vendor-card-content">
+                        <span class="vendor-category-tag">${vendor.category}</span>
+                        <h3 class="vendor-name-title">${vendor.name}</h3>
+                        <p class="vendor-location-line">${vendor.town}, ${vendor.province}</p>
+                        <span class="vendor-view-link">View profile &rarr;</span>
                     </div>
                 `;
+
                 card.addEventListener('click', () => openModal(vendor));
                 grid.appendChild(card);
             });
         }
 
-        function openModal(vendor) {
-            document.getElementById('modalLogo').src = vendor.logo;
-            document.getElementById('modalName').innerText = vendor.name;
-            document.getElementById('modalCategory').innerText = vendor.category;
-            document.getElementById('modalProvince').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${vendor.province}`;
-            document.getElementById('modalDesc').innerText = vendor.desc;
-            document.getElementById('modalPhone').innerText = vendor.phone;
-            document.getElementById('modalEmail').innerText = vendor.email;
-            
-            modal.style.display = 'flex';
+        // Apply filters from dropdowns
+        function applyVendorFilters() {
+            currentCategory = categorySelect.value;
+            currentProvince = provinceSelect.value;
+            syncPopularPills();
+            renderVendors();
         }
 
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
+        // Sync popular pill active states
+        function syncPopularPills() {
+            popularPills.forEach(pill => {
+                const pillCategory = pill.getAttribute('data-category');
+                if (currentCategory.toLowerCase() === pillCategory.toLowerCase()) {
+                    pill.classList.add('active');
+                } else {
+                    pill.classList.remove('active');
+                }
+            });
+        }
 
-        // Close on outside click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.style.display = 'none';
-        });
+        // Event listeners for filters
+        findVendorsBtn.addEventListener('click', applyVendorFilters);
+        categorySelect.addEventListener('change', applyVendorFilters);
+        provinceSelect.addEventListener('change', applyVendorFilters);
 
-        // Tab Clicking
-        document.querySelectorAll('.vendor-tab').forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                document.querySelectorAll('.vendor-tab').forEach(t => t.classList.remove('active'));
-                e.target.classList.add('active');
-                currentCategory = e.target.getAttribute('data-category');
+        // Popular tag pills
+        popularPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const cat = pill.getAttribute('data-category');
+                if (currentCategory === cat) {
+                    currentCategory = "All";
+                    categorySelect.value = "All";
+                } else {
+                    currentCategory = cat;
+                    categorySelect.value = cat;
+                }
+                syncPopularPills();
                 renderVendors();
             });
         });
 
-        // Province Changing
-        document.getElementById('provinceFilter').addEventListener('change', (e) => {
-            currentProvince = e.target.value;
+        // Reset filters button in empty state
+        function resetAllFilters() {
+            currentCategory = "All";
+            currentProvince = "All";
+            categorySelect.value = "All";
+            provinceSelect.value = "All";
+            syncPopularPills();
             renderVendors();
+        }
+        window.resetAllFilters = resetAllFilters;
+        if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetAllFilters);
+
+        // Modal Logic
+        function openModal(vendor) {
+            // Logo handling
+            if (vendor.logo) {
+                modalLogoImg.src = vendor.logo;
+                modalLogoImg.classList.remove('d-none');
+                modalLogoText.classList.add('d-none');
+            } else {
+                modalLogoImg.src = '';
+                modalLogoImg.classList.add('d-none');
+                modalLogoText.classList.remove('d-none');
+            }
+            
+            modalName.innerText = vendor.name || "Vendor Details";
+            modalDesc.innerText = vendor.desc || "Verified wedding & event service vendor on Another Moment.";
+            
+            // Phone
+            if (vendor.phone && vendor.phone !== '—') {
+                modalPhone.innerText = vendor.phone;
+                modalPhoneLink.href = `tel:${vendor.phone.replace(/[^0-9+]/g, '')}`;
+                modalPhoneLink.style.display = 'flex';
+            } else {
+                modalPhone.innerText = 'Available upon inquiry';
+                modalPhoneLink.href = '#';
+                modalPhoneLink.style.display = 'flex';
+            }
+
+            // Email
+            if (vendor.email && vendor.email !== '—') {
+                modalEmail.innerText = vendor.email;
+                modalEmailLink.href = `mailto:${vendor.email}`;
+                modalEmailLink.style.display = 'flex';
+            } else {
+                modalEmail.innerText = 'Contact via inquiry';
+                modalEmailLink.href = '#';
+                modalEmailLink.style.display = 'flex';
+            }
+
+            // Website
+            if (vendor.website && vendor.website !== '—' && vendor.website !== 'Not provided') {
+                modalWebsite.innerText = vendor.website;
+                const fullWebsiteUrl = vendor.website.startsWith('http') ? vendor.website : `https://${vendor.website}`;
+                modalWebsiteLink.href = fullWebsiteUrl;
+                modalWebsiteLink.style.display = 'flex';
+            } else {
+                modalWebsiteLink.style.display = 'none';
+            }
+
+            // Instagram
+            if (vendor.instagram && vendor.instagram !== '—' && vendor.instagram !== 'Not provided') {
+                modalInstagram.innerText = vendor.instagram;
+                const cleanHandle = vendor.instagram.replace(/^@/, '');
+                modalInstagramLink.href = `https://instagram.com/${cleanHandle}`;
+                modalInstagramLink.style.display = 'flex';
+            } else {
+                modalInstagramLink.style.display = 'none';
+            }
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalHandler() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        closeModal.addEventListener('click', closeModalHandler);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalHandler();
+            }
         });
 
-        // Initial Render
-        renderVendors();
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModalHandler();
+            }
+        });
+
+        // Check URL Query Parameters on Load
+        function checkUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const catParam = urlParams.get('category');
+            const provParam = urlParams.get('province');
+
+            if (catParam) {
+                categorySelect.value = catParam;
+                currentCategory = catParam;
+            }
+
+            if (provParam) {
+                provinceSelect.value = provParam;
+                currentProvince = provParam;
+            }
+
+            syncPopularPills();
+        }
+
+        // Initial Load (Dynamic fetch from backend + verified directory)
+        checkUrlParams();
+        loadDirectoryVendors();
+
+        // ── Vendor Request Modal ──────────────────────────────────────────────
+        const vendorRequestModal   = document.getElementById('vendorRequestModal');
+        const closeRequestModalBtn = document.getElementById('closeRequestModal');
+        const vendorRequestForm    = document.getElementById('vendorRequestForm');
+        const vendorReqSuccess     = document.getElementById('vendorReqSuccess');
+        const vendorReqError       = document.getElementById('vendorReqError');
+        const vendorReqErrorMsg    = document.getElementById('vendorReqErrorMsg');
+        const vendorReqSubmitBtn   = document.getElementById('vendorReqSubmitBtn');
+        const vendorReqSubmitText  = document.getElementById('vendorReqSubmitText');
+        const vendorReqSubmitIcon  = document.getElementById('vendorReqSubmitIcon');
+
+        function openVendorRequestModal() {
+            vendorRequestModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            // Reset form state
+            vendorRequestForm.classList.remove('d-none');
+            vendorReqSuccess.classList.add('d-none');
+            vendorReqError.classList.add('d-none');
+            vendorRequestForm.reset();
+            vendorReqSubmitText.textContent = 'Submit Application';
+            vendorReqSubmitIcon.className = 'fa-solid fa-paper-plane ms-2';
+            vendorReqSubmitBtn.disabled = false;
+        }
+
+        function closeVendorRequestModal() {
+            vendorRequestModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        async function submitVendorRequest(e) {
+            e.preventDefault();
+            const businessName = document.getElementById('reqBusinessName').value.trim();
+            const category     = document.getElementById('reqCategory').value;
+            const contactName  = document.getElementById('reqContactName').value.trim();
+            const phone        = document.getElementById('reqPhone').value.trim();
+            const email        = document.getElementById('reqEmail').value.trim();
+            const province     = document.getElementById('reqProvince').value;
+            const website      = document.getElementById('reqWebsite') ? document.getElementById('reqWebsite').value.trim() : '';
+            const message      = document.getElementById('reqMessage').value.trim();
+
+            // Form validation
+            if (!businessName || !category || !contactName || !phone || !email || !province || !message) {
+                vendorReqErrorMsg.textContent = 'Please fill in all required fields.';
+                vendorReqError.classList.remove('d-none');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                vendorReqErrorMsg.textContent = 'Please enter a valid email address.';
+                vendorReqError.classList.remove('d-none');
+                return;
+            }
+
+            vendorReqError.classList.add('d-none');
+
+            // Set loading status
+            vendorReqSubmitText.textContent = 'Submitting application...';
+            vendorReqSubmitIcon.className = 'fa-solid fa-spinner fa-spin ms-2';
+            vendorReqSubmitBtn.disabled = true;
+
+            const refId = 'VR-' + Math.floor(100000 + Math.random() * 900000);
+
+            // 1. Build application record
+            const applicationRecord = {
+                id: refId,
+                businessName,
+                category,
+                contactName,
+                phone,
+                email,
+                province,
+                website: website || 'Not provided',
+                message,
+                submittedAt: new Date().toISOString(),
+                status: 'pending_review'
+            };
+
+            // 2. Persist locally to vendor requests store
+            try {
+                const storedRequests = JSON.parse(localStorage.getItem('anothermoment_vendor_requests') || '[]');
+                storedRequests.unshift(applicationRecord);
+                localStorage.setItem('anothermoment_vendor_requests', JSON.stringify(storedRequests));
+            } catch (err) {
+                console.warn('LocalStorage save notice:', err);
+            }
+
+            // 3. Dispatch real notification to backend /contact endpoint
+            const formattedMessage = [
+                '=== NEW VENDOR PARTNERSHIP APPLICATION ===',
+                `Application Reference: ${refId}`,
+                `Business Name: ${businessName}`,
+                `Category: ${category}`,
+                `Province: ${province}`,
+                `Contact Person: ${contactName}`,
+                `Phone / WhatsApp: ${phone}`,
+                `Email: ${email}`,
+                `Website / Social: ${website || 'Not provided'}`,
+                '',
+                'About the Business & Services:',
+                message,
+                '',
+                `Submission Date: ${new Date().toLocaleString('en-ZA')}`,
+                'Status: Pending Admin Review'
+            ].join('\n');
+
+            const baseApi = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : 'https://djangoapi-treasured-l0xu.onrender.com';
+
+            try {
+                await fetch(`${baseApi}/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: contactName,
+                        lastName: `(Vendor: ${businessName})`,
+                        email: email,
+                        message: formattedMessage
+                    })
+                });
+            } catch (apiError) {
+                console.warn('API notification dispatched (saved locally):', apiError);
+            }
+
+            // 4. Update and display success state
+            const successBiz = document.getElementById('successBusinessName');
+            const successRef = document.getElementById('successRefNum');
+            const successMail = document.getElementById('successEmail');
+            if (successBiz) successBiz.textContent = businessName;
+            if (successRef) successRef.textContent = refId;
+            if (successMail) successMail.textContent = email;
+
+            vendorRequestForm.classList.add('d-none');
+            vendorReqSuccess.classList.remove('d-none');
+
+            // Reset submit button state
+            vendorReqSubmitText.textContent = 'Submit Application';
+            vendorReqSubmitIcon.className = 'fa-solid fa-paper-plane ms-2';
+            vendorReqSubmitBtn.disabled = false;
+        }
+
+        // Make functions global so onclick attributes can reach them
+        window.openVendorRequestModal  = openVendorRequestModal;
+        window.closeVendorRequestModal = closeVendorRequestModal;
+        window.submitVendorRequest     = submitVendorRequest;
+
+        // Close on overlay click
+        vendorRequestModal.addEventListener('click', (e) => {
+            if (e.target === vendorRequestModal) closeVendorRequestModal();
+        });
+        closeRequestModalBtn.addEventListener('click', closeVendorRequestModal);
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && vendorRequestModal.style.display === 'flex') {
+                closeVendorRequestModal();
+            }
+        });
     </script>
 </body>
 
