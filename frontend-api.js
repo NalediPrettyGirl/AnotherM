@@ -764,6 +764,11 @@ function handleRegister() {
         if (password.length < 6 || !passwordRegex.test(password)) {
             return showError('Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
         }
+
+        const termsCheckbox = document.getElementById('acceptTerms');
+        if (termsCheckbox && !termsCheckbox.checked) {
+            return showError('You must accept the Terms & Conditions to register.');
+        }
         if (errorBox) errorBox.style.display = 'none';
 
         try {
@@ -831,6 +836,11 @@ function handleVendorRegister() {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
         if (password.length < 6 || !passwordRegex.test(password)) {
             return showError('Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
+        }
+
+        const termsCheckbox = document.getElementById('acceptVendorTerms') || document.getElementById('acceptTerms');
+        if (termsCheckbox && !termsCheckbox.checked) {
+            return showError('You must accept the Terms & Conditions to register.');
         }
         if (errorBox) errorBox.style.display = 'none';
 
@@ -1444,8 +1454,64 @@ function setupListAttireButtons() {
     });
 }
 
+// POPIA Privacy & Cookies Banner (Item 14)
+function initCookieConsent() {
+    if (localStorage.getItem('anotherm_cookie_consent')) return;
+    const banner = document.createElement('div');
+    banner.id = 'cookieConsentBanner';
+    banner.style.cssText = 'position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:#ffffff;border:1px solid rgba(179,154,88,0.45);border-radius:12px;padding:16px 20px;box-shadow:0 12px 35px rgba(0,0,0,0.18);z-index:99999;display:flex;flex-direction:column;gap:10px;font-family:Poppins,sans-serif;font-size:12.5px;color:#444;line-height:1.55;';
+    banner.innerHTML = `
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+            <i class="fa-solid fa-cookie-bite" style="color:var(--gold);font-size:20px;margin-top:2px;flex-shrink:0;"></i>
+            <div>
+                <strong style="color:var(--sage-green);">Privacy &amp; Cookies:</strong> We collect and process personal information in line with the Protection of Personal Information Act (POPIA). We use essential cookies to run the site and, with your consent, analytics cookies to improve it.
+            </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:12px;align-items:center;">
+            <a href="Another_Moment_Terms_and_Conditions.pdf" target="_blank" style="color:var(--sage-green);font-size:12px;text-decoration:underline;">Terms &amp; POPIA (PDF)</a>
+            <button id="acceptCookieBtn" style="background:var(--sage-green);color:#ffffff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;font-weight:600;cursor:pointer;">Accept</button>
+        </div>
+    `;
+    document.body.appendChild(banner);
+    const btn = document.getElementById('acceptCookieBtn');
+    if (btn) {
+        btn.onclick = () => {
+            localStorage.setItem('anotherm_cookie_consent', 'true');
+            banner.remove();
+        };
+    }
+}
+
+// Global Platform Disclaimer for Footer (Item 1)
+function setupGlobalFooterDisclaimer() {
+    const footerContainer = document.querySelector('.footer-bottom-container');
+    if (!footerContainer) return;
+    
+    if (!footerContainer.querySelector('.footer-platform-disclaimer')) {
+        const disclaimerP = document.createElement('p');
+        disclaimerP.className = 'footer-platform-disclaimer mb-2';
+        disclaimerP.style.cssText = 'font-size: 11.5px; line-height: 1.6; opacity: 0.9; max-width: 960px; margin: 0 auto 10px; text-align: center; color: #e2e8e0;';
+        disclaimerP.innerHTML = '<strong>Platform Disclaimer:</strong> Another Moment is a listing platform only. We connect people who want to sell or buy event attire with people looking for it. We don\'t own, inspect, store, clean or deliver any item listed on this site, and we are not a party to any agreement between users. All arrangements, payments, handovers and returns are the responsibility of the users involved.';
+        footerContainer.insertBefore(disclaimerP, footerContainer.firstChild);
+    }
+    
+    // Ensure Terms & Conditions link points to PDF
+    footerContainer.querySelectorAll('p').forEach(p => {
+        if (!p.classList.contains('footer-platform-disclaimer') && (p.innerHTML.includes('Terms &amp; Conditions') || p.innerHTML.includes('Terms & Conditions'))) {
+            if (!p.innerHTML.includes('Another_Moment_Terms_and_Conditions.pdf')) {
+                p.innerHTML = p.innerHTML.replace(
+                    /(Terms\s*(&amp;|&)\s*Conditions)/gi,
+                    '<a href="Another_Moment_Terms_and_Conditions.pdf" target="_blank" style="color: white; text-decoration: underline;">Terms &amp; Conditions (PDF)</a>'
+                );
+            }
+        }
+    });
+}
+
 // Initialize based on current page
 document.addEventListener('DOMContentLoaded', () => {
+    initCookieConsent();
+    setupGlobalFooterDisclaimer();
     // Top bar profile updates
     window.logoutUser = function(e) {
         if (e) e.preventDefault();

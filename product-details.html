@@ -168,8 +168,14 @@
                         alt="Size Chart Rule" style="width: 28px; height: auto;">
                     Size Chart
                 </a>
+
+                <!-- Disclaimer: Item 4 (Independent Listing Notice) -->
+                <div class="p-3 mt-3 mb-2 rounded" style="background-color: var(--cream); border: 1px solid rgba(179, 154, 88, 0.35); font-size: 12.5px; line-height: 1.55; color: #4a4a4a;">
+                    <i class="fa-solid fa-circle-exclamation me-1" style="color: var(--gold);"></i>
+                    <strong>Independent Listing:</strong> This item is listed by an independent user. Another Moment has not inspected it and cannot guarantee its condition, fit, authenticity or availability. Confirm measurements, rental dates, deposit and return terms directly with the lister before paying.
+                </div>
                 
-                <button id="add-to-favorite-btn" class="btn-outline-gold pt-2 pb-2 ps-5 pe-5 mt-4 mb-2 w-100" style="display: flex; align-items: center; justify-content: center;">
+                <button id="add-to-favorite-btn" class="btn-outline-gold pt-2 pb-2 ps-5 pe-5 mt-2 mb-2 w-100" style="display: flex; align-items: center; justify-content: center;">
                     <i class="fa-regular fa-heart me-2"></i> Add to Favorites
                 </button>
 
@@ -178,8 +184,47 @@
                     <p id="detail-description">Loading description...</p>
                 </div>
 
+                <!-- Disclaimers: Item 5 (Sizing & Fit), Item 6 (Rentals & Deposits), Item 10 (Hygiene) -->
+                <div class="accordion accordion-flush mb-4 border rounded" id="listingNotesAccordion" style="font-size: 13px;">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSizing">
+                            <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSizing" style="font-size: 13px; color: var(--sage-green);">
+                                <i class="fa-solid fa-ruler-combined me-2" style="color: var(--gold);"></i> Sizing, Fit &amp; Hygiene Guidelines
+                            </button>
+                        </h2>
+                        <div id="collapseSizing" class="accordion-collapse collapse" data-bs-parent="#listingNotesAccordion">
+                            <div class="accordion-body py-2 px-3 text-muted" style="line-height: 1.55;">
+                                <p class="mb-2"><strong>Sizing &amp; Fit:</strong> Sizes vary between brands and countries. Always ask for actual garment measurements (bust, waist, hips, length) and, where possible, arrange a fitting before your event. Another Moment is not responsible for items that don't fit.</p>
+                                <p class="mb-0"><strong>Hygiene &amp; Cleaning:</strong> Listers are responsible for having items cleaned before each rental. Renters should not alter, wash or dry-clean an item unless the lister agrees. Another Moment makes no guarantees about cleanliness.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingRentals">
+                            <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRentals" style="font-size: 13px; color: var(--sage-green);">
+                                <i class="fa-solid fa-handshake-angle me-2" style="color: var(--gold);"></i> Rentals, Deposits &amp; Damage Terms
+                            </button>
+                        </h2>
+                        <div id="collapseRentals" class="accordion-collapse collapse" data-bs-parent="#listingNotesAccordion">
+                            <div class="accordion-body py-2 px-3 text-muted" style="line-height: 1.55;">
+                                <p class="mb-0">Rental terms, including the fee, deposit, rental period, late return charges and damage costs, are set by each lister. Agree on these in writing before handover. Another Moment does not hold deposits, mediate disputes or cover loss or damage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="contact-seller-section">
                     <h2>Contact Seller</h2>
+
+                    <!-- Disclaimers: Item 7 (Payments) & Item 8 (Meeting up & safety) -->
+                    <div class="safety-tip-card p-3 mb-3 rounded" style="background-color: #f7f9f7; border: 1px solid rgba(103, 123, 100, 0.25); font-size: 12px; line-height: 1.5; color: #444;">
+                        <div class="d-flex align-items-center mb-1">
+                            <i class="fa-solid fa-shield-halved me-2" style="color: var(--sage-green);"></i>
+                            <strong style="color: var(--sage-green);">Safe Meeting &amp; Payment Tips:</strong>
+                        </div>
+                        <p class="mb-1"><strong>Meeting Up:</strong> For your safety, meet in a public place during daylight for fittings and handovers, bring someone with you, and check the item before paying. Report suspicious listings to us at <a href="mailto:info@anothermoment.co.za" style="color: var(--gold);">info@anothermoment.co.za</a>.</p>
+                        <p class="mb-0"><strong>Payments:</strong> Payments are made directly between users. Another Moment does not process, hold or refund payments. Never pay a deposit to someone you haven't verified, and never share banking passwords or OTPs.</p>
+                    </div>
                     <form class="contact-seller-form" id="contact-seller-form">
                         <div class="form-group border-bottom-only">
                             <input type="text" placeholder="Your Full Names*" required>

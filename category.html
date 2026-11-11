@@ -43,15 +43,15 @@
                     <i class="fa-regular fa-user"></i>
                 </div>
 
-                                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
-                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
-                </div>
-                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
+                                <div class="top-bar-item notifications-container" id="nav-notifications-bell" style="display: none;">
                     <i class="fa-regular fa-bell notification-bell"></i>
                     <span class="notification-badge" id="nav-notifications-badge">0</span>
                     <div class="notification-dropdown" id="nav-notifications-dropdown">
                         <div class="notification-empty">Loading notifications...</div>
                     </div>
+                </div>
+                <div class="top-bar-item favorites" style="cursor: pointer;" title="Favorites">
+                    <a href="favorites.html" class="text-decoration-none text-reset"><i class="fa-regular fa-heart"></i></a>
                 </div>
             </div>
         </div>
@@ -247,6 +247,11 @@
 
         <!-- Products Grid -->
         <div class="products-grid-container">
+            <!-- Disclaimer: Item 9 (Matric & Under-18 Notice) -->
+            <div id="category-guidance-notice" class="p-3 mb-3 rounded" style="background-color: var(--cream); border: 1px solid rgba(179, 154, 88, 0.35); font-size: 12.5px; color: #4a4a4a; line-height: 1.55;">
+                <i class="fa-solid fa-circle-info me-2" style="color: var(--gold);"></i>
+                <strong>Matric &amp; Under-18 Notice:</strong> Users must be 18 or older to create an account or list items. Learners under 18 may browse, but a parent or guardian must handle all communication, payment and agreements. Another Moment is a listing platform and does not inspect or guarantee items.
+            </div>
             <div class="products-grid">
                 <p class="text-center w-100">Loading products...</p>
             </div>

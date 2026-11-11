@@ -154,6 +154,13 @@
                     <input type="password" id="regPassword" class="form-control" placeholder="Password*" required>
                 </div>
 
+                <div class="auth-options mb-3" style="justify-content: flex-start; margin-top: 5px; margin-bottom: 20px;">
+                    <label class="checkbox-label" style="align-items: flex-start; text-align: left; font-size: 13.5px; line-height: 1.4; color: #fff;">
+                        <input type="checkbox" id="acceptVendorTerms" required style="margin-top: 2px; flex-shrink: 0;">
+                        <span>I accept the <a href="Another_Moment_Terms_and_Conditions.pdf" target="_blank" class="text-white text-decoration-underline fw-bold" style="text-underline-offset: 3px;"><i class="fa-solid fa-file-pdf me-1" style="color: var(--gold);"></i>Terms &amp; Conditions (PDF)</a></span>
+                    </label>
+                </div>
+
                 <p class="privacy-text">Your personal data will be used to support your experience<br>throughout the
                     website to manage to your account, and for in<br>our privacy policy</p>
 
@@ -169,15 +176,9 @@
                         <span class="px-2" style="font-size: 13px;">Or sign up with</span>
                         <hr class="flex-grow-1 border-white opacity-50">
                     </div>
-                    <div class="d-flex justify-content-center gap-3">
+                    <div class="d-flex justify-content-center">
                         <button type="button" class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Google login integration requires OAuth Developer keys.')">
                             <i class="fa-brands fa-google fa-lg" style="color: #DB4437;"></i>
-                        </button>
-                        <button type="button" class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Facebook login integration requires Meta Developer keys.')">
-                            <i class="fa-brands fa-facebook fa-lg text-primary"></i>
-                        </button>
-                        <button type="button" class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Instagram login integration requires Meta Developer keys.')">
-                            <i class="fa-brands fa-instagram fa-lg" style="color: #E1306C;"></i>
                         </button>
                     </div>
                 </div>
@@ -216,4 +217,3 @@
 </body>
 
 </html>
-
