@@ -145,7 +145,7 @@
                         </div>
                         <div class="field-row no-border flex-column align-items-start">
                             <label class="mb-2">Province</label>
-                            <select name="province" class="form-control list-select p-0">
+                            <select name="province" class="form-control list-select">
                                 <option value="" disabled selected>Select an option</option>
                                 <option value="Gauteng">Gauteng</option>
                                 <option value="Western Cape">Western Cape</option>
@@ -170,14 +170,14 @@
                             <label>Title</label>
                             <div class="split-input-wrapper">
                                 <span class="desc-text mb-2 d-block">E.g: 'Elegant Zulu Traditional Dress', 'White Mermaid Wedding Dress'</span>
-                                <input type="text" name="title" class="form-control list-input p-0" required>
+                                <input type="text" name="title" class="form-control list-input" placeholder="e.g. White Mermaid Wedding Dress" required>
                             </div>
                         </div>
                         <div class="field-row field-row-split align-items-start">
                             <label>Description</label>
                             <div class="split-input-wrapper">
                                 <span class="desc-text mb-2 d-block">Please provide a clear description of the attire here. If the attire has been altered for a specific size or height, please provide the details of the alterations.</span>
-                                <textarea name="description" class="form-control list-textarea p-2" rows="4" required></textarea>
+                                <textarea name="description" class="form-control list-textarea" rows="4" placeholder="Describe the style, fit, condition, fabric, alterations, and any key details..." required></textarea>
                             </div>
                         </div>
                         <div class="field-row">
@@ -211,7 +211,7 @@
                                 <label>Attire Size</label>
                                 <span class="muted-text">South African / General Sizing</span>
                             </div>
-                            <select name="size" class="form-control list-select p-0" required>
+                            <select name="size" class="form-control list-select" required>
                                 <option value="" disabled selected>Select an option</option>
                                 <option value="30">30 / XXS / XS</option>
                                 <option value="32">32 / XS / S</option>
@@ -405,7 +405,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="frontend-api.js?v=17"></script>
+    <script src="frontend-api.js?v=18"></script>
     <script>
         // Sync sidebar active highlight when clicking nav links
         document.querySelectorAll('.list-nav a').forEach(link => {

@@ -952,7 +952,7 @@ function setupImageUploads() {
 
 // ─── Early-Bird Free Listing Helper ───────────────────────────────────────
 // The first FREE_LISTING_SLOTS people to publish a listing pay nothing.
-const FREE_LISTING_SLOTS = 15;
+const FREE_LISTING_SLOTS = 50;
 
 /**
  * Returns the current total number of published listings from the API.
