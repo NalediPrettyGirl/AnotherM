@@ -226,7 +226,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="frontend-api.js?v=17"></script>
+    <script src="frontend-api.js?v=19"></script>
     <script>
         function handleGoogleCredentialResponse(response) {
             const token = response.credential;
@@ -250,6 +250,8 @@
                 if (res.status === 200 || res.status === 201) {
                     localStorage.setItem('token', res.body.token);
                     localStorage.setItem('user', JSON.stringify(res.body));
+                    localStorage.setItem('treasured_user', JSON.stringify(res.body));
+                    if (typeof collectRealCookies === 'function') collectRealCookies();
                     window.location.href = 'index.html';
                 } else {
                     if (errorDiv) {

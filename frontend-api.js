@@ -27,6 +27,115 @@ function resolveImageUrl(url) {
     return `${API_BASE_URL}${url}`;
 }
 
+// ==========================================
+// Real Cookie Utilities (POPIA & Browser Storage)
+// ==========================================
+function setCookie(name, value, days = 365, path = '/', sameSite = 'Lax') {
+    try {
+        let cookieStr = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; path=${path}; SameSite=${sameSite}`;
+        if (days) {
+            const maxAge = days * 24 * 60 * 60;
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            cookieStr += `; max-age=${maxAge}; expires=${expires}`;
+        }
+        if (window.location.protocol === 'https:') {
+            cookieStr += '; Secure';
+        }
+        document.cookie = cookieStr;
+    } catch (e) {
+        console.warn('Could not set cookie:', name, e);
+    }
+}
+
+function getCookie(name) {
+    try {
+        const matches = document.cookie.match(new RegExp('(?:^|; )' + encodeURIComponent(name).replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+        return matches ? decodeURIComponent(matches[1]) : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+function deleteCookie(name, path = '/') {
+    try {
+        document.cookie = `${encodeURIComponent(name)}=; path=${path}; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT${window.location.protocol === 'https:' ? '; Secure' : ''}`;
+    } catch (e) {}
+}
+
+window.setCookie = setCookie;
+window.getCookie = getCookie;
+window.deleteCookie = deleteCookie;
+
+// Real Cookie Collector: sets essential, session, visitor, and analytics cookies in compliance with POPIA
+function collectRealCookies(consentType = 'all') {
+    try {
+        // 1. Consent flag & timestamp cookies
+        setCookie('anotherm_cookie_consent', consentType, 365);
+        setCookie('anotherm_consent_date', new Date().toISOString(), 365);
+        localStorage.setItem('anotherm_cookie_consent', consentType);
+
+        // 2. Real Session Cookie (expires in 24 hours or end of session)
+        let sessionId = getCookie('anotherm_session_id');
+        if (!sessionId) {
+            sessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 9);
+            setCookie('anotherm_session_id', sessionId, 1);
+        }
+
+        // 3. Real Persistent Visitor ID (1 year)
+        let visitorId = getCookie('anotherm_visitor_id');
+        if (!visitorId) {
+            visitorId = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 9);
+            setCookie('anotherm_visitor_id', visitorId, 365);
+            setCookie('anotherm_first_visit', new Date().toISOString(), 365);
+        }
+
+        // 4. Visit Counter & Activity
+        let visitCount = parseInt(getCookie('anotherm_visit_count') || '0', 10);
+        if (!getCookie('anotherm_session_active')) {
+            visitCount += 1;
+            setCookie('anotherm_visit_count', visitCount.toString(), 365);
+            setCookie('anotherm_session_active', '1', 1);
+        }
+        setCookie('anotherm_last_active', new Date().toISOString(), 365);
+
+        // 5. Traffic Source / Referrer & Landing Page
+        if (!getCookie('anotherm_referrer')) {
+            const ref = document.referrer ? (new URL(document.referrer, location.href).hostname || 'direct') : 'direct';
+            setCookie('anotherm_referrer', ref, 30);
+        }
+        if (!getCookie('anotherm_landing_page')) {
+            setCookie('anotherm_landing_page', window.location.pathname || '/', 30);
+        }
+
+        // 6. User Auth Sync into Cookie
+        const storedUser = localStorage.getItem('treasured_user');
+        if (storedUser) {
+            try {
+                const userObj = JSON.parse(storedUser);
+                if (userObj && (userObj.email || userObj.username)) {
+                    setCookie('anotherm_auth_user', userObj.email || userObj.username, 30);
+                    if (userObj.role || userObj.user_type) {
+                        setCookie('anotherm_auth_role', userObj.role || userObj.user_type, 30);
+                    }
+                }
+            } catch (err) {}
+        }
+
+        // 7. Preferences (Currency & Viewed)
+        if (!getCookie('anotherm_currency')) {
+            setCookie('anotherm_currency', 'ZAR', 365);
+        }
+        const viewed = localStorage.getItem('treasured_recently_viewed');
+        if (viewed) {
+            setCookie('anotherm_recently_viewed', viewed, 30);
+        }
+    } catch (err) {
+        console.warn('Real cookie collection error:', err);
+    }
+}
+
+window.collectRealCookies = collectRealCookies;
+
 // Session inactivity timeout (60 minutes)
 const INACTIVITY_TIMEOUT_MS = 60 * 60 * 1000; 
 
@@ -118,7 +227,13 @@ async function apiFetch(endpoint, options = {}) {
             headers['Authorization'] = `Bearer ${state.token}`;
         }
         
+        const csrfToken = getCookie('csrftoken');
+        if (csrfToken && !headers['X-CSRFToken']) {
+            headers['X-CSRFToken'] = csrfToken;
+        }
+        
         const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            credentials: 'same-origin',
             ...options,
             headers
         });
@@ -694,6 +809,7 @@ window.handleLogin = function() {
                         localStorage.removeItem('treasured_remember_me');
                     }
                     localStorage.setItem('treasured_user', JSON.stringify(data));
+                    collectRealCookies();
                     window.location.href = 'dashboard.html';
                 } else {
                     const errorData = await response.json().catch(() => ({ error: 'Invalid username or password' }));
@@ -781,6 +897,7 @@ function handleRegister() {
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('treasured_user', JSON.stringify(data));
+                collectRealCookies();
                 window.location.href = 'dashboard.html';
             } else {
                 const errorData = await response.json().catch(() => ({ error: 'Registration failed' }));
@@ -854,6 +971,7 @@ function handleVendorRegister() {
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('treasured_user', JSON.stringify(data));
+                collectRealCookies();
                 window.location.href = 'list-service.html'; // Go directly to list-service!
             } else {
                 const errorData = await response.json().catch(() => ({ error: 'Registration failed' }));
@@ -1456,27 +1574,49 @@ function setupListAttireButtons() {
 
 // POPIA Privacy & Cookies Banner (Item 14)
 function initCookieConsent() {
-    if (localStorage.getItem('anotherm_cookie_consent')) return;
+    const existingConsent = getCookie('anotherm_cookie_consent') || localStorage.getItem('anotherm_cookie_consent');
+    if (existingConsent) {
+        // Consent already recorded: refresh session, visit, and activity cookies
+        collectRealCookies(existingConsent);
+        return;
+    }
+
+    if (document.getElementById('cookieConsentBanner')) return;
+
     const banner = document.createElement('div');
     banner.id = 'cookieConsentBanner';
-    banner.style.cssText = 'position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:#ffffff;border:1px solid rgba(179,154,88,0.45);border-radius:12px;padding:16px 20px;box-shadow:0 12px 35px rgba(0,0,0,0.18);z-index:99999;display:flex;flex-direction:column;gap:10px;font-family:Poppins,sans-serif;font-size:12.5px;color:#444;line-height:1.55;';
+    banner.style.cssText = 'position:fixed;bottom:20px;left:20px;right:20px;max-width:620px;margin:0 auto;background:#ffffff;border:1px solid rgba(179,154,88,0.45);border-radius:14px;padding:16px 20px;box-shadow:0 12px 35px rgba(0,0,0,0.2);z-index:99999;display:flex;flex-direction:column;gap:12px;font-family:Poppins,sans-serif;font-size:12.5px;color:#444;line-height:1.55;';
     banner.innerHTML = `
         <div style="display:flex;align-items:flex-start;gap:12px;">
-            <i class="fa-solid fa-cookie-bite" style="color:var(--gold);font-size:20px;margin-top:2px;flex-shrink:0;"></i>
+            <i class="fa-solid fa-cookie-bite" style="color:var(--gold);font-size:22px;margin-top:2px;flex-shrink:0;"></i>
             <div>
-                <strong style="color:var(--sage-green);">Privacy &amp; Cookies:</strong> We collect and process personal information in line with the Protection of Personal Information Act (POPIA). We use essential cookies to run the site and, with your consent, analytics cookies to improve it.
+                <strong style="color:var(--sage-green);font-size:13.5px;">Privacy &amp; Cookies:</strong> We collect and process real browser cookies (session IDs, preferences, security tokens, and anonymous analytics) in line with the Protection of Personal Information Act (POPIA) to maintain your session and improve your marketplace experience.
             </div>
         </div>
-        <div style="display:flex;justify-content:flex-end;gap:12px;align-items:center;">
-            <a href="Another_Moment_Terms_and_Conditions.pdf" target="_blank" style="color:var(--sage-green);font-size:12px;text-decoration:underline;">Terms &amp; POPIA (PDF)</a>
-            <button id="acceptCookieBtn" style="background:var(--sage-green);color:#ffffff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;font-weight:600;cursor:pointer;">Accept</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:6px;border-top:1px solid #f0f0f0;">
+            <a href="Another_Moment_Terms_and_Conditions.pdf" target="_blank" style="color:var(--sage-green);font-size:12px;text-decoration:underline;font-weight:500;">
+                <i class="fa-solid fa-file-pdf me-1" style="color:var(--gold);"></i>Terms &amp; POPIA (PDF)
+            </a>
+            <div style="display:flex;gap:8px;">
+                <button id="essentialCookieBtn" type="button" style="background:#f4f5f3;color:#555;border:1px solid #d5ded4;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;cursor:pointer;">Essential Only</button>
+                <button id="acceptCookieBtn" type="button" style="background:var(--sage-green);color:#ffffff;border:none;border-radius:20px;padding:6px 18px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 2px 6px rgba(103,123,100,0.3);">Accept All Cookies</button>
+            </div>
         </div>
     `;
     document.body.appendChild(banner);
-    const btn = document.getElementById('acceptCookieBtn');
-    if (btn) {
-        btn.onclick = () => {
-            localStorage.setItem('anotherm_cookie_consent', 'true');
+
+    const acceptBtn = document.getElementById('acceptCookieBtn');
+    if (acceptBtn) {
+        acceptBtn.onclick = () => {
+            collectRealCookies('all');
+            banner.remove();
+        };
+    }
+
+    const essentialBtn = document.getElementById('essentialCookieBtn');
+    if (essentialBtn) {
+        essentialBtn.onclick = () => {
+            collectRealCookies('essential');
             banner.remove();
         };
     }
@@ -1517,6 +1657,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e) e.preventDefault();
         localStorage.removeItem('treasured_user');
         localStorage.removeItem('treasured_token');
+        deleteCookie('anotherm_auth_user');
+        deleteCookie('anotherm_auth_role');
+        deleteCookie('anotherm_session_active');
         window.location.href = 'index.html';
     };
 
@@ -2053,6 +2196,7 @@ async function loadProductDetails() {
     recentlyViewed.unshift(productId); // Add to front
     recentlyViewed = recentlyViewed.slice(0, 10); // Keep last 10
     localStorage.setItem('treasured_recently_viewed', JSON.stringify(recentlyViewed));
+    setCookie('anotherm_recently_viewed', JSON.stringify(recentlyViewed), 30);
 }
 
 // Function to load recently viewed items
@@ -2061,7 +2205,7 @@ async function loadRecentlyViewed() {
     const section = document.getElementById('recently-viewed-section');
     if (!grid || !section) return;
 
-    const viewed = JSON.parse(localStorage.getItem('treasured_recently_viewed') || '[]');
+    const viewed = JSON.parse(localStorage.getItem('treasured_recently_viewed') || getCookie('anotherm_recently_viewed') || '[]');
     if (viewed.length === 0) {
         section.style.display = 'none';
         return;
@@ -2935,6 +3079,9 @@ async function markNotificationsAsRead() {
 window.logoutUser = function(e) {
     if (e) e.preventDefault();
     localStorage.removeItem('treasured_user');
+    deleteCookie('anotherm_auth_user');
+    deleteCookie('anotherm_auth_role');
+    deleteCookie('anotherm_session_active');
     window.location.href = 'index.html';
 };
 

@@ -198,7 +198,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="frontend-api.js?v=17"></script>
+    <script src="frontend-api.js?v=19"></script>
     
     <script>
         function handleGoogleCredentialResponse(response) {
@@ -223,6 +223,7 @@
                 if (res.status === 200 || res.status === 201) {
                     localStorage.setItem('treasured_user', JSON.stringify(res.body));
                     localStorage.setItem('treasured_last_activity', Date.now().toString());
+                    if (typeof collectRealCookies === 'function') collectRealCookies();
                     window.location.href = 'dashboard.html';
                 } else {
                     if (errorDiv) {
