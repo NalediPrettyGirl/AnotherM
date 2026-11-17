@@ -1074,26 +1074,45 @@ const FREE_LISTING_SLOTS = 50;
 
 /**
  * Returns the current total number of published listings from the API.
- * Falls back to Infinity (force paid) if the request fails.
+ * Falls back to 0 (allow free listing) if the request fails.
  */
 async function getTotalListingCount() {
     try {
-        const res = await fetch(`${API_BASE_URL}/products?limit=1`);
-        if (!res.ok) return Infinity;
+        const res = await fetch(`${API_BASE_URL}/products`);
+        if (!res.ok) return 0;
         const data = await res.json();
         // Support both { count: N, results: [...] } and plain arrays
         if (data && typeof data.count === 'number') return data.count;
         if (Array.isArray(data)) return data.length;
-        return Infinity;
+        return 0;
     } catch {
-        return Infinity;
+        return 0;
     }
+}
+
+// Update the visible Early-Bird notice banner with live remaining slots
+async function updateEarlyBirdBanner() {
+    const banner = document.getElementById('earlyBirdBanner');
+    if (!banner) return;
+    try {
+        const currentCount = await getTotalListingCount();
+        if (currentCount < FREE_LISTING_SLOTS) {
+            const slotsLeft = Math.max(0, FREE_LISTING_SLOTS - currentCount);
+            const desc = banner.querySelector('p');
+            if (desc) {
+                desc.innerHTML = `You qualify for free listing! <strong>${slotsLeft} of ${FREE_LISTING_SLOTS}</strong> free slots remaining. No R49 fee required.`;
+            }
+        } else {
+            banner.style.display = 'none';
+        }
+    } catch (e) {}
 }
 // ───────────────────────────────────────────────────────────────────────────
 
 // Function to handle attire listing
 function handleListAttire() {
     setupImageUploads();
+    updateEarlyBirdBanner();
     
     const form = document.getElementById('listing-form');
     if (!form) return;
