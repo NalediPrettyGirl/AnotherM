@@ -2371,6 +2371,32 @@ h2,
     border-radius: 50%;
 }
 
+.sidebar-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.sidebar-icon img,
+.sidebar-icon svg {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-link:hover .sidebar-icon img,
+.sidebar-link.active .sidebar-icon img,
+.sidebar-link:hover .sidebar-icon svg,
+.sidebar-link.active .sidebar-icon svg {
+    transform: scale(1.12);
+}
+
 .sidebar-bottom {
     margin-top: 30px;
 }
@@ -2605,7 +2631,7 @@ h2,
     content: '';
     width: 8px;
     height: 8px;
-    background-color: #b58d83; /* Matching the icon circle color */
+    background-color: #5C7260; /* Matching the icon circle color */
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -2664,7 +2690,7 @@ h2,
 .icon-circle {
     width: 40px;
     height: 40px;
-    background-color: #b58d83; /* Primary icon color */
+    background-color: #5C7260; /* Primary icon color */
     border-radius: 50%;
     display: flex;
     align-items: center;
