@@ -27,6 +27,16 @@ function resolveImageUrl(url) {
     return `${API_BASE_URL}${url}`;
 }
 
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 // ==========================================
 // Real Cookie Utilities (POPIA & Browser Storage)
 // ==========================================
@@ -385,17 +395,19 @@ function renderCategoryPage(page) {
 
     grid.innerHTML = '';
     pageProducts.forEach(product => {
+        const displayPrice = isNaN(parseFloat(product.price)) ? product.price : parseFloat(product.price).toLocaleString(undefined, { minimumFractionDigits: (String(product.price).includes('.') ? 2 : 0), maximumFractionDigits: 2 });
         const productHtml = `
-            <div class="outfit-card category-card">
+            <a href="product-details.html?id=${product.id}" class="outfit-card category-card text-decoration-none">
                 <div class="outfit-image-container">
-                    <img src="${resolveImageUrl(product.imageUrl)}" alt="${product.title}" style="width:120px;height:120px;object-fit:contain;">
+                    ${product.imageUrl ? `<img src="${resolveImageUrl(product.imageUrl)}" alt="${escapeHtml(product.title || 'Attire')}">` : `<div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted"><i class="fa-solid fa-image fa-2x"></i></div>`}
                 </div>
                 <div class="outfit-details">
-                    <p class="outfit-desc" style="font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;" title="${product.description || product.title}">${product.title}</p>
-                    <h3 class="outfit-price">R${product.price}</h3>
-                    <a href="product-details.html?id=${product.id}" class="btn-outline-gold w-100 mt-2 mb-2 p-2" style="border-radius:30px;">View</a>
+                    <h5 class="outfit-title" title="${escapeHtml(product.title || '')}">${escapeHtml(product.title || 'Untitled')}</h5>
+                    <div class="outfit-price-row">
+                        <span class="outfit-price">R ${displayPrice}</span>
+                    </div>
                 </div>
-            </div>
+            </a>
         `;
         grid.innerHTML += productHtml;
     });
@@ -2243,17 +2255,19 @@ async function loadRecentlyViewed() {
 
     grid.innerHTML = '';
     products.forEach(product => {
+        const displayPrice = isNaN(parseFloat(product.price)) ? product.price : parseFloat(product.price).toLocaleString(undefined, { minimumFractionDigits: (String(product.price).includes('.') ? 2 : 0), maximumFractionDigits: 2 });
         const productHtml = `
-            <div class="outfit-card">
+            <a href="product-details.html?id=${product.id}" class="outfit-card text-decoration-none">
                 <div class="outfit-image-container">
-                    <img src="${resolveImageUrl(product.imageUrl)}" alt="${product.title}" style="width:120px;height:120px;object-fit:contain;">
+                    ${product.imageUrl ? `<img src="${resolveImageUrl(product.imageUrl)}" alt="${escapeHtml(product.title || 'Attire')}">` : `<div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted"><i class="fa-solid fa-image fa-2x"></i></div>`}
                 </div>
                 <div class="outfit-details">
-                    <p class="outfit-desc" style="font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;" title="${product.description || product.title}">${product.title}</p>
-                    <h3 class="outfit-price">R${product.price}</h3>
-                    <a href="product-details.html?id=${product.id}" class="btn-outline-gold w-100">View</a>
+                    <h5 class="outfit-title" title="${escapeHtml(product.title || '')}">${escapeHtml(product.title || 'Untitled Attire')}</h5>
+                    <div class="outfit-price-row">
+                        <span class="outfit-price">R ${displayPrice}</span>
+                    </div>
                 </div>
-            </div>
+            </a>
         `;
         grid.innerHTML += productHtml;
     });
@@ -2282,16 +2296,18 @@ async function loadFavorites() {
 
     grid.innerHTML = '';
     products.forEach(product => {
+        const displayPrice = isNaN(parseFloat(product.price)) ? product.price : parseFloat(product.price).toLocaleString(undefined, { minimumFractionDigits: (String(product.price).includes('.') ? 2 : 0), maximumFractionDigits: 2 });
         const productHtml = `
-            <div class="outfit-card category-card">
+            <div class="outfit-card category-card" style="cursor: pointer;" onclick="if (!event.target.closest('.remove-fav-btn')) window.location.href='product-details.html?id=${product.id}';">
                 <div class="outfit-image-container">
-                    <img src="${resolveImageUrl(product.imageUrl)}" alt="${product.title}" style="width:120px;height:120px;object-fit:contain;">
+                    ${product.imageUrl ? `<img src="${resolveImageUrl(product.imageUrl)}" alt="${escapeHtml(product.title || 'Attire')}">` : `<div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted"><i class="fa-solid fa-image fa-2x"></i></div>`}
                 </div>
                 <div class="outfit-details">
-                    <p class="outfit-desc" style="font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;" title="${product.description || product.title}">${product.title}</p>
-                    <h3 class="outfit-price">R${product.price}</h3>
-                    <a href="product-details.html?id=${product.id}" class="btn-outline-gold w-100 mt-2 mb-2 p-2" style="border-radius:30px;">View</a>
-                    <button class="btn btn-sm btn-link text-danger w-100" onclick="removeFromFavorites('${product.id}')">Remove</button>
+                    <h5 class="outfit-title" title="${escapeHtml(product.title || '')}">${escapeHtml(product.title || 'Untitled')}</h5>
+                    <div class="outfit-price-row mb-2">
+                        <span class="outfit-price">R ${displayPrice}</span>
+                    </div>
+                    <button class="btn btn-sm btn-link text-danger w-100 remove-fav-btn" onclick="removeFromFavorites('${product.id}')">Remove</button>
                 </div>
             </div>
         `;
@@ -2324,17 +2340,19 @@ async function loadHomeProducts() {
     // Show last 5 products
     const recent = products.slice(-5).reverse();
     recent.forEach(product => {
+        const displayPrice = isNaN(parseFloat(product.price)) ? product.price : parseFloat(product.price).toLocaleString(undefined, { minimumFractionDigits: (String(product.price).includes('.') ? 2 : 0), maximumFractionDigits: 2 });
         const productHtml = `
-            <div class="outfit-card">
+            <a href="product-details.html?id=${product.id}" class="outfit-card text-decoration-none">
                 <div class="outfit-image-container">
-                    <img src="${resolveImageUrl(product.imageUrl)}" alt="${product.title}" width="400" height="400" style="object-fit:cover;">
+                    ${product.imageUrl ? `<img src="${resolveImageUrl(product.imageUrl)}" alt="${escapeHtml(product.title || 'Attire')}">` : `<div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted"><i class="fa-solid fa-image fa-2x"></i></div>`}
                 </div>
                 <div class="outfit-details">
-                    <p class="outfit-desc" style="font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;" title="${product.description || product.title}">${product.title}</p>
-                    <h3 class="outfit-price">R${product.price}</h3>
-                    <a href="product-details.html?id=${product.id}" class="btn-outline-gold w-100">View</a>
+                    <h5 class="outfit-title" title="${escapeHtml(product.title || '')}">${escapeHtml(product.title || 'Untitled')}</h5>
+                    <div class="outfit-price-row">
+                        <span class="outfit-price">R ${displayPrice}</span>
+                    </div>
                 </div>
-            </div>
+            </a>
         `;
         grid.innerHTML += productHtml;
     });

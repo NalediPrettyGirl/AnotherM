@@ -25,7 +25,7 @@ a {
 
 /* Colors */
 :root {
-    --sage-green: #677b64;
+    --sage-green: #5C7260;
     --sage-green-light: #778b74;
     --cream: #f6f5f0;
     --gold: #b39a58;
@@ -916,8 +916,8 @@ h2,
 
 /* Icon Circle */
 .icon-circle {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     background-color: var(--white);
     border-radius: 50%;
     display: flex;
@@ -996,33 +996,51 @@ h2,
 }
 
 .outfit-card {
-    flex: 0 0 210px;
-    max-width: 210px;
+    flex: 0 0 240px;
+    max-width: 240px;
     background-color: var(--white);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    text-align: center;
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    text-align: left;
+    border: 1px solid #ededed;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.outfit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    color: inherit;
+    text-decoration: none;
 }
 
 .outfit-image-container {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px 0;
-    height: 150px;
+    width: 100%;
+    height: 220px;
     overflow: hidden;
+    background-color: #f8f9fa;
+    padding: 0;
+    display: block;
 }
 
 .outfit-image-container img {
-    max-width: 140px;
-    max-height: 140px;
-    width: auto !important;
-    height: auto !important;
-    object-fit: contain;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
     display: block;
+    transition: transform 0.4s ease;
+}
+
+.outfit-card:hover .outfit-image-container img {
+    transform: scale(1.04);
 }
 
 .img-nav-btn {
@@ -1050,28 +1068,77 @@ h2,
 }
 
 .outfit-details {
-    padding: 10px 15px 15px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+    background-color: var(--white);
+    text-align: left;
+}
+
+.outfit-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--sage-green);
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
 }
 
 .outfit-desc {
-    display: none;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 1.45;
+    margin-bottom: 12px;
+    min-height: 35px;
+}
+
+.outfit-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: 0;
+    padding-top: 6px;
 }
 
 .outfit-price {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.outfit-badge {
+    font-size: 11px;
+    font-weight: 500;
+    background-color: var(--cream, #f4f2ed);
     color: var(--sage-green);
-    margin-bottom: 10px;
-    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
 }
 
 .outfit-details .btn-outline-gold {
     display: block;
-    width: 60%;
-    padding: 10px 0;
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .pagination-dots {
@@ -1094,6 +1161,32 @@ h2,
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#recently-viewed-grid {
+    overflow-x: auto;
+    padding-bottom: 15px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+#recently-viewed-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+#recently-viewed-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#recently-viewed-grid::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 4px;
+}
+
+#recently-viewed-grid .outfit-card {
+    flex: 0 0 240px !important;
+    max-width: 240px !important;
 }
 
 @media (max-width: 1024px) {
@@ -1129,7 +1222,7 @@ h2,
 }
 
 .footer-top {
-    background-color: #9ab098;
+    background-color: var(--gold);
     padding: 30px 0;
 }
 
@@ -1181,7 +1274,7 @@ h2,
 }
 
 .footer-bottom {
-    background-color: #6a7c66;
+    background-color: var(--sage-green);
     padding: 15px 0;
 }
 
@@ -1802,24 +1895,29 @@ h2,
 
 .category-card {
     background-color: var(--white);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    text-align: center;
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #ededed;
     display: flex;
     flex-direction: column;
 }
 
 .category-card .outfit-image-container {
-    height: 150px;
+    height: 220px;
     overflow: hidden;
+    padding: 0;
 }
 
 .category-card .outfit-desc {
-    padding: 0 10px;
-    font-size: 13px;
-    display: none;
+    padding: 0;
+    font-size: 12px;
+    color: #6c757d;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 35px;
 }
 
 /* Dropdown Menu for Header */
@@ -1965,7 +2063,7 @@ h2,
 }
 
 .auth-card {
-    background-color: #9cb19a;
+    background-color: #5C7260;
     border-radius: 12px;
     padding: 60px 50px;
     width: 100%;
@@ -2541,7 +2639,7 @@ h2,
 .section-header {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
     margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 1px solid #f0f0f0;
@@ -2552,6 +2650,15 @@ h2,
     font-weight: 600;
     margin: 0;
     color: var(--text-dark-dash);
+}
+
+.section-header .icon-circle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    margin-right: 18px;
+    flex-shrink: 0;
 }
 
 .icon-circle {
@@ -4011,7 +4118,7 @@ ul.sidebar-nav {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
     font-weight: 700;
-    color: #1c2e22;
+    color: #5C7260;
     margin-bottom: 12px;
 }
 
