@@ -1236,10 +1236,17 @@ h2,
 }
 
 .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: var(--white);
-    letter-spacing: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo-img {
+    max-height: 55px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    height: auto;
+    object-fit: contain;
 }
 
 .footer-socials {
@@ -1449,6 +1456,14 @@ h2,
         flex-direction: column;
         gap: 20px;
         text-align: center;
+    }
+
+    .footer-logo {
+        justify-content: center;
+    }
+
+    .footer-logo-img {
+        max-height: 42px;
     }
 
     .footer-bottom-container {
@@ -2549,8 +2564,9 @@ h2,
 .footer-top {
     padding: 15px 0 !important;
 }
-.footer-logo {
-    font-size: 22px !important;
+.footer-logo-img {
+    max-height: 45px !important;
+    max-width: 180px !important;
 }
 .follow-text {
     font-size: 16px !important;
